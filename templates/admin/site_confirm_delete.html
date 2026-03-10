@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="{% static 'vegrid-logo-BBC4G70n.ico' %}" />
+<title>Delete Site - VEGRID</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --vegrid-orange: #f59120; }
+        body { font-family: 'Inter', sans-serif; background-color: #f8f9fa; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; }
+        .delete-card { background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); max-width: 500px; width: 100%; text-align: center; }
+        .delete-icon { font-size: 4rem; color: #dc3545; margin-bottom: 20px; }
+        h2 { font-weight: 700; color: #333; margin-bottom: 20px; }
+        p { color: #666; margin-bottom: 30px; font-size: 1.1rem; }
+        .site-name { font-weight: 700; color: #000; }
+        .btn-delete { background: #dc3545; color: #fff; border: none; padding: 12px 30px; border-radius: 8px; font-weight: 700; text-transform: uppercase; margin-right: 15px; }
+        .btn-cancel { background: #eee; color: #333; border: none; padding: 12px 30px; border-radius: 8px; font-weight: 700; text-transform: uppercase; text-decoration: none; }
+        .btn-delete:hover { background: #bb2d3b; }
+        .btn-cancel:hover { background: #ddd; }
+    </style>
+</head>
+<body>
+    <div class="delete-card">
+        <div class="delete-icon">
+            <i class="bi bi-exclamation-triangle-fill"></i>
+        </div>
+        <h2>Delete Site?</h2>
+        <p>Are you sure you want to delete <span class="site-name">{{ site.name }}</span> ({{ site.device_sn }})? This action cannot be undone.</p>
+        
+        <form method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn-delete">Delete Site</button>
+            <a href="{% url 'admin-sites' %}" class="btn-cancel">Cancel</a>
+        </form>
+    </div>
+</body>
+</html>

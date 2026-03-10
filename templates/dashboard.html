@@ -1,0 +1,3158 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="{% static 'vegrid-logo-BBC4G70n.ico' %}" />
+        <title>Dashboard - VEGRID</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <style>
+            :root {
+                --vegrid-orange: #f59120; /* Matching the orange from mockups */
+                --text-muted: #888;
+                --tiny-font: 0.65rem;
+                --small-font: 0.8rem;
+            }
+            body {
+                background-color: #ffffff;
+                font-family: 'Inter', sans-serif;
+                margin: 0;
+                padding-bottom: 120px; /* Space for bottom navbar */
+                overflow-x: hidden;
+            }
+            .dashboard-header {
+                padding: 17px 17px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                background: white;
+                flex-wrap: wrap;
+                gap: 12px;
+            }
+            
+            .filter-container {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+                justify-content: center;
+                padding: 8px 12px;
+                background: #fcfcfc;
+                border-radius: 12px;
+                border: 1px solid #eee;
+                flex: 1;
+                max-width: 600px;
+            }
+            .menu-toggle {
+                width: 38px;
+                height: 38px;
+                border-radius: 50%;
+                background: transparent;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border: 1px solid #ddd;
+                color: #888;
+                cursor: pointer;
+                padding: 0;
+            }
+            .menu-toggle i {
+                font-size: 1.4rem;
+            }
+            .header-title-area {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+            }
+            .header-title {
+                font-size: 1.1rem;
+                font-weight: 700;
+                color: #333;
+                margin: 0;
+                line-height: 1.2;
+            }
+            .status-indicator {
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                font-size: 0.55rem;
+                color: #b0b0b0;
+                margin-top: 2px;
+            }
+            .status-dot {
+                width: 7px;
+                height: 7px;
+                background-color: #d0021b; /* Red dot from mockup */
+                border-radius: 50%;
+            }
+            .header-logo-container {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+            }
+            .header-logo-img {
+                height: 40px;
+                margin-bottom: -5px;
+            }
+            .header-brand-text {
+                font-size: 0.85rem;
+                font-weight: 900;
+                color: var(--vegrid-orange);
+                letter-spacing: 0.5px;
+            }
+
+            .main-content {
+                padding: 10px 20px;
+                text-align: center;
+            }
+
+            /* Filtering Styles */
+            .filter-container {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+                justify-content: center;
+                margin-bottom: 20px;
+                padding: 10px;
+                background: #fcfcfc;
+                border-radius: 12px;
+                border: 1px solid #eee;
+            }
+            .filter-dropdown {
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                padding: 5px 10px;
+                font-size: 0.8rem;
+                font-weight: 600;
+                color: #555;
+                background-color: white;
+                min-width: 90px;
+                cursor: pointer;
+                outline: none;
+            }
+            .filter-dropdown:focus {
+                border-color: var(--vegrid-orange);
+            }
+            .site-selector-container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 15px;
+                margin-bottom: 20px;
+                width: 100%;
+                position: relative;
+            }
+            .weather-info {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                background: #f8f9fa;
+                padding: 6px 12px;
+                border-radius: 10px;
+                border: 1px solid #eee;
+                font-size: 0.75rem;
+                color: #555;
+                order: 2;
+            }
+            .site-dropdown-wrapper {
+                order: 1;
+                display: flex;
+                justify-content: center;
+            }
+            @media (max-width: 576px) {
+                .site-selector-container {
+                    flex-direction: column;
+                    gap: 15px;
+                }
+                .weather-info {
+                    order: 2;
+                }
+                .site-dropdown-wrapper {
+                    order: 1;
+                }
+            }
+            .weather-item {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                line-height: 1.2;
+            }
+            .weather-label {
+                font-size: 0.6rem;
+                color: #999;
+                font-weight: 700;
+                text-transform: uppercase;
+            }
+            .weather-value {
+                font-weight: 700;
+                color: #333;
+            }
+            .weather-icon {
+                font-size: 1.2rem;
+                color: var(--vegrid-orange);
+            }
+            .site-select-btn {
+                background-color: var(--vegrid-orange);
+                color: white;
+                border: none;
+                border-radius: 8px;
+                padding: 10px 25px;
+                font-size: 0.95rem;
+                font-weight: 700;
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                box-shadow: 0 4px 10px rgba(245, 145, 32, 0.2);
+            }
+            .site-select-btn:hover {
+                background-color: #e07d10;
+            }
+            .site-select-btn i {
+                font-size: 0.8rem;
+            }
+            .site-select-btn::after {
+                display: none !important;
+            }
+            .dropdown-menu-center {
+                left: 50% !important;
+                right: auto !important;
+                transform: translateX(-50%) !important;
+            }
+            .dropdown-menu-orange {
+                border-radius: 12px;
+                border: none;
+                box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+                padding: 8px 0;
+            }
+            .dropdown-item-orange:hover {
+                background-color: rgba(245, 145, 32, 0.1);
+                color: var(--vegrid-orange);
+            }
+
+            /* Profile Modal Styles */
+            .modal-body {
+                padding-bottom: 120px !important;
+            }
+            .profile-field {
+                border-bottom: 1px solid #ccc;
+                margin-bottom: 8px;
+                padding-bottom: 2px;
+                display: flex;
+                align-items: center;
+                width: 90%;
+            }
+            .profile-label {
+                color: #b0b0b0;
+                font-size: 0.75rem;
+                font-weight: 500;
+                min-width: fit-content;
+                margin-right: 8px;
+            }
+            .profile-value {
+                color: #333;
+                font-weight: 700;
+                font-size: 0.8rem;
+            }
+            .profile-header-btn {
+                background-color: var(--vegrid-orange);
+                color: white;
+                border: none;
+                border-radius: 6px;
+                padding: 6px 30px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                margin-bottom: 25px;
+                display: inline-block;
+                font-size: 0.9rem;
+            }
+            .btn-black-ok, .btn-black-exit {
+                background-color: #000;
+                color: white;
+                border: none;
+                border-radius: 6px;
+                padding: 6px 30px;
+                font-weight: 700;
+                text-transform: uppercase;
+                margin: 20px 0;
+                font-size: 0.85rem;
+            }
+
+            /* Billings Modal Styles */
+            .bill-item {
+                border-bottom: 1.5px solid #ccc;
+                padding-bottom: 10px;
+                margin-bottom: 15px;
+                text-align: left;
+                width: 95%;
+                margin-left: auto;
+                margin-right: auto;
+                position: relative;
+            }
+            .bill-field {
+                display: flex;
+                margin-bottom: 2px;
+                font-size: 0.8rem;
+            }
+            .bill-label {
+                font-weight: 700;
+                color: #333;
+                min-width: 90px;
+            }
+            .bill-value {
+                color: #444;
+                font-weight: 500;
+            }
+            .btn-view-bill {
+                background-color: #fff;
+                color: #333;
+                border: 1px solid #999;
+                border-radius: 6px;
+                padding: 2px 15px;
+                font-weight: 600;
+                font-size: 0.75rem;
+                position: absolute;
+                bottom: 10px;
+                right: 0;
+            }
+            .billing-box {
+                border: 1px solid #aaa;
+                border-radius: 10px;
+                padding: 6px 15px;
+                margin-bottom: 8px;
+                text-align: left;
+                display: flex;
+                align-items: center;
+                min-height: 32px;
+                width: 100%;
+            }
+            .billing-box-label {
+                color: #999;
+                font-size: 0.75rem;
+                font-weight: 500;
+                margin-right: 8px;
+            }
+            .billing-box-value {
+                color: #666;
+                font-size: 0.75rem;
+                font-weight: 600;
+            }
+            .billing-details-container {
+                border: 1px solid #aaa;
+                border-radius: 12px;
+                padding: 15px;
+                margin-top: 5px;
+                text-align: left;
+            }
+            .billing-detail-row {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 8px;
+                font-size: 0.75rem;
+            }
+            .detail-label {
+                color: #999;
+                font-weight: 600;
+            }
+            .detail-value {
+                color: #999;
+                font-weight: 700;
+            }
+            .payment-history-item {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                font-size: 0.75rem;
+                margin-top: 5px;
+            }
+            .payment-label {
+                color: #999;
+                font-weight: 600;
+            }
+            .payment-time {
+                color: var(--vegrid-orange);
+                font-size: 0.55rem;
+                font-weight: 700;
+            }
+            .billing-action-btn {
+                background-color: #000;
+                color: white;
+                border: none;
+                border-radius: 6px;
+                padding: 6px 0;
+                font-weight: 700;
+                font-size: 0.85rem;
+                width: 90px;
+                text-align: center;
+                display: inline-block;
+                text-decoration: none;
+            }
+
+            /* Pay Bill Modal Styles */
+            .pay-from-btn {
+                background-color: #fff;
+                color: #888;
+                border: 1px solid #ccc;
+                border-radius: 8px;
+                padding: 8px 0;
+                font-weight: 700;
+                font-size: 0.85rem;
+                width: 100%;
+                text-align: center;
+                margin-bottom: 10px;
+                transition: all 0.2s ease;
+            }
+            .pay-from-btn:hover {
+                border-color: var(--vegrid-orange);
+                color: var(--vegrid-orange);
+            }
+
+            /* Incidents Modal Styles */
+            .incident-item {
+                border-bottom: 1.5px solid #ccc;
+                padding-bottom: 10px;
+                margin-bottom: 15px;
+                text-align: left;
+                width: 95%;
+                margin-left: auto;
+                margin-right: auto;
+                position: relative;
+            }
+            .incident-field {
+                display: flex;
+                margin-bottom: 2px;
+                font-size: 0.8rem;
+            }
+            .incident-label {
+                font-weight: 700;
+                color: #333;
+                min-width: 120px;
+            }
+            .incident-value {
+                color: #444;
+                font-weight: 500;
+            }
+            .btn-view-incident {
+                background-color: #fff;
+                color: #333;
+                border: 1px solid #999;
+                border-radius: 6px;
+                padding: 2px 15px;
+                font-weight: 600;
+                font-size: 0.75rem;
+                position: absolute;
+                bottom: 10px;
+                right: 0;
+            }
+            .btn-black-new {
+                background-color: #000;
+                color: white;
+                border: none;
+                border-radius: 6px;
+                padding: 6px 30px;
+                font-weight: 700;
+                text-transform: uppercase;
+                margin: 20px 0;
+                font-size: 0.85rem;
+            }
+            .incident-log-item {
+                margin-bottom: 15px;
+                text-align: left;
+            }
+            .incident-log-header {
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                gap: 10px;
+                margin-bottom: 4px;
+            }
+            .incident-log-title {
+                font-size: 0.85rem;
+                font-weight: 800;
+                color: #000;
+            }
+            .incident-log-time {
+                font-size: 0.55rem;
+                font-weight: 700;
+                color: var(--vegrid-orange);
+            }
+            .incident-log-content {
+                font-size: 0.8rem;
+                color: #aaa;
+                line-height: 1.3;
+            }
+            .incident-textarea {
+                width: 100%;
+                border: 1px solid #aaa;
+                border-radius: 12px;
+                padding: 10px;
+                min-height: 200px;
+                font-size: 0.85rem;
+                color: #666;
+                outline: none;
+            }
+            /* Alert Styles */
+            .alert-item {
+                border-bottom: 1.5px solid #ccc;
+                padding-bottom: 10px;
+                margin-bottom: 15px;
+                text-align: left;
+                width: 95%;
+                margin-left: auto;
+                margin-right: auto;
+                position: relative;
+            }
+            .alert-field {
+                display: flex;
+                margin-bottom: 2px;
+                font-size: 0.8rem;
+            }
+            .alert-label {
+                font-weight: 700;
+                color: #333;
+                min-width: 130px;
+            }
+            .alert-value {
+                color: #444;
+                font-weight: 500;
+            }
+            .btn-view-alert {
+                background-color: #fff;
+                color: #333;
+                border: 1px solid #999;
+                border-radius: 6px;
+                padding: 2px 15px;
+                font-weight: 600;
+                font-size: 0.75rem;
+                position: absolute;
+                bottom: 10px;
+                right: 0;
+            }
+            .alert-textarea {
+                width: 100%;
+                border: 1px solid #aaa;
+                border-radius: 12px;
+                padding: 10px;
+                min-height: 200px;
+                font-size: 0.85rem;
+                color: #666;
+                outline: none;
+            }
+            .confirmation-box {
+                border: 1px solid #aaa;
+                border-radius: 20px;
+                padding: 60px 30px;
+                margin: 40px 0;
+                text-align: center;
+            }
+            .confirmation-text {
+                font-size: 0.95rem;
+                font-weight: 700;
+                color: #333;
+                line-height: 1.4;
+            }
+
+            .metrics-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 25px 15px;
+                margin-bottom: 40px;
+            }
+            .metric-card {
+                text-align: center;
+            }
+            .metric-label {
+                font-size: 0.95rem;
+                font-weight: 700;
+                color: #333;
+                margin-bottom: 12px;
+            }
+            .metric-icon-circle {
+                width: 85px;
+                height: 85px;
+                border: 1.5px solid var(--vegrid-orange);
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0 auto 12px;
+                color: var(--vegrid-orange);
+            }
+            .metric-icon-circle i {
+                font-size: 2.2rem;
+            }
+            .metric-value {
+                font-size: 0.9rem;
+                color: #a0a0a0;
+                font-weight: 500;
+            }
+
+            /* Filter Section Styling */
+            .filter-section {
+                background: #f8f9fa;
+                padding: 20px;
+                margin: 20px auto;
+                max-width: 800px;
+                border-radius: 12px;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            }
+            .filter-header {
+                text-align: center;
+                margin-bottom: 20px;
+            }
+            .filter-title {
+                font-size: 1.2rem;
+                font-weight: 700;
+                color: #333;
+                margin-bottom: 5px;
+            }
+            .filter-subtitle {
+                font-size: 0.85rem;
+                color: #666;
+                margin: 0;
+            }
+            .filter-buttons {
+                display: flex;
+                justify-content: center;
+                gap: 10px;
+                flex-wrap: wrap;
+            }
+            .filter-btn {
+                padding: 8px 20px;
+                border: 2px solid #e0e0e0;
+                background: white;
+                border-radius: 25px;
+                font-size: 0.9rem;
+                font-weight: 600;
+                color: #666;
+                cursor: pointer;
+                transition: all 0.2s ease;
+            }
+            .filter-btn:hover {
+                border-color: var(--vegrid-orange);
+                color: var(--vegrid-orange);
+                transform: translateY(-2px);
+            }
+            .filter-btn.active {
+                background: var(--vegrid-orange);
+                border-color: var(--vegrid-orange);
+                color: white;
+                box-shadow: 0 4px 15px rgba(245, 145, 32, 0.3);
+            }
+
+            /* Filtered Data Section */
+            .filtered-data-section {
+                max-width: 1200px;
+                margin: 0 auto 40px;
+                padding: 0 20px;
+            }
+            .data-summary {
+                display: grid;
+                grid-template-columns: repeat(5, 1fr);
+                gap: 8px;
+                margin-bottom: 25px;
+            }
+            .summary-card {
+                background: white;
+                padding: 12px 8px;
+                border-radius: 12px;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+                transition: transform 0.2s ease;
+                min-width: 0; /* Allow shrinking */
+                text-align: center;
+            }
+            .summary-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            }
+            .summary-icon {
+                width: 36px;
+                height: 36px;
+                background: var(--vegrid-orange);
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: white;
+                font-size: 1.1rem;
+                flex-shrink: 0;
+            }
+            .summary-content {
+                width: 100%;
+                overflow: hidden;
+            }
+            .summary-label {
+                font-size: 0.6rem;
+                color: #666;
+                font-weight: 700;
+                margin-bottom: 2px;
+                text-transform: uppercase;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            .summary-value {
+                font-size: 0.75rem;
+                color: #333;
+                font-weight: 800;
+                white-space: nowrap;
+            }
+            @media (min-width: 768px) {
+                .summary-card {
+                    padding: 20px;
+                    flex-direction: row;
+                    text-align: left;
+                    gap: 15px;
+                }
+                .summary-icon {
+                    width: 50px;
+                    height: 50px;
+                    font-size: 1.3rem;
+                }
+                .summary-label {
+                    font-size: 0.75rem;
+                }
+                .summary-value {
+                    font-size: 1.1rem;
+                }
+                .data-summary {
+                    gap: 15px;
+                }
+            }
+
+            /* Charts Section */
+            .charts-section {
+                display: block;
+            }
+            .chart-container {
+                margin-bottom: 25px;
+                padding: 15px;
+                background: #fcfcfc;
+                border-radius: 12px;
+                border: 1px solid #eee;
+                height: 320px;
+                position: relative;
+                display: flex;
+                flex-direction: column;
+            }
+            #energyChart {
+                flex: 1;
+                max-height: 220px;
+            }
+            .chart-header-custom {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 15px;
+            }
+            .chart-unit {
+                font-size: 0.75rem;
+                color: #888;
+                font-weight: 600;
+            }
+            .info-details-section {
+                margin-top: 20px;
+                padding: 15px;
+                background: #f8f9fa;
+                border-radius: 12px;
+                border: 1px solid #eee;
+            }
+            .info-grid {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+            .info-item {
+                display: flex;
+                flex-direction: column;
+                text-align: left;
+                padding: 10px;
+                background: white;
+                border-radius: 8px;
+                border: 1px solid #efefef;
+            }
+            .info-label {
+                font-size: 0.7rem;
+                color: #999;
+                font-weight: 600;
+                text-transform: uppercase;
+                margin-bottom: 4px;
+            }
+            .info-value {
+                font-size: 1.1rem;
+                font-weight: 700;
+                color: #333;
+            }
+            @media (min-width: 768px) {
+                .info-grid {
+                    grid-template-columns: repeat(4, 1fr);
+                }
+            }
+            .chart-title {
+                font-size: 1.1rem;
+                font-weight: 700;
+                color: #333;
+                margin-bottom: 20px;
+                text-align: center;
+            }
+
+            /* Energy Flow Styling */
+            .energy-flow-section {
+                padding: 40px 0;
+                position: relative;
+                width: 100%;
+                max-width: 500px;
+                margin: 0 auto;
+                height: 400px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            .flow-node {
+                position: absolute;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                width: auto;
+                text-align: left;
+                z-index: 2;
+            }
+            .flow-node.node-right {
+                flex-direction: row-reverse;
+                text-align: right;
+            }
+            .flow-node.node-right .node-content {
+                align-items: flex-end;
+            }
+            .node-icon {
+                width: 50px;
+                height: 50px;
+                border: 2px solid var(--vegrid-orange);
+                border-radius: 50%;
+                background: white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: var(--vegrid-orange);
+                font-size: 1.2rem;
+                box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+                flex-shrink: 0;
+            }
+            .node-content {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+            .node-label {
+                font-size: 0.7rem;
+                font-weight: 700;
+                color: #333;
+                text-transform: uppercase;
+                line-height: 1;
+                margin-bottom: 2px;
+            }
+            .node-value {
+                font-size: 0.75rem;
+                font-weight: 700;
+                color: var(--vegrid-orange);
+                line-height: 1;
+            }
+
+            .battery-percentage-inside {
+                position: absolute;
+                font-size: 0.65rem;
+                font-weight: 700;
+                color: var(--vegrid-orange);
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                z-index: 5;
+            }
+
+            /* Positions */
+            .node-generation { top: 0; left: 0; }
+            .node-grid { top: 0; right: 0; }
+            .node-center { 
+                top: 50%; 
+                left: 50%; 
+                transform: translate(-50%, -50%);
+                width: 100px;
+            }
+            .node-center .node-icon {
+                width: 80px;
+                height: 80px;
+                background: var(--vegrid-orange);
+                color: white;
+                border: none;
+                font-size: 2rem;
+            }
+            .node-storage { bottom: 0; left: 0; }
+            .node-consumption { bottom: 0; right: 0; }
+
+            /* Flow SVG */
+            .flow-svg {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 1;
+                pointer-events: none;
+            }
+            .flow-line {
+                fill: none;
+                stroke: #e0e0e0;
+                stroke-width: 4;
+                stroke-linecap: round;
+            }
+            .flow-active {
+                stroke: var(--vegrid-orange);
+                stroke-opacity: 0.3;
+            }
+            
+            /* Moving dots/particles */
+            .flow-dot {
+                fill: var(--vegrid-orange);
+                visibility: hidden;
+            }
+            .flow-active + .flow-dot {
+                visibility: visible;
+                animation: flow-dot-move 3s linear infinite;
+            }
+            .flow-reverse + .flow-dot {
+                animation: flow-dot-move-reverse 3s linear infinite;
+            }
+
+            @keyframes flow-dot-move {
+                from { offset-distance: 0%; }
+                to { offset-distance: 100%; }
+            }
+            @keyframes flow-dot-move-reverse {
+                from { offset-distance: 100%; }
+                to { offset-distance: 0%; }
+            }
+
+            .ad-space {
+                background: white;
+                border: 1px solid #c0c0c0;
+                border-radius: 12px;
+                height: 140px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 20px 0;
+                font-size: 1.1rem;
+                font-weight: 700;
+                color: #333;
+                letter-spacing: 1px;
+            }
+
+            .footer-container {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                z-index: 2000;
+            }
+            .footer-container {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                z-index: 1000;
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                pointer-events: none;
+            }
+            .footer-curve, .bottom-navbar {
+                width: 100%;
+                max-width: 600px;
+                pointer-events: auto;
+            }
+            .footer-curve {
+                height: 25px;
+                background-color: var(--vegrid-orange);
+                border-top-left-radius: 100% 100%;
+                border-top-right-radius: 100% 100%;
+                margin-bottom: -1px;
+            }
+            .bottom-navbar {
+                background-color: var(--vegrid-orange);
+                height: 85px;
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                padding: 0 10px 10px;
+            }
+            .bottom-nav-item {
+                text-align: center;
+                color: white;
+                text-decoration: none;
+                flex: 1;
+                transition: all 0.2s ease;
+            }
+            .bottom-nav-item:hover {
+                color: rgba(255, 255, 255, 0.8);
+            }
+            .bottom-nav-item:hover .bottom-nav-icon-box {
+                background: rgba(255, 255, 255, 0.15);
+                border-color: #fff;
+                transform: translateY(-2px);
+            }
+            .bottom-nav-icon-box {
+                width: 42px;
+                height: 42px;
+                border: 1px solid rgba(255, 255, 255, 0.6);
+                border-radius: 12px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0 auto 6px;
+                font-size: 1.5rem;
+                background: rgba(255, 255, 255, 0.05);
+                position: relative; /* Added to fix badge positioning */
+            }
+            .bottom-nav-label {
+                font-size: 0.65rem;
+                text-transform: uppercase;
+                font-weight: 700;
+                letter-spacing: 0.5px;
+            }
+
+            /* Sidebar/Offcanvas Styling */
+            .offcanvas {
+                width: 300px !important;
+                border: none;
+                box-shadow: 10px 0 30px rgba(0,0,0,0.1);
+                border-top-right-radius: 20px;
+                border-bottom-right-radius: 20px;
+            }
+            .offcanvas-header {
+                padding: 25px 20px;
+                border-bottom: 1px solid #f0f0f0;
+            }
+            .offcanvas-body {
+                padding: 20px;
+                display: flex;
+                flex-direction: column;
+            }
+            .sidebar-nav-container {
+                position: relative;
+                margin-top: 10px;
+            }
+            .sidebar-nav-list {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+            }
+            .sidebar-nav-item {
+                margin-bottom: 8px;
+            }
+            .sidebar-nav-link {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                padding: 12px 15px;
+                color: #444;
+                text-decoration: none;
+                font-size: 0.95rem;
+                font-weight: 600;
+                border-radius: 12px;
+                transition: all 0.2s ease;
+            }
+            .sidebar-nav-link i {
+                font-size: 1.2rem;
+                color: #888;
+                transition: all 0.2s ease;
+            }
+            .sidebar-nav-link:hover {
+                background-color: rgba(245, 145, 32, 0.1);
+                color: var(--vegrid-orange);
+            }
+            .sidebar-nav-link:hover i {
+                color: var(--vegrid-orange);
+            }
+            .sidebar-nav-link.text-danger:hover {
+                background-color: rgba(220, 53, 69, 0.1);
+            }
+            .sidebar-footer-ad {
+                margin-top: auto;
+                padding-top: 30px;
+            }
+            .sidebar-footer-nav {
+                margin: 0 -20px -20px;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Dashboard Header -->
+        <header class="dashboard-header">
+            <div class="header-title-area">
+                <button class="menu-toggle" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu">
+                    <i class="bi bi-list"></i>
+                </button>
+                <div>
+                    <h1 class="header-title">My Vegrid</h1>
+                </div>
+            </div>
+            
+            <!-- Location Filters -->
+            <div class="filter-container">
+                <select class="filter-dropdown" id="countryFilter">
+                    <option value="all">Country: All</option>
+                    {% for country in countries %}
+                        <option value="{{ country|lower }}" {% if customer.country == country %}selected{% endif %}>{{ country }}</option>
+                    {% endfor %}
+                </select>
+                <select class="filter-dropdown" id="countyFilter">
+                    <option value="all">County: All</option>
+                    {% for county in counties %}
+                        <option value="{{ county|lower }}" {% if customer.county == county %}selected{% endif %}>{{ county }}</option>
+                    {% endfor %}
+                </select>
+                <select class="filter-dropdown" id="townFilter">
+                    <option value="all">Town: All</option>
+                    {% for town in towns %}
+                        <option value="{{ town|lower }}" {% if customer.town == town %}selected{% endif %}>{{ town }}</option>
+                    {% endfor %}
+                </select>
+                <select class="filter-dropdown" id="areaFilter">
+                    <option value="all">Area: All</option>
+                    {% for area in areas %}
+                        <option value="{{ area|lower }}" {% if customer.area == area %}selected{% endif %}>{{ area }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div class="header-logo-container">
+                <img src="{% static 'sun-logo.png' %}" alt="Sun Logo" class="header-logo-img">
+                <span class="header-brand-text">VEGRID</span>
+            </div>
+        </header>
+
+        <!-- Main Dashboard Content -->
+        <main class="main-content">
+
+            <!-- Site Selector Dropdown and Weather/Time Info -->
+            <div class="site-selector-container">
+                <!-- Site Selector (Top) -->
+                <div class="site-dropdown-wrapper dropdown">
+                    <button class="site-select-btn dropdown-toggle" type="button" id="siteSelectorBtn" data-bs-toggle="dropdown" aria-expanded="false">
+                        {% if devices %}
+                            {{ devices.0.name }} ({{ devices|length }})
+                        {% else %}
+                            My Sites (0)
+                        {% endif %}
+                        <i class="bi bi-chevron-down"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-center dropdown-menu-orange border-0 shadow" aria-labelledby="siteSelectorBtn">
+                        {% for device in devices %}
+                            <li><a class="dropdown-item dropdown-item-orange py-2 device-selector" href="#" data-sn="{{ device.device_sn }}" data-name="{{ device.name }}">{{ device.name }}</a></li>
+                        {% empty %}
+                            <li><a class="dropdown-item dropdown-item-orange py-2" href="#">No sites found</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <!-- Weather, Time, Location Info (Below site selector) -->
+                <div class="weather-info">
+                    <div class="weather-icon">
+                        <i class="bi bi-geo-alt-fill"></i>
+                    </div>
+                    <div class="weather-item">
+                        <span class="weather-label">Site Location</span>
+                        <span class="weather-value" id="currentLocation">{% if devices %}{{ devices.0.location_address|default:devices.0.area|add:", "|add:devices.0.county }}{% else %}{{ customer.area|default:"Runda" }}, {{ customer.county|default:"Nairobi" }}{% endif %}</span>
+                    </div>
+                    <div class="weather-item">
+                        <span class="weather-label">Site Time</span>
+                        <span class="weather-value" id="currentTime">00:00:00</span>
+                    </div>
+                    <div class="weather-item">
+                        <span class="weather-label">Weather</span>
+                        <span class="weather-value" id="currentWeather">{{ initial_weather|default:"Weather Unavailable" }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="energy-flow-section">
+                <!-- SVG for animated lines -->
+                <svg class="flow-svg" viewBox="0 0 500 400">
+                    <defs>
+                        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                            <polygon points="0 0, 10 3.5, 0 7" fill="var(--vegrid-orange)" />
+                        </marker>
+                        <marker id="arrowhead-gray" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                            <polygon points="0 0, 10 3.5, 0 7" fill="#ddd" />
+                        </marker>
+                    </defs>
+                    <!-- Generation to Center -->
+                    <path id="pathGen" d="M 40 60 V 180 H 210" class="flow-line"></path>
+                    <circle r="4" class="flow-dot" style="offset-path: path('M 40 60 V 180 H 210');"></circle>
+                    
+                    <!-- Grid to Center -->
+                    <path id="pathGrid" d="M 460 60 V 180 H 290" class="flow-line"></path>
+                    <circle r="4" class="flow-dot" style="offset-path: path('M 460 60 V 180 H 290');"></circle>
+                    
+                    <!-- Center to Storage (Charging) -->
+                    <path id="pathCharge" d="M 210 220 H 60 V 340" class="flow-line"></path>
+                    <circle r="4" class="flow-dot" style="offset-path: path('M 210 220 H 60 V 340');"></circle>
+                    
+                    <!-- Storage to Center (Discharging) -->
+                    <path id="pathDischarge" d="M 60 340 V 220 H 210" class="flow-line"></path>
+                    <circle r="4" class="flow-dot" style="offset-path: path('M 60 340 V 220 H 210');"></circle>
+                    
+                    <!-- Center to Consumption -->
+                    <path id="pathCons" d="M 290 220 H 440 V 340" class="flow-line"></path>
+                    <circle r="4" class="flow-dot" style="offset-path: path('M 290 220 H 440 V 340');"></circle>
+                </svg>
+
+                <!-- Generation (Top Left) -->
+                <div class="flow-node node-generation" style="left: 15px; top: 10px;">
+                    <div class="node-icon" style="flex-direction: column; gap: 2px;">
+                        <i class="bi bi-sun-fill" style="font-size: 0.8rem;"></i>
+                        <i class="bi bi-grid-3x3" style="font-size: 1rem; margin-top: -4px;"></i>
+                    </div>
+                    <div class="node-content">
+                        <div class="node-label">Generation</div>
+                        <div id="generationValue" class="node-value">0.00 kW</div>
+                    </div>
+                </div>
+
+                <!-- Grid (Top Right) -->
+                <div class="flow-node node-grid node-right" style="right: 15px; top: 10px;">
+                    <div class="node-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2v20"></path>
+                            <path d="M7 22l5-20 5 20"></path>
+                            <path d="M2 12h20"></path>
+                            <path d="M5 12l2 4"></path>
+                            <path d="M19 12l-2 4"></path>
+                            <path d="M12 4l-4 3"></path>
+                            <path d="M12 4l4 3"></path>
+                        </svg>
+                    </div>
+                    <div class="node-content">
+                        <div class="node-label">Grid</div>
+                        <div id="gridValue" class="node-value">0.00 kW</div>
+                    </div>
+                </div>
+
+                <!-- Center Box -->
+                <div class="flow-node node-center">
+                    <div class="node-icon">
+                        <img src="{% static 'vegrid-logo-BBC4G70n.png' %}" alt="Vegrid Logo" style="height: 60px; width: auto;">
+                    </div>
+                </div>
+
+                <!-- Storage (Bottom Left) -->
+                <div class="flow-node node-storage" style="left: 15px; bottom: 10px;">
+                    <div class="node-icon" style="position: relative;">
+                        <i class="bi bi-battery-full" style="font-size: 1.8rem; opacity: 0.3;"></i>
+                        <span id="batteryPercentage" class="battery-percentage-inside">0%</span>
+                    </div>
+                    <div class="node-content">
+                        <div class="node-label">Storage</div>
+                        <div id="storageValue" class="node-value">0.00 kW</div>
+                    </div>
+                </div>
+
+                <!-- Consumption (Bottom Right) -->
+                <div class="flow-node node-consumption node-right" style="right: 15px; bottom: 10px;">
+                    <div class="node-icon">
+                        <i class="bi bi-house-door"></i>
+                    </div>
+                    <div class="node-content">
+                        <div class="node-label">Consumption</div>
+                        <div id="consumptionValue" class="node-value">0.00 kW</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Time Period Filtering -->
+            <div class="filter-section">
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-period="day">Day</button>
+                    <button class="filter-btn" data-period="month">Month</button>
+                    <button class="filter-btn" data-period="year">Year</button>
+                    <button class="filter-btn" data-period="lifetime">Lifetime</button>
+                </div>
+            </div>
+
+            <!-- Filtered Data Display Area -->
+            <div class="filtered-data-section">
+                <div class="data-summary">
+                    <div class="summary-card">
+                        <div class="summary-icon">
+                            <i class="bi bi-house-door"></i>
+                        </div>
+                        <div class="summary-content">
+                            <div class="summary-label">Total Consumption</div>
+                            <div class="summary-value" id="totalConsumption">0 kWh</div>
+                        </div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-icon">
+                            <i class="bi bi-sun"></i>
+                        </div>
+                        <div class="summary-content">
+                            <div class="summary-label">Solar</div>
+                            <div class="summary-value" id="solarProduction">0 kWh</div>
+                        </div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-icon">
+                            <i class="bi bi-battery-full"></i>
+                        </div>
+                        <div class="summary-content">
+                            <div class="summary-label">Battery</div>
+                            <div class="summary-value" id="batteryUsage">0 kWh</div>
+                        </div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-icon">
+                            <i class="bi bi-grid-3x3"></i>
+                        </div>
+                        <div class="summary-content">
+                            <div class="summary-label">Grid</div>
+                            <div class="summary-value" id="gridUsage">0 kWh</div>
+                        </div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-icon">
+                            <i class="bi bi-sun-fill"></i>
+                        </div>
+                        <div class="summary-content">
+                            <div class="summary-label">Generation</div>
+                            <div class="summary-value" id="totalGeneration">0 kWh</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Section -->
+                <div class="charts-section">
+                    <div class="chart-container">
+                        <div class="chart-header-custom">
+                            <h4 class="chart-title">Energy Statistics</h4>
+                            <div class="chart-unit" id="chartUnit">kWh</div>
+                        </div>
+                        <canvas id="energyChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Info below chart like Deye Cloud -->
+                <div class="info-details-section">
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <span class="info-label">Consumption</span>
+                            <span class="info-value" id="dailyCons">0.00 kWh</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Solar</span>
+                            <span class="info-value" id="dailySolar">0.00 kWh</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Battery Discharge</span>
+                            <span class="info-value" id="dailyDischarge">0.00 kWh</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Grid Import</span>
+                            <span class="info-value" id="dailyGrid">0.00 kWh</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Generation</span>
+                            <span class="info-value" id="dailyGen">0.00 kWh</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ad-space" style="margin-top: 20px;">
+                AD SPACE
+            </div>
+        </main>
+
+        <!-- Sidebar Navigation (Offcanvas) -->
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel">
+            <div class="offcanvas-header">
+                <div class="header-title-area">
+                    <button class="menu-toggle" type="button" data-bs-dismiss="offcanvas">
+                        <i class="bi bi-list"></i>
+                    </button>
+                    <div>
+                        <h1 class="header-title">My Vegrid</h1>
+                        <div class="status-indicator">
+                            <span class="status-dot"></span>
+                            <span>{% if devices %}{{ devices.0.area }}, {{ devices.0.county }}{% endif %}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="header-logo-container">
+                    <img src="{% static 'sun-logo.png' %}" alt="Sun Logo" class="header-logo-img">
+                    <span class="header-brand-text">VEGRID</span>
+                </div>
+            </div>
+            <div class="offcanvas-body">
+                <div class="sidebar-nav-container">
+                    <ul class="sidebar-nav-list">
+                        <li class="sidebar-nav-item"><a href="#" class="sidebar-nav-link" data-bs-toggle="modal" data-bs-target="#profileModal"><i class="bi bi-person"></i> Profile</a></li>
+                        <li class="sidebar-nav-item"><a href="#" class="sidebar-nav-link" data-bs-toggle="modal" data-bs-target="#billingsModal"><i class="bi bi-receipt"></i> Billings</a></li>
+                        <li class="sidebar-nav-item"><a href="{% url 'payments_list' %}" class="sidebar-nav-link"><i class="bi bi-credit-card"></i> Payments</a></li>
+                        <li class="sidebar-nav-item"><a href="{% url 'wallet-dashboard' %}" class="sidebar-nav-link"><i class="bi bi-wallet2"></i> Wallet</a></li>
+                        <li class="sidebar-nav-item"><a href="#" class="sidebar-nav-link"><i class="bi bi-grid-fill"></i> Applications</a></li>
+                        <li class="sidebar-nav-item"><a href="#" class="sidebar-nav-link"><i class="bi bi-file-earmark-bar-graph"></i> Reports</a></li>
+                        <li class="sidebar-nav-item"><a href="{% url 'logout' %}" class="sidebar-nav-link text-danger"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-footer-ad">
+                    <div class="ad-space">
+                        AD SPACE
+                    </div>
+                </div>
+
+                <div class="sidebar-footer-nav">
+                    <div class="footer-curve"></div>
+                    <nav class="bottom-navbar">
+                        <a href="#" class="bottom-nav-item" data-bs-toggle="modal" data-bs-target="#notificationsModal">
+                            <div class="bottom-nav-icon-box">
+                                <i class="bi bi-bell"></i>
+                                {% if unread_notifications_count > 0 %}
+                                <span class="badge rounded-pill bg-danger" style="position: absolute; top: -5px; right: -5px; font-size: 0.6rem;">{{ unread_notifications_count }}</span>
+                                {% endif %}
+                            </div>
+                            <div class="bottom-nav-label">Notifications</div>
+                        </a>
+                        <a href="#" class="bottom-nav-item" data-bs-toggle="modal" data-bs-target="#alertsModal">
+                            <div class="bottom-nav-icon-box">
+                                <i class="bi bi-exclamation-triangle"></i>
+                                {% if open_alerts_count > 0 %}
+                                <span class="badge rounded-pill bg-danger" style="position: absolute; top: -5px; right: -5px; font-size: 0.6rem; border: 1.5px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">{{ open_alerts_count }}</span>
+                                {% endif %}
+                            </div>
+                            <div class="bottom-nav-label">Alerts</div>
+                        </a>
+                        <a href="#" class="bottom-nav-item" data-bs-toggle="modal" data-bs-target="#incidentsModal">
+                            <div class="bottom-nav-icon-box">
+                                <i class="bi bi-gear"></i>
+                            </div>
+                            <div class="bottom-nav-label">Incidents</div>
+                        </a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation Bar -->
+        <div class="footer-container">
+            <div class="footer-curve"></div>
+            <nav class="bottom-navbar">
+                <a href="#" class="bottom-nav-item" data-bs-toggle="modal" data-bs-target="#notificationsModal">
+                    <div class="bottom-nav-icon-box">
+                        <i class="bi bi-bell"></i>
+                        {% if unread_notifications_count > 0 %}
+                        <span class="badge rounded-pill bg-danger" style="position: absolute; top: -5px; right: -5px; font-size: 0.6rem;">{{ unread_notifications_count }}</span>
+                        {% endif %}
+                    </div>
+                    <div class="bottom-nav-label">Notifications</div>
+                </a>
+                <a href="#" class="bottom-nav-item" data-bs-toggle="modal" data-bs-target="#alertsModal">
+                    <div class="bottom-nav-icon-box">
+                        <i class="bi bi-exclamation-triangle"></i>
+                        {% if open_alerts_count > 0 %}
+                        <span class="badge rounded-pill bg-danger" style="position: absolute; top: -5px; right: -5px; font-size: 0.6rem;">{{ open_alerts_count }}</span>
+                        {% endif %}
+                    </div>
+                    <div class="bottom-nav-label">Alerts</div>
+                </a>
+                <a href="#" class="bottom-nav-item" data-bs-toggle="modal" data-bs-target="#incidentsModal">
+                    <div class="bottom-nav-icon-box">
+                        <i class="bi bi-gear"></i>
+                    </div>
+                    <div class="bottom-nav-label">Incidents</div>
+                </a>
+            </nav>
+        </div>
+
+        <!-- Profile Modal -->
+        <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-fullscreen">
+                <div class="modal-content border-0">
+                    <div class="modal-body p-0">
+                        <!-- Header matching Dashboard -->
+                        <header class="dashboard-header border-bottom">
+                            <div class="header-title-area">
+                                <button class="menu-toggle" type="button" data-bs-dismiss="modal">
+                                    <i class="bi bi-list"></i>
+                                </button>
+                                <div>
+                                    <h1 class="header-title">My Vegrid</h1>
+                                </div>
+                            </div>
+                            <div class="header-logo-container">
+                                <img src="{% static 'sun-logo.png' %}" alt="Sun Logo" class="header-logo-img">
+                                <span class="header-brand-text">VEGRID</span>
+                            </div>
+                        </header>
+
+                        <div class="text-center mt-5 px-4">
+                            <div class="profile-header-btn">MY PROFILE</div>
+                            
+                            <form id="profileForm" class="text-start mt-4">
+                                {% csrf_token %}
+                                <div class="profile-field">
+                                    <span class="profile-label">First Name: *</span>
+                                    <input type="text" name="first_name" class="form-control-plaintext profile-value p-0" value="{{ customer.user.first_name }}" required>
+                                    <i class="bi bi-camera ms-auto" style="color: var(--vegrid-orange); font-size: 1.2rem;"></i>
+                                </div>
+                                <div class="profile-field">
+                                    <span class="profile-label">Last Name: *</span>
+                                    <input type="text" name="last_name" class="form-control-plaintext profile-value p-0" value="{{ customer.user.last_name }}" required>
+                                </div>
+                                <div class="profile-field">
+                                    <span class="profile-label">Middle Name:</span>
+                                    <input type="text" name="middle_name" class="form-control-plaintext profile-value p-0" value="{{ customer.middle_name|default:"" }}">
+                                </div>
+                                <div class="profile-field">
+                                    <span class="profile-label">Phone Number:</span>
+                                    <input type="text" name="phone_number" class="form-control-plaintext profile-value p-0" value="{{ customer.phone_number|default:"" }}">
+                                </div>
+                                <div class="profile-field">
+                                    <span class="profile-label">Email Address:</span>
+                                    <input type="email" name="email" class="form-control-plaintext profile-value p-0" value="{{ customer.user.email }}" required>
+                                </div>
+                                <div class="profile-field">
+                                    <span class="profile-label">ID Number:</span>
+                                    <input type="text" name="id_number" class="form-control-plaintext profile-value p-0" value="{{ customer.id_number|default:"" }}">
+                                </div>
+                                <div class="profile-field">
+                                    <span class="profile-label">Kra Pin:</span>
+                                    <input type="text" name="pin_number" class="form-control-plaintext profile-value p-0" value="{{ customer.pin_number|default:"" }}">
+                                </div>
+                                <div class="profile-field">
+                                    <span class="profile-label">Address (P.O Box Number): *</span>
+                                    <input type="text" name="address" class="form-control-plaintext profile-value p-0" value="{{ customer.address|default:"" }}" required>
+                                </div>
+                                <div class="profile-field">
+                                    <span class="profile-label">County:</span>
+                                    <input type="text" name="county" class="form-control-plaintext profile-value p-0" value="{{ customer.county|default:"" }}">
+                                </div>
+                                <div class="profile-field">
+                                    <span class="profile-label">Town:</span>
+                                    <input type="text" name="town" class="form-control-plaintext profile-value p-0" value="{{ customer.town|default:"" }}">
+                                </div>
+                                <div class="profile-field">
+                                    <span class="profile-label">Country:</span>
+                                    <input type="text" name="country" class="form-control-plaintext profile-value p-0" value="{{ customer.country|default:"" }}">
+                                </div>
+                                <div class="profile-field">
+                                    <span class="profile-label">Area:</span>
+                                    <input type="text" name="area" class="form-control-plaintext profile-value p-0" value="{{ customer.area|default:"" }}">
+                                </div>
+                                
+                                <div class="d-flex gap-2 mt-4 justify-content-center">
+                                    <button type="submit" class="btn-black-ok m-0">Save Changes</button>
+                                    <button type="button" class="btn-black-exit m-0" data-bs-dismiss="modal">Cancel</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Profile Footer (Matching image style) -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Billings Modal -->
+        <div class="modal fade" id="billingsModal" tabindex="-1" aria-labelledby="billingsModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-fullscreen">
+                <div class="modal-content border-0">
+                    <div class="modal-body p-0">
+                        <!-- Header -->
+                        <header class="dashboard-header border-bottom">
+                            <div class="header-title-area">
+                                <button class="menu-toggle" type="button" data-bs-dismiss="modal">
+                                    <i class="bi bi-list"></i>
+                                </button>
+                                <div>
+                                    <h1 class="header-title">My Vegrid</h1>
+                                </div>
+                            </div>
+                            <div class="header-logo-container">
+                                <img src="{% static 'sun-logo.png' %}" alt="Sun Logo" class="header-logo-img">
+                                <span class="header-brand-text">VEGRID</span>
+                            </div>
+                        </header>
+
+                        <div class="text-center mt-5 px-4">
+                            <div class="profile-header-btn">BILLINGS</div>
+                            
+                            <div class="mt-4">
+                                {% for bill in billings %}
+                                <div class="bill-item">
+                                    <div class="bill-field"><span class="bill-label">Date:</span> <span class="bill-value">{{ bill.date|date:"d.M.Y" }}</span></div>
+                                    <div class="bill-field"><span class="bill-label">Name:</span> <span class="bill-value">{{ customer.get_full_name }}</span></div>
+                                    <div class="bill-field"><span class="bill-label">Site:</span> <span class="bill-value">{{ bill.description|truncatewords:5 }}</span></div>
+                                    <div class="bill-field"><span class="bill-label">Type:</span> <span class="bill-value">{{ bill.billing_type|default:"N/A" }}</span></div>
+                                    <div class="bill-field"><span class="bill-label">Ref:</span> <span class="bill-value">{{ bill.reference }}</span></div>
+                                    <div class="bill-field"><span class="bill-label">Bill Balance:</span> <span class="bill-value">{{ bill.amount }}</span></div>
+                                    <div class="bill-field"><span class="bill-label">Status:</span> <span class="bill-value">{{ bill.status|title }}</span></div>
+                                    <button class="btn-view-bill" data-bs-toggle="modal" data-bs-target="#viewBillModal" data-bill-id="{{ bill.id }}">View</button>
+                                </div>
+                                {% empty %}
+                                <p class="text-muted">No billings found.</p>
+                                {% endfor %}
+                            </div>
+
+                            <button type="button" class="btn-black-exit" data-bs-dismiss="modal">Exit</button>
+                        </div>
+
+                        <!-- Footer -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- View Bill Modal -->
+        <div class="modal fade" id="viewBillModal" tabindex="-1" aria-labelledby="viewBillModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-fullscreen">
+                <div class="modal-content border-0">
+                    <div class="modal-body p-0">
+                        <!-- Header -->
+                        <header class="dashboard-header border-bottom">
+                            <div class="header-title-area">
+                                <button class="menu-toggle" type="button" data-bs-dismiss="modal">
+                                    <i class="bi bi-list"></i>
+                                </button>
+                                <div>
+                                    <h1 class="header-title">My Vegrid</h1>
+                                </div>
+                            </div>
+                            <div class="header-logo-container">
+                                <img src="{% static 'sun-logo.png' %}" alt="Sun Logo" class="header-logo-img">
+                                <span class="header-brand-text">VEGRID</span>
+                            </div>
+                        </header>
+
+                        <div class="text-center mt-5 px-4">
+                            <div class="profile-header-btn">VIEW BILL</div>
+                            
+                            <div class="mt-4">
+                                <div class="billing-box"><span class="billing-box-label">Billing Date:</span> <span class="billing-box-value">01.Aug.2024</span></div>
+                                <div class="billing-box"><span class="billing-box-label">Due Date:</span> <span class="billing-box-value">15.Aug.2024</span></div>
+                                <div class="billing-box"><span class="billing-box-label">Billing Site:</span> <span class="billing-box-value">Nairobi Main</span></div>
+                                <div class="billing-box"><span class="billing-box-label">Billing Type:</span> <span class="billing-box-value">Commercial</span></div>
+                                <div class="billing-box"><span class="billing-box-label">Reference:</span> <span class="billing-box-value">VG-2024-001</span></div>
+                                <div class="billing-box"><span class="billing-box-label">Status:</span> <span class="billing-box-value">Pending</span></div>
+
+                                <div class="text-start mt-3 mb-1"><span class="fw-bold" style="font-size: 0.85rem;">Billing Details</span></div>
+                                <div class="billing-details-container">
+                                    <div class="billing-detail-row">
+                                        <span class="detail-label">Bill Amount:</span>
+                                        <span class="detail-value">15,000.00</span>
+                                    </div>
+                                    <div class="billing-detail-row">
+                                        <span class="detail-label">Bill Balance:</span>
+                                        <span class="detail-value">6,800.00</span>
+                                    </div>
+                                    <div class="payment-history-item">
+                                        <span class="payment-label">Amount Paid: 4,200.00</span>
+                                        <span class="payment-time">12:45PM 01.Aug.2024</span>
+                                    </div>
+                                    <div class="payment-history-item">
+                                        <span class="payment-label">Amount Paid: 4,000.00</span>
+                                        <span class="payment-time">12:45PM 04.Aug.2024</span>
+                                    </div>
+                                    <div class="payment-history-item">
+                                        <span class="payment-label">Payment Failure: 2,000.00</span>
+                                        <span class="payment-time">12:45PM 04.Aug.2024</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-between mt-4 px-1">
+                                <button class="billing-action-btn" data-bs-toggle="modal" data-bs-target="#payBillModal">Pay</button>
+                                <button class="billing-action-btn">Download</button>
+                                <button class="billing-action-btn" data-bs-dismiss="modal">Exit</button>
+                            </div>
+                        </div>
+
+                        <!-- Footer -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pay Bill Modal -->
+        <div class="modal fade" id="payBillModal" tabindex="-1" aria-labelledby="payBillModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-fullscreen">
+                <div class="modal-content border-0">
+                    <div class="modal-body p-0">
+                        <!-- Header -->
+                        <header class="dashboard-header border-bottom">
+                            <div class="header-title-area">
+                                <button class="menu-toggle" type="button" data-bs-dismiss="modal">
+                                    <i class="bi bi-list"></i>
+                                </button>
+                                <div>
+                                    <h1 class="header-title">My Vegrid</h1>
+                                </div>
+                            </div>
+                            <div class="header-logo-container">
+                                <img src="{% static 'sun-logo.png' %}" alt="Sun Logo" class="header-logo-img">
+                                <span class="header-brand-text">VEGRID</span>
+                            </div>
+                        </header>
+
+                        <div class="text-center mt-5 px-4">
+                            <div class="profile-header-btn">PAY BILL</div>
+                            
+                            <div class="mt-4">
+                                <div class="billing-box"><span class="billing-box-label">Billing Site:</span> <span class="billing-box-value">Nairobi Main</span></div>
+                                <div class="billing-box"><span class="billing-box-label">Billing Type:</span> <span class="billing-box-value">Commercial</span></div>
+                                <div class="billing-box"><span class="billing-box-label">Reference:</span> <span class="billing-box-value">VG-2024-001</span></div>
+                                <div class="billing-box"><span class="billing-box-label">Billed Amount:</span> <span class="billing-box-value">15,000.00</span></div>
+                                <div class="billing-box"><span class="billing-box-label">Bill Balance:</span> <span class="billing-box-value">6,800.00</span></div>
+
+                                <div class="text-start mt-4 mb-2"><span class="fw-bold" style="font-size: 0.85rem;">Amount To Pay</span></div>
+                                <div class="billing-box" style="padding: 0;">
+                                    <input type="text" class="form-control border-0 bg-transparent text-muted" value="Amount: 2,000.00" style="font-size: 0.75rem; font-weight: 600;">
+                                </div>
+
+                                <div class="text-start mt-4 mb-2"><span class="fw-bold" style="font-size: 0.85rem;">Pay From</span></div>
+                                <button class="pay-from-btn">Wallet</button>
+                                <button class="pay-from-btn">Mobile Money</button>
+                            </div>
+
+                            <button type="button" class="btn-black-exit" data-bs-dismiss="modal" style="margin-top: 40px;">Exit</button>
+                        </div>
+
+                        <!-- Footer -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Incidents Modal -->
+        <div class="modal fade" id="incidentsModal" tabindex="-1" aria-labelledby="incidentsModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-fullscreen">
+                <div class="modal-content border-0">
+                    <div class="modal-body p-0">
+                        <!-- Header -->
+                        <header class="dashboard-header border-bottom">
+                            <div class="header-title-area">
+                                <button class="menu-toggle" type="button" data-bs-dismiss="modal">
+                                    <i class="bi bi-list"></i>
+                                </button>
+                                <div>
+                                    <h1 class="header-title">My Vegrid</h1>
+                                </div>
+                            </div>
+                            <div class="header-logo-container">
+                                <img src="{% static 'sun-logo.png' %}" alt="Sun Logo" class="header-logo-img">
+                                <span class="header-brand-text">VEGRID</span>
+                            </div>
+                        </header>
+
+                        <div class="text-center mt-5 px-4">
+                            <div class="profile-header-btn">INCIDENTS</div>
+                            
+                            <div class="mt-4">
+                                {% for incident in incidents %}
+                                <div class="incident-item">
+                                    <div class="incident-field"><span class="incident-label">Date:</span> <span class="incident-value">{{ incident.date|date:"d.M.Y" }}</span></div>
+                                    <div class="incident-field"><span class="incident-label">Created By:</span> <span class="incident-value">{% if incident.sender == request.user.username %}Customer{% else %}Admin{% endif %}</span></div>
+                                    <div class="incident-field"><span class="incident-label">Customer Name:</span> <span class="incident-value">{{ customer.get_full_name }}</span></div>
+                                    <div class="incident-field"><span class="incident-label">Type:</span> <span class="incident-value">{{ incident.incident_type }}</span></div>
+                                    <div class="incident-field"><span class="incident-label">Ref:</span> <span class="incident-value">{{ incident.reference }}</span></div>
+                                    <div class="incident-field"><span class="incident-label">Status:</span> <span class="incident-value">{{ incident.status }}</span></div>
+                                    <button class="btn-view-incident" data-bs-toggle="modal" data-bs-target="#viewIncidentModal" data-incident-id="{{ incident.id }}">View</button>
+                                </div>
+                                {% empty %}
+                                <p class="text-muted">No incidents found.</p>
+                                {% endfor %}
+                            </div>
+
+                            <div class="d-flex justify-content-between mt-4 px-1">
+                                <button type="button" class="btn-black-new" data-bs-toggle="modal" data-bs-target="#newIncidentModal">New</button>
+                                <button type="button" class="btn-black-exit" data-bs-dismiss="modal">Exit</button>
+                            </div>
+                        </div>
+
+                        <!-- Footer -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- View Incident Modal -->
+        <div class="modal fade" id="viewIncidentModal" tabindex="-1" aria-labelledby="viewIncidentModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-fullscreen">
+                <div class="modal-content border-0">
+                    <div class="modal-body p-0">
+                        <!-- Header -->
+                        <header class="dashboard-header border-bottom">
+                            <div class="header-title-area">
+                                <button class="menu-toggle" type="button" data-bs-dismiss="modal">
+                                    <i class="bi bi-list"></i>
+                                </button>
+                                <div>
+                                    <h1 class="header-title">My Vegrid</h1>
+                                </div>
+                            </div>
+                            <div class="header-logo-container">
+                                <img src="{% static 'sun-logo.png' %}" alt="Sun Logo" class="header-logo-img">
+                                <span class="header-brand-text">VEGRID</span>
+                            </div>
+                        </header>
+
+                        <div class="text-center mt-5 px-4">
+                            <div class="profile-header-btn">VIEW INCIDENT</div>
+                            
+                            <div class="mt-4">
+                                <div class="billing-box"><span class="billing-box-label">Created By:</span> <span class="billing-box-value">Customer</span></div>
+                                <div class="billing-box"><span class="billing-box-label">Customer Name:</span> <span class="billing-box-value">{{ request.user.customer.get_full_name }}</span></div>
+                                <div class="billing-box"><span class="billing-box-label">Incident Date:</span> <span class="billing-box-value">01.Aug.2024</span></div>
+                                <div class="billing-box"><span class="billing-box-label">Incident Site:</span> <span class="billing-box-value">Nairobi Main</span></div>
+                                <div class="billing-box"><span class="billing-box-label">Incident Type:</span> <span class="billing-box-value">Technical</span></div>
+                                <div class="billing-box"><span class="billing-box-label">Status:</span> <span class="billing-box-value">Open</span></div>
+
+                                <div class="text-start mt-4 mb-2"><span class="fw-bold" style="font-size: 0.85rem;">Incident Details</span></div>
+                                <div class="billing-details-container" style="padding: 20px;">
+                                    <div class="incident-log-item">
+                                        <div class="incident-log-header">
+                                            <span class="incident-log-title">Incident created.</span>
+                                            <span class="incident-log-time">12:45PM 01.Aug.2024 By Customer</span>
+                                        </div>
+                                        <div class="incident-log-content">
+                                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonum
+                                        </div>
+                                    </div>
+                                    <div class="incident-log-item">
+                                        <div class="incident-log-header">
+                                            <span class="incident-log-title">Incident Updated.</span>
+                                            <span class="incident-log-time">12:45PM 01.Aug.2024 By Installer</span>
+                                        </div>
+                                        <div class="incident-log-content">
+                                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonum
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-between mt-5 px-1">
+                                <button type="button" class="btn-black-new" style="width: 120px;" data-bs-toggle="modal" data-bs-target="#newIncidentModal">Update</button>
+                                <button type="button" class="btn-black-exit" style="width: 120px;" data-bs-dismiss="modal">Exit</button>
+                            </div>
+                        </div>
+
+                        <!-- Footer -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- New Incident Modal -->
+        <div class="modal fade" id="newIncidentModal" tabindex="-1" aria-labelledby="newIncidentModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-fullscreen">
+                <div class="modal-content border-0">
+                    <div class="modal-body p-0">
+                        <!-- Header -->
+                        <header class="dashboard-header border-bottom">
+                            <div class="header-title-area">
+                                <button class="menu-toggle" type="button" data-bs-dismiss="modal">
+                                    <i class="bi bi-list"></i>
+                                </button>
+                                <div>
+                                    <h1 class="header-title">My Vegrid</h1>
+                                </div>
+                            </div>
+                            <div class="header-logo-container">
+                                <img src="{% static 'sun-logo.png' %}" alt="Sun Logo" class="header-logo-img">
+                                <span class="header-brand-text">VEGRID</span>
+                            </div>
+                        </header>
+
+                        <div class="text-center mt-5 px-4">
+                            <div class="profile-header-btn">NEW INCIDENT</div>
+                            
+                            <form id="newIncidentForm" class="mt-4">
+                                {% csrf_token %}
+                                <div class="billing-box justify-content-between">
+                                    <span class="billing-box-label">Customer Name:</span> 
+                                    <span class="fw-bold" style="font-size: 0.85rem;">{{ customer.get_full_name }}</span>
+                                </div>
+                                <div class="billing-box justify-content-between">
+                                    <span class="billing-box-label">Incident Site:</span> 
+                                    <select name="incident_site" class="form-select border-0 p-0 text-end" style="font-size: 0.85rem; color: var(--vegrid-orange); font-weight: 700;">
+                                        {% for device in devices %}
+                                        <option value="{{ device.name }}">{{ device.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="billing-box justify-content-between">
+                                    <span class="billing-box-label">Incident Type:</span> 
+                                    <select name="incident_type" class="form-select border-0 p-0 text-end" style="font-size: 0.85rem; color: var(--vegrid-orange); font-weight: 700;">
+                                        <option value="Technical">Technical</option>
+                                        <option value="Billing">Billing</option>
+                                        <option value="Performance">Performance</option>
+                                        <option value="Service">Service</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                                <div class="billing-box justify-content-between">
+                                    <span class="billing-box-label">Status:</span> 
+                                    <span class="fw-bold" style="font-size: 0.85rem;">New</span>
+                                </div>
+
+                                <div class="text-start mt-4 mb-2"><span class="fw-bold" style="font-size: 0.85rem;">Incident Details</span></div>
+                                <textarea name="details" class="incident-textarea" required></textarea>
+
+                                <div class="d-flex justify-content-between mt-5 px-1">
+                                    <button type="submit" class="btn-black-new" style="width: 120px;">Submit</button>
+                                    <button type="button" class="btn-black-exit" style="width: 120px;" data-bs-dismiss="modal">Exit</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Footer -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Incident Confirmation Modal -->
+        <div class="modal fade" id="incidentConfirmationModal" tabindex="-1" aria-labelledby="incidentConfirmationModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-fullscreen">
+                <div class="modal-content border-0">
+                    <div class="modal-body p-0">
+                        <!-- Header -->
+                        <header class="dashboard-header border-bottom">
+                            <div class="header-title-area">
+                                <button class="menu-toggle" type="button" data-bs-dismiss="modal">
+                                    <i class="bi bi-list"></i>
+                                </button>
+                                <div>
+                                    <h1 class="header-title">My Vegrid</h1>
+                                </div>
+                            </div>
+                            <div class="header-logo-container">
+                                <img src="{% static 'sun-logo.png' %}" alt="Sun Logo" class="header-logo-img">
+                                <span class="header-brand-text">VEGRID</span>
+                            </div>
+                        </header>
+
+                        <div class="text-center mt-5 px-4">
+                            <div class="profile-header-btn">INCIDENT CONFIRMATION</div>
+                            
+                            <div class="confirmation-box">
+                                <p class="confirmation-text" id="confCustomerName">{{ customer.get_full_name }}</p>
+                                <p class="confirmation-text">Your incident reference number <span id="confReference" class="fw-bold"></span> has been submitted to the service provider.</p>
+                                <p class="confirmation-text mt-4">Thank You</p>
+                            </div>
+
+                            <button type="button" class="btn-black-ok" data-bs-dismiss="modal">OK</button>
+                        </div>
+
+                        <!-- Footer -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notifications Modal -->
+        <div class="modal fade" id="notificationsModal" tabindex="-1" aria-labelledby="notificationsModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-fullscreen">
+                <div class="modal-content border-0">
+                    <div class="modal-body p-0">
+                        <header class="dashboard-header border-bottom">
+                            <div class="header-title-area">
+                                <button class="menu-toggle" type="button" data-bs-dismiss="modal">
+                                    <i class="bi bi-list"></i>
+                                </button>
+                                <div>
+                                    <h1 class="header-title">My Vegrid</h1>
+                                </div>
+                            </div>
+                            <div class="header-logo-container">
+                                <img src="{% static 'sun-logo.png' %}" alt="Sun Logo" class="header-logo-img">
+                                <span class="header-brand-text">VEGRID</span>
+                            </div>
+                        </header>
+
+                        <div class="text-center mt-5 px-4">
+                            <div class="profile-header-btn">NOTIFICATIONS</div>
+                            
+                            <div class="text-end mt-3">
+                                <button class="btn btn-sm btn-outline-warning rounded-pill px-3" onclick="pullNotifications()">
+                                    <i class="bi bi-arrow-clockwise me-1"></i> Pull Notifications
+                                </button>
+                            </div>
+
+                            <div class="mt-4" id="notificationsList">
+                                {% for notification in notifications %}
+                                <div class="alert-item {% if notification.status == 'unread' %}border-warning{% endif %}" onclick="markRead({{ notification.id }})">
+                                    <div class="alert-field"><span class="alert-label">Date:</span> <span class="alert-value">{{ notification.date|date:"d.M.Y" }}</span></div>
+                                    <div class="alert-field"><span class="alert-label">From:</span> <span class="alert-value">{{ notification.sender }}</span></div>
+                                    <div class="alert-field"><span class="alert-label">Type:</span> <span class="alert-value">{{ notification.notification_type|default:"General" }}</span></div>
+                                    <div class="alert-field"><span class="alert-label">Ref:</span> <span class="alert-value">{{ notification.reference }}</span></div>
+                                    <div class="mt-2 text-start" style="font-size: 0.85rem; color: #666;">
+                                        {{ notification.message }}
+                                    </div>
+                                    <div class="text-end mt-1">
+                                        <span class="badge {% if notification.status == 'unread' %}bg-warning{% else %}bg-light text-muted{% endif %}">{{ notification.status|upper }}</span>
+                                    </div>
+                                </div>
+                                {% empty %}
+                                <p class="text-muted">No notifications found.</p>
+                                {% endfor %}
+                            </div>
+
+                            <button type="button" class="btn-black-exit" data-bs-dismiss="modal">Exit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Alerts Modal -->
+        <div class="modal fade" id="alertsModal" tabindex="-1" aria-labelledby="alertsModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-fullscreen">
+                <div class="modal-content border-0">
+                    <div class="modal-body p-0">
+                        <!-- Header -->
+                        <header class="dashboard-header border-bottom">
+                            <div class="header-title-area">
+                                <button class="menu-toggle" type="button" data-bs-dismiss="modal">
+                                    <i class="bi bi-list"></i>
+                                </button>
+                                <div>
+                                    <h1 class="header-title">My Vegrid</h1>
+                                </div>
+                            </div>
+                            <div class="header-logo-container">
+                                <img src="{% static 'sun-logo.png' %}" alt="Sun Logo" class="header-logo-img">
+                                <span class="header-brand-text">VEGRID</span>
+                            </div>
+                        </header>
+
+                        <div class="text-center mt-5 px-4">
+                            <div class="profile-header-btn">ALERTS</div>
+                            
+                            <div class="mt-4">
+                                {% for alert in alerts %}
+                                <div class="alert-item">
+                                    <div class="alert-field"><span class="alert-label">Date:</span> <span class="alert-value">{{ alert.date|date:"d.M.Y" }}</span></div>
+                                    <div class="alert-field"><span class="alert-label">Customer Name:</span> <span class="alert-value">{{ customer.get_full_name }}</span></div>
+                                    <div class="alert-field"><span class="alert-label">Site Name:</span> <span class="alert-value">{{ alert.site }}</span></div>
+                                    <div class="alert-field"><span class="alert-label">Alert Type:</span> <span class="alert-value">{{ alert.alert_type }}</span></div>
+                                    <div class="alert-field"><span class="alert-label">Severity:</span> <span class="alert-value">{{ alert.severity }}</span></div>
+                                    <div class="alert-field"><span class="alert-label">Status:</span> <span class="alert-value">{{ alert.status }}</span></div>
+                                    <button class="btn-view-alert" onclick="showViewAlertModal('{{ alert.id }}')" data-alert-data='{"id": "{{ alert.id }}", "date": "{{ alert.date|date:"Y-m-d H:i:s" }}", "site": "{{ alert.site|escapejs }}", "alert_type": "{{ alert.alert_type|escapejs }}", "severity": "{{ alert.severity|escapejs }}", "status": "{{ alert.status|escapejs }}", "message": "{{ alert.message|escapejs }}", "source": "{{ alert.source|escapejs }}"}'>View</button>
+                                </div>
+                                {% empty %}
+                                <p class="text-muted">No alerts found.</p>
+                                {% endfor %}
+                            </div>
+
+                            <button type="button" class="btn-black-exit" data-bs-dismiss="modal">Exit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- View Alert Modal -->
+        <div class="modal fade" id="viewAlertModal" tabindex="-1" aria-labelledby="viewAlertModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-fullscreen">
+                <div class="modal-content border-0">
+                    <div class="modal-body p-0">
+                        <!-- Header -->
+                        <header class="dashboard-header border-bottom">
+                            <div class="header-title-area">
+                                <button class="menu-toggle" type="button" data-bs-dismiss="modal">
+                                    <i class="bi bi-list"></i>
+                                </button>
+                                <div>
+                                    <h1 class="header-title">My Vegrid</h1>
+                                </div>
+                            </div>
+                            <div class="header-logo-container">
+                                <img src="{% static 'sun-logo.png' %}" alt="Sun Logo" class="header-logo-img">
+                                <span class="header-brand-text">VEGRID</span>
+                            </div>
+                        </header>
+
+                        <div class="text-center mt-5 px-4">
+                            <div class="profile-header-btn">VIEW ALERTS</div>
+                            
+                            <div class="mt-4">
+                                <div class="billing-box"><span class="billing-box-label">Alert Date:</span> <span class="billing-box-value" id="viewAlertDate">01.Aug.2024</span></div>
+                                <div class="billing-box"><span class="billing-box-label">Customer Name:</span> <span class="billing-box-value">{{ request.user.customer.get_full_name }}</span></div>
+                                <div class="billing-box"><span class="billing-box-label">Site Name:</span> <span class="billing-box-value" id="viewAlertSite">Nairobi Main</span></div>
+                                <div class="billing-box"><span class="billing-box-label">Alert Type:</span> <span class="billing-box-value" id="viewAlertType">System Error</span></div>
+                                <div class="billing-box"><span class="billing-box-label">Severity:</span> <span class="billing-box-value" id="viewAlertSeverity">Critical</span></div>
+                                <div class="billing-box"><span class="billing-box-label">Status:</span> <span class="billing-box-value" id="viewAlertStatus">New</span></div>
+
+                                <div class="text-start mt-4 mb-2"><span class="fw-bold" style="font-size: 0.85rem;">Alert Details</span></div>
+                                <textarea class="alert-textarea" id="viewAlertDetails"></textarea>
+                            </div>
+
+                            <div class="d-flex justify-content-between mt-5 px-1">
+                                <button type="button" class="btn-black-new" style="width: 120px;" data-bs-toggle="modal" data-bs-target="#alertUpdateConfirmationModal">Update</button>
+                                <button type="button" class="btn-black-exit" style="width: 120px;" data-bs-dismiss="modal">Exit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Alert Update Confirmation Modal -->
+        <div class="modal fade" id="alertUpdateConfirmationModal" tabindex="-1" aria-labelledby="alertUpdateConfirmationModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-fullscreen">
+                <div class="modal-content border-0">
+                    <div class="modal-body p-0">
+                        <!-- Header -->
+                        <header class="dashboard-header border-bottom">
+                            <div class="header-title-area">
+                                <button class="menu-toggle" type="button" data-bs-dismiss="modal">
+                                    <i class="bi bi-list"></i>
+                                </button>
+                                <div>
+                                    <h1 class="header-title">My Vegrid</h1>
+                                </div>
+                            </div>
+                            <div class="header-logo-container">
+                                <img src="{% static 'sun-logo.png' %}" alt="Sun Logo" class="header-logo-img">
+                                <span class="header-brand-text">VEGRID</span>
+                            </div>
+                        </header>
+
+                        <div class="text-center mt-5 px-4">
+                            <div class="profile-header-btn" style="padding: 6px 15px; font-size: 0.8rem;">ALERT UPDATE CONFIRMATION</div>
+                            
+                            <div class="confirmation-box">
+                                <p class="confirmation-text">{{ request.user.customer.get_full_name }}</p>
+                                <p class="confirmation-text">Your alert update has been submitted.</p>
+                                <p class="confirmation-text mt-4">Thank You</p>
+                            </div>
+
+                            <button type="button" class="btn-black-ok" data-bs-dismiss="modal">OK</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        
+        <script>
+            // Initialize charts
+            let energyChart;
+            
+            // Current selected device SN
+            let currentDeviceSn = null;
+            let siteTimezoneOffset = 3; // Default to Kenya UTC+3
+            let isLoading = false;
+            let abortController = null;
+            
+            // Initialize when DOM is loaded
+            document.addEventListener('DOMContentLoaded', function() {
+                // Get current device SN from page
+                const deviceElements = document.querySelectorAll('.device-selector');
+                if (deviceElements.length > 0) {
+                    currentDeviceSn = deviceElements[0].getAttribute('data-sn');
+                }
+                
+                // Initialize charts
+                initializeCharts();
+                
+                // Set up filter buttons
+                setupFilterButtons();
+                
+                // Start clock
+                startClock();
+                
+                // Load initial data
+                if (currentDeviceSn) {
+                    loadFilteredData('day');
+                }
+            });
+
+            function startClock() {
+                function updateTime() {
+                    let now;
+                    if (siteTimezoneOffset !== null && !isNaN(siteTimezoneOffset)) {
+                        // Use UTC and add the offset
+                        const utc = new Date().getTime() + (new Date().getTimezoneOffset() * 60000);
+                        now = new Date(utc + (3600000 * siteTimezoneOffset));
+                    } else {
+                        now = new Date();
+                    }
+                    const hours = String(now.getHours()).padStart(2, '0');
+                    const minutes = String(now.getMinutes()).padStart(2, '0');
+                    const seconds = String(now.getSeconds()).padStart(2, '0');
+                    const clockElement = document.getElementById('currentTime');
+                    if (clockElement) {
+                        clockElement.textContent = `${hours}:${minutes}:${seconds}`;
+                    }
+                }
+                updateTime();
+                setInterval(updateTime, 1000);
+            }
+            
+            function setupFilterButtons() {
+                const filterButtons = document.querySelectorAll('.filter-btn');
+                filterButtons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        // Remove active class from all buttons
+                        filterButtons.forEach(btn => btn.classList.remove('active'));
+                        
+                        // Add active class to clicked button
+                        this.classList.add('active');
+                        
+                        // Get selected period
+                        const period = this.getAttribute('data-period');
+                        
+                        // Update unit based on period
+                        const unitEl = document.getElementById('chartUnit');
+                        if (period === 'day') {
+                            unitEl.textContent = 'kWh';
+                        } else {
+                            unitEl.textContent = 'kWh';
+                        }
+                        
+                        // Load data for selected period
+                        if (currentDeviceSn) {
+                            loadFilteredData(period);
+                        } else {
+                            console.warn('No device selected');
+                        }
+                    });
+                });
+            }
+            
+            function loadFilteredData(period) {
+                if (isLoading && abortController) {
+                    abortController.abort();
+                }
+                
+                isLoading = true;
+                abortController = new AbortController();
+                
+                // Show loading state
+                showLoading();
+                
+                // Make API call
+                fetch(`/api/filtered-data/${currentDeviceSn}/?period=${period}`, {
+                    signal: abortController.signal
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            const solarProd = data.solarProductionToday || data.generationToday || 0;
+                            updateSummaryCards(data.data, period, data.generationToday, data.generationTotal, data.batteryDischargeToday, data.consumptionToday, data.gridToday, solarProd);
+                            updateInfoDetails(data.data, period, data.generationToday, data.generationTotal, data.batteryDischargeToday, data.consumptionToday, data.gridToday, solarProd);
+                            updateCharts(data.data, period);
+                            
+                            // Update station info if available
+                            if (data.station_info) {
+                                if (data.station_info.location) {
+                                    document.getElementById('currentLocation').textContent = data.station_info.location;
+                                }
+                                if (data.station_info.weather) {
+                                    document.getElementById('currentWeather').textContent = data.station_info.weather;
+                                }
+                                if (data.station_info.timezone) {
+                                    const parsedOffset = parseFloat(data.station_info.timezone);
+                                    if (!isNaN(parsedOffset)) {
+                                        siteTimezoneOffset = parsedOffset;
+                                    } else {
+                                        // If it's a string like "Africa/Nairobi", we'll just use the time from the server 
+                                        // and stop the local ticking clock from overwriting it with NaN
+                                        // For now, default to +3 if it's Nairobi-ish, or keep current
+                                        if (data.station_info.timezone.includes('Nairobi')) siteTimezoneOffset = 3;
+                                        else if (data.station_info.timezone.includes('Amsterdam')) siteTimezoneOffset = 1;
+                                    }
+                                }
+                            }
+                        } else {
+                            console.error('Error fetching filtered data:', data.message);
+                            showError('Failed to load data');
+                        }
+                    })
+                    .catch(error => {
+                        if (error.name === 'AbortError') return;
+                        console.error('Error fetching filtered data:', error);
+                        showError('Network error');
+                    })
+                    .finally(() => {
+                        isLoading = false;
+                        hideLoading();
+                    });
+            }
+            
+            function updateSummaryLabels(period) {
+                const labels = document.querySelectorAll('.summary-card .summary-label');
+                if (labels.length >= 5) {
+                    labels[0].textContent = `Total Consumption`;
+                    labels[1].textContent = `Solar Production`;
+                    labels[2].textContent = `Battery`;
+                    labels[3].textContent = `Grid`;
+                    labels[4].textContent = `Total Generation`;
+                }
+            }
+
+            function updateSummaryCards(data, period, genToday, genTotal, dischargeToday, consumptionToday, gridToday, solarProductionToday) {
+                // For 'day' period, use real-time Today's metrics if available.
+                // For other periods, use aggregated totals from data.items.
+                let totalGeneration, totalConsumption, batteryUsage, gridUsage, solarProduction;
+                
+                if (period === 'day') {
+                    totalGeneration = genToday !== undefined ? parseFloat(genToday) : calculateTotalGeneration(data);
+                    totalConsumption = consumptionToday !== undefined ? parseFloat(consumptionToday) : calculateTotalConsumption(data);
+                    batteryUsage = dischargeToday !== undefined ? parseFloat(dischargeToday) : calculateBatteryUsage(data);
+                    gridUsage = gridToday !== undefined ? parseFloat(gridToday) : calculateGridUsage(data);
+                    solarProduction = solarProductionToday !== undefined ? parseFloat(solarProductionToday) : calculateSolarProduction(data);
+                } else if (period === 'lifetime' && genTotal !== undefined) {
+                    totalGeneration = parseFloat(genTotal);
+                    totalConsumption = calculateTotalConsumption(data);
+                    batteryUsage = calculateBatteryUsage(data);
+                    gridUsage = calculateGridUsage(data);
+                    solarProduction = calculateSolarProduction(data);
+                } else {
+                    totalGeneration = calculateTotalGeneration(data);
+                    totalConsumption = calculateTotalConsumption(data);
+                    batteryUsage = calculateBatteryUsage(data);
+                    gridUsage = calculateGridUsage(data);
+                    solarProduction = calculateSolarProduction(data);
+                }
+                
+                // Update UI Values
+                document.getElementById('totalGeneration').textContent = `${totalGeneration.toFixed(2)} kWh`;
+                document.getElementById('totalConsumption').textContent = `${totalConsumption.toFixed(2)} kWh`;
+                document.getElementById('batteryUsage').textContent = `${batteryUsage.toFixed(2)} kWh`;
+                document.getElementById('gridUsage').textContent = `${gridUsage.toFixed(2)} kWh`;
+                if (document.getElementById('solarProduction')) {
+                    document.getElementById('solarProduction').textContent = `${solarProduction.toFixed(2)} kWh`;
+                }
+
+                // Update UI Labels to static labels
+                updateSummaryLabels(period);
+            }
+
+            function updateInfoDetails(data, period, genToday, genTotal, dischargeToday, consumptionToday, gridToday, solarProductionToday) {
+                let totalGeneration, totalConsumption, batteryUsage, gridUsage, solarProduction;
+                
+                if (period === 'day') {
+                    totalGeneration = genToday !== undefined ? parseFloat(genToday) : calculateTotalGeneration(data);
+                    totalConsumption = consumptionToday !== undefined ? parseFloat(consumptionToday) : calculateTotalConsumption(data);
+                    batteryUsage = dischargeToday !== undefined ? parseFloat(dischargeToday) : calculateBatteryUsage(data);
+                    gridUsage = gridToday !== undefined ? parseFloat(gridToday) : calculateGridUsage(data);
+                    solarProduction = solarProductionToday !== undefined ? parseFloat(solarProductionToday) : calculateSolarProduction(data);
+                } else if (period === 'lifetime' && genTotal !== undefined) {
+                    totalGeneration = parseFloat(genTotal);
+                    totalConsumption = calculateTotalConsumption(data);
+                    batteryUsage = calculateBatteryUsage(data);
+                    gridUsage = calculateGridUsage(data);
+                    solarProduction = calculateSolarProduction(data);
+                } else {
+                    totalGeneration = calculateTotalGeneration(data);
+                    totalConsumption = calculateTotalConsumption(data);
+                    batteryUsage = calculateBatteryUsage(data);
+                    gridUsage = calculateGridUsage(data);
+                    solarProduction = calculateSolarProduction(data);
+                }
+                
+                // Update labels to static labels
+                const infoLabels = document.querySelectorAll('.info-label');
+                if (infoLabels.length >= 5) {
+                    infoLabels[0].textContent = `Total Consumption`;
+                    infoLabels[1].textContent = `Solar`;
+                    infoLabels[2].textContent = `Battery`;
+                    infoLabels[3].textContent = `Grid`;
+                    infoLabels[4].textContent = `Total Generation`;
+                }
+
+                document.getElementById('dailyGen').textContent = `${totalGeneration.toFixed(2)} kWh`;
+                document.getElementById('dailyCons').textContent = `${totalConsumption.toFixed(2)} kWh`;
+                if (document.getElementById('dailyDischarge')) {
+                    document.getElementById('dailyDischarge').textContent = `${batteryUsage.toFixed(2)} kWh`;
+                }
+                if (document.getElementById('dailyGrid')) {
+                    document.getElementById('dailyGrid').textContent = `${gridUsage.toFixed(2)} kWh`;
+                }
+                if (document.getElementById('dailySolar')) {
+                    document.getElementById('dailySolar').textContent = `${solarProduction.toFixed(2)} kWh`;
+                }
+            }
+            
+            function updateCharts(data, period) {
+                const generationData = prepareChartData(data, 'generation');
+                const consumptionData = prepareChartData(data, 'consumption');
+                const storageData = prepareChartData(data, 'storage');
+                const gridData = prepareChartData(data, 'grid');
+                
+                const timeLabels = prepareTimeLabels(data, period);
+                
+                // Update energy chart
+                energyChart.data.labels = timeLabels;
+                energyChart.data.datasets[0].data = generationData;
+                energyChart.data.datasets[1].data = consumptionData;
+                energyChart.data.datasets[2].data = storageData;
+                energyChart.data.datasets[3].data = gridData;
+                energyChart.update();
+            }
+            
+            function initializeCharts() {
+                const energyCtx = document.getElementById('energyChart').getContext('2d');
+                
+                const commonOptions = {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'bottom',
+                            labels: {
+                                boxWidth: 12,
+                                padding: 15,
+                                usePointStyle: true,
+                                font: {
+                                    size: 11,
+                                    weight: '600'
+                                }
+                            }
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: '#f0f0f0'
+                            },
+                            ticks: {
+                                font: {
+                                    size: 10
+                                }
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                font: {
+                                    size: 10
+                                },
+                                maxRotation: 0,
+                                autoSkip: true,
+                                maxTicksLimit: 6
+                            }
+                        }
+                    },
+                    interaction: {
+                        mode: 'nearest',
+                        axis: 'x',
+                        intersect: false
+                    }
+                };
+                
+                energyChart = new Chart(energyCtx, {
+                    type: 'line',
+                    data: {
+                        labels: [],
+                        datasets: [
+                            {
+                                label: 'Generation',
+                                data: [],
+                                borderColor: '#FF9D00',
+                                backgroundColor: 'rgba(255, 157, 0, 0.1)',
+                                tension: 0.4,
+                                fill: true,
+                                pointRadius: 0,
+                                borderWidth: 2
+                            },
+                            {
+                                label: 'Consumption',
+                                data: [],
+                                borderColor: '#36A2EB',
+                                backgroundColor: 'rgba(54, 162, 235, 0.1)',
+                                tension: 0.4,
+                                fill: true,
+                                pointRadius: 0,
+                                borderWidth: 2
+                            },
+                            {
+                                label: 'Storage',
+                                data: [],
+                                borderColor: '#9966FF',
+                                backgroundColor: 'rgba(153, 102, 255, 0.1)',
+                                tension: 0.4,
+                                fill: true,
+                                pointRadius: 0,
+                                borderWidth: 2
+                            },
+                            {
+                                label: 'Grid',
+                                data: [],
+                                borderColor: '#4BC0C0',
+                                backgroundColor: 'rgba(75, 192, 192, 0.1)',
+                                tension: 0.4,
+                                fill: true,
+                                pointRadius: 0,
+                                borderWidth: 2
+                            }
+                        ]
+                    },
+                    options: commonOptions
+                });
+            }
+            
+            function calculateTotalGeneration(data) {
+                return calculateTotal(data, 'generation');
+            }
+            
+            function calculateTotalConsumption(data) {
+                return calculateTotal(data, 'consumption');
+            }
+            
+            function calculateBatteryUsage(data) {
+                return calculateTotal(data, 'storage');
+            }
+            
+            function calculateGridUsage(data) {
+                return calculateTotal(data, 'grid');
+            }
+            
+            function calculateSolarProduction(data) {
+                return calculateTotal(data, 'generation'); // Using generation as solar production base
+            }
+            
+            function calculateTotal(data, metric) {
+                if (!data || !data.items) {
+                    return 0;
+                }
+                
+                let total = 0;
+                data.items.forEach(item => {
+                    if (item[metric] && !isNaN(item[metric])) {
+                        total += parseFloat(item[metric]);
+                    }
+                });
+                
+                return total;
+            }
+            
+            function prepareChartData(data, metric) {
+                if (!data || !data.items) {
+                    return [];
+                }
+                
+                return data.items.map(item => {
+                    return item[metric] || 0;
+                });
+            }
+            
+            function prepareTimeLabels(data, period) {
+                if (!data || !data.items) {
+                    return [];
+                }
+                
+                return data.items.map(item => {
+                    const time = item.time || item.timestamp || item.date;
+                    return formatTimeLabel(time, period);
+                });
+            }
+            
+            function formatTimeLabel(time, period) {
+                if (!time) return '';
+                
+                // Format time based on period
+                if (period === 'day') {
+                    // For daily data, show time (e.g., 09:00)
+                    return time.slice(11, 16);
+                } else if (period === 'month') {
+                    // For monthly data, show day (e.g., 01)
+                    return time.slice(8, 10);
+                } else if (period === 'year') {
+                    // For yearly data, show month (e.g., Jan)
+                    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
+                                   'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                    const monthIndex = parseInt(time.slice(5, 7)) - 1;
+                    return months[monthIndex];
+                } else { // lifetime
+                    // For lifetime data, show date (e.g., 2024-01)
+                    return time.slice(0, 7);
+                }
+            }
+            
+            function showLoading() {
+                const summaryCards = document.querySelectorAll('.summary-card');
+                summaryCards.forEach(card => {
+                    card.style.opacity = '0.5';
+                    card.style.pointerEvents = 'none';
+                });
+                
+                const chartContainers = document.querySelectorAll('.chart-container');
+                chartContainers.forEach(container => {
+                    container.style.opacity = '0.5';
+                    container.style.pointerEvents = 'none';
+                });
+            }
+            
+            function hideLoading() {
+                const summaryCards = document.querySelectorAll('.summary-card');
+                summaryCards.forEach(card => {
+                    card.style.opacity = '1';
+                    card.style.pointerEvents = 'auto';
+                });
+                
+                const chartContainers = document.querySelectorAll('.chart-container');
+                chartContainers.forEach(container => {
+                    container.style.opacity = '1';
+                    container.style.pointerEvents = 'auto';
+                });
+            }
+            
+            function showError(message) {
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'alert alert-danger alert-dismissible fade show';
+                errorDiv.style.margin = '20px';
+                errorDiv.innerHTML = `
+                    <strong>Error:</strong> ${message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                `;
+                
+                const filteredDataSection = document.querySelector('.filtered-data-section');
+                filteredDataSection.insertBefore(errorDiv, filteredDataSection.firstChild);
+                
+                // Remove alert after 5 seconds
+                setTimeout(() => {
+                    if (errorDiv.parentNode) {
+                        errorDiv.parentNode.removeChild(errorDiv);
+                    }
+                }, 5000);
+            }
+        </script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const siteSelectorBtn = document.getElementById('siteSelectorBtn');
+                const deviceSelectors = document.querySelectorAll('.device-selector');
+                const generationValue = document.getElementById('generationValue');
+                const gridValue = document.getElementById('gridValue');
+                const storageValue = document.getElementById('storageValue');
+                const consumptionValue = document.getElementById('consumptionValue');
+                const batteryPercentage = document.getElementById('batteryPercentage');
+                const currentLocation = document.getElementById('currentLocation');
+                const currentTime = document.getElementById('currentTime');
+                const currentWeather = document.getElementById('currentWeather');
+                
+                let currentDeviceSn = null;
+                {% if devices %}
+                    currentDeviceSn = "{{ devices.0.device_sn }}";
+                {% endif %}
+
+                let dashAbortController = null;
+
+                function updateDashboard(deviceSn) {
+                    if (!deviceSn) return;
+                    
+                    if (dashAbortController) {
+                        dashAbortController.abort();
+                    }
+                    dashAbortController = new AbortController();
+                    
+                    // Show loading state
+                    [generationValue, gridValue, storageValue, consumptionValue].forEach(el => el.classList.add('opacity-50'));
+                    
+                    fetch(`/api/device-data/${deviceSn}/`, {
+                        signal: dashAbortController.signal
+                    })
+                        .then(response => response.json())
+                        .then(result => {
+                            if (result.status === 'success') {
+                                const data = result.data;
+                                
+                                generationValue.innerText = (data.pvPower || 0).toFixed(2) + ' kW';
+                                gridValue.innerText = Math.abs(data.gridPower || 0).toFixed(2) + ' kW';
+                                storageValue.innerText = Math.abs(data.batteryPower || 0).toFixed(2) + ' kW';
+                                consumptionValue.innerText = (data.loadPower || 0).toFixed(2) + ' kW';
+                                batteryPercentage.innerText = (data.batterySoc || 0) + '%';
+                                
+                                // Update weather and location if available
+                                if (data.station_info) {
+                                    if (currentLocation && data.station_info.location) {
+                                        currentLocation.innerText = data.station_info.location;
+                                    }
+                                    if (currentWeather && data.station_info.weather) {
+                                        currentWeather.innerText = data.station_info.weather;
+                                    }
+                                    if (currentTime && data.station_info.current_time) {
+                                        currentTime.innerText = data.station_info.current_time;
+                                    }
+                                    if (data.station_info.timezone) {
+                                        const parsedOffset = parseFloat(data.station_info.timezone);
+                                        if (!isNaN(parsedOffset)) {
+                                            siteTimezoneOffset = parsedOffset;
+                                        } else {
+                                            if (data.station_info.timezone.includes('Nairobi')) siteTimezoneOffset = 3;
+                                            else if (data.station_info.timezone.includes('Amsterdam')) siteTimezoneOffset = 1;
+                                        }
+                                    }
+                                }
+                                
+                                // Update flow animations based on power direction
+                                updateFlowLines(data);
+                                
+                                // Update Today's Generation in summary cards if no historical filter is active or if we're on 'day'
+                                const activeFilterBtn = document.querySelector('.filter-btn.active');
+                                const currentPeriod = activeFilterBtn ? activeFilterBtn.getAttribute('data-period') : 'day';
+                                
+                                // Update labels to ALWAYS use requested names
+                                document.getElementById('totalConsumption').previousElementSibling.innerText = "Consumption";
+                                document.getElementById('totalGeneration').previousElementSibling.innerText = "Generation";
+                                document.getElementById('solarProduction').previousElementSibling.innerText = "Solar";
+                                document.getElementById('batteryUsage').previousElementSibling.innerText = "Battery";
+                                document.getElementById('gridUsage').previousElementSibling.innerText = "Grid";
+
+                                if (currentPeriod === 'day') {
+                                    if (data.generationToday !== undefined) {
+                                        const totalGenEl = document.getElementById('totalGeneration');
+                                        const dailyGenEl = document.getElementById('dailyGen');
+                                        if (totalGenEl) totalGenEl.innerText = (data.generationToday || 0).toFixed(2) + ' kWh';
+                                        if (dailyGenEl) dailyGenEl.innerText = (data.generationToday || 0).toFixed(2) + ' kWh';
+                                        if (dailyGenEl) dailyGenEl.previousElementSibling.innerText = "Generation";
+                                    }
+                                    if (data.pvPower !== undefined) {
+                                        const solarProdEl = document.getElementById('solarProduction');
+                                        const dailySolarEl = document.getElementById('dailySolar');
+                                        
+                                        // Use pvSelfConsumption for the "Self-consumption" display as requested
+                                        const pvVal = data.pvSelfConsumption !== undefined ? data.pvSelfConsumption : (data.solarProductionToday || 0);
+                                        
+                                        if (solarProdEl) solarProdEl.innerText = (pvVal || 0).toFixed(2) + ' kWh';
+                                        if (dailySolarEl) dailySolarEl.innerText = (pvVal || 0).toFixed(2) + ' kWh';
+                                        
+                                        // Change labels to clarify it is Solar
+                                        if (solarProdEl) solarProdEl.previousElementSibling.innerText = "Solar";
+                                        if (dailySolarEl) dailySolarEl.previousElementSibling.innerText = "Solar";
+                                    }
+                                    if (data.batteryDischargeToday !== undefined) {
+                                        const batteryUsageEl = document.getElementById('batteryUsage');
+                                        const dailyDischargeEl = document.getElementById('dailyDischarge');
+                                        if (batteryUsageEl) batteryUsageEl.innerText = (data.batteryDischargeToday || 0).toFixed(2) + ' kWh';
+                                        if (dailyDischargeEl) dailyDischargeEl.innerText = (data.batteryDischargeToday || 0).toFixed(2) + ' kWh';
+                                    }
+                                    if (data.consumptionToday !== undefined) {
+                                        const totalConsEl = document.getElementById('totalConsumption');
+                                        const dailyConsEl = document.getElementById('dailyCons');
+                                        if (totalConsEl) totalConsEl.innerText = (data.consumptionToday || 0).toFixed(2) + ' kWh';
+                                        if (dailyConsEl) dailyConsEl.innerText = (data.consumptionToday || 0).toFixed(2) + ' kWh';
+                                        if (dailyConsEl) dailyConsEl.previousElementSibling.innerText = "Consumption";
+                                    }
+                                    if (data.gridToday !== undefined) {
+                                        const gridUsageEl = document.getElementById('gridUsage');
+                                        const dailyGridEl = document.getElementById('dailyGrid');
+                                        if (gridUsageEl) gridUsageEl.innerText = (data.gridToday || 0).toFixed(2) + ' kWh';
+                                        if (dailyGridEl) dailyGridEl.innerText = (data.gridToday || 0).toFixed(2) + ' kWh';
+                                    }
+                                } else if (currentPeriod === 'lifetime') {
+                                    if (data.generationTotal !== undefined) {
+                                        const totalGenEl = document.getElementById('totalGeneration');
+                                        const dailyGenEl = document.getElementById('dailyGen'); // Actually lifetimeGen here
+                                        if (totalGenEl) totalGenEl.innerText = (data.generationTotal || 0).toFixed(2) + ' kWh';
+                                        if (dailyGenEl) dailyGenEl.innerText = (data.generationTotal || 0).toFixed(2) + ' kWh';
+                                    }
+                                }
+                            }
+                        })
+                        .catch(error => {
+                            if (error.name === 'AbortError') return;
+                            console.error('Fetch error:', error);
+                        })
+                        .finally(() => {
+                            [generationValue, gridValue, storageValue, consumptionValue].forEach(el => el.classList.remove('opacity-50'));
+                        });
+                }
+
+                function updateFlowLines(data) {
+                    const setFlow = (id, active, reverse = false) => {
+                        const path = document.getElementById(id);
+                        if (!path) return;
+                        if (active) {
+                            path.classList.add('flow-active');
+                            if (reverse) path.classList.add('flow-reverse');
+                            else path.classList.remove('flow-reverse');
+                        } else {
+                            path.classList.remove('flow-active');
+                            path.classList.remove('flow-reverse');
+                        }
+                    };
+
+                    // Generation to Center
+                    setFlow('pathGen', (data.pvPower || 0) > 0.05);
+
+                    // Grid Flow: positive gridPower means taking from grid, negative means feeding in
+                    const gridPower = data.gridPower || 0;
+                    setFlow('pathGrid', Math.abs(gridPower) > 0.05, gridPower < 0);
+
+                    // Battery Flow: Deye convention: negative is charging, positive is discharging
+                    const batteryPower = data.batteryPower || 0;
+                    setFlow('pathCharge', batteryPower < -0.05);
+                    setFlow('pathDischarge', batteryPower > 0.05);
+
+                    // Consumption Flow
+                    setFlow('pathCons', (data.loadPower || 0) > 0.05);
+                }
+
+                deviceSelectors.forEach(selector => {
+                    selector.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const sn = this.getAttribute('data-sn');
+                        const name = this.getAttribute('data-name');
+                        
+                        currentDeviceSn = sn;
+                        siteSelectorBtn.innerHTML = `${name} (${deviceSelectors.length}) <i class="bi bi-chevron-down"></i>`;
+                        
+                        updateDashboard(sn);
+                        
+                        // Update filtered data for the new device
+                        const activeFilterBtn = document.querySelector('.filter-btn.active');
+                        const period = activeFilterBtn ? activeFilterBtn.getAttribute('data-period') : 'day';
+                        loadFilteredData(period);
+                    });
+                });
+
+                // Initial fetch
+                if (currentDeviceSn) {
+                    updateDashboard(currentDeviceSn);
+                }
+
+                // Periodic refresh every 60 seconds
+                setInterval(() => {
+                    if (currentDeviceSn) {
+                        updateDashboard(currentDeviceSn);
+                    }
+                }, 60000);
+
+                // Profile Form Submission
+                const profileForm = document.getElementById('profileForm');
+                if (profileForm) {
+                    profileForm.addEventListener('submit', function(e) {
+                        e.preventDefault();
+                        const formData = new FormData(this);
+                        const submitBtn = this.querySelector('button[type="submit"]');
+                        const originalText = submitBtn.innerText;
+                        
+                        submitBtn.disabled = true;
+                        submitBtn.innerText = 'Saving...';
+                        
+                        fetch("{% url 'update-profile' %}", {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                'X-CSRFToken': '{{ csrf_token }}'
+                            }
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                alert(data.message);
+                                location.reload();
+                            } else {
+                                alert('Error: ' + data.message);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('Failed to update profile. Please try again.');
+                        })
+                        .finally(() => {
+                            submitBtn.disabled = false;
+                            submitBtn.innerText = originalText;
+                        });
+                    });
+                }
+
+                // New Incident Form Submission
+                const newIncidentForm = document.getElementById('newIncidentForm');
+                if (newIncidentForm) {
+                    newIncidentForm.addEventListener('submit', function(e) {
+                        e.preventDefault();
+                        const formData = new FormData(this);
+                        
+                        fetch("{% url 'create-incident' %}", {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                'X-CSRFToken': '{{ csrf_token }}'
+                            }
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                document.getElementById('confReference').textContent = data.reference;
+                                if (data.customer_name) {
+                                    document.getElementById('confCustomerName').textContent = data.customer_name;
+                                }
+                                
+                                // Hide New Incident Modal
+                                bootstrap.Modal.getInstance(document.getElementById('newIncidentModal')).hide();
+                                
+                                // Show Confirmation Modal
+                                const confModal = new bootstrap.Modal(document.getElementById('incidentConfirmationModal'));
+                                confModal.show();
+                                
+                                // Reset form
+                                newIncidentForm.reset();
+                            } else {
+                                alert('Error: ' + data.message);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('Failed to submit incident. Please try again.');
+                        });
+                    });
+                }
+
+                // Mark notification as read
+                window.markRead = function(id) {
+                    fetch(`/api/mark-notification-read/${id}/`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                // Refresh notifications instead of full page reload
+                                pullNotifications();
+                            }
+                        });
+                };
+
+                // Pull notifications from API
+                window.pullNotifications = function() {
+                    const btn = document.querySelector('button[onclick="pullNotifications()"]');
+                    const originalHtml = btn.innerHTML;
+                    btn.disabled = true;
+                    btn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> Pulling...';
+
+                    fetch('/api/notifications/')
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.status === 'success') {
+                                updateNotificationsModal(data.notifications);
+                                updateNotificationBadges(data.unread_count);
+                            }
+                        })
+                        .catch(error => console.error('Error:', error))
+                        .finally(() => {
+                            btn.disabled = false;
+                            btn.innerHTML = originalHtml;
+                        });
+                };
+
+                function updateNotificationsModal(notifications) {
+                    const container = document.getElementById('notificationsList');
+                    if (!container) return;
+
+                    if (notifications.length === 0) {
+                        container.innerHTML = '<p class="text-muted">No notifications found.</p>';
+                        return;
+                    }
+
+                    container.innerHTML = '';
+                    notifications.forEach(notif => {
+                        const date = new Date(notif.date);
+                        const formattedDate = date.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+                        
+                        const item = document.createElement('div');
+                        item.className = `alert-item ${notif.status === 'unread' ? 'border-warning' : ''}`;
+                        item.onclick = () => markRead(notif.id);
+                        
+                        item.innerHTML = `
+                            <div class="alert-field"><span class="alert-label">Date:</span> <span class="alert-value">${formattedDate}</span></div>
+                            <div class="alert-field"><span class="alert-label">From:</span> <span class="alert-value">${notif.sender}</span></div>
+                            <div class="alert-field"><span class="alert-label">Type:</span> <span class="alert-value">${notif.notification_type}</span></div>
+                            <div class="alert-field"><span class="alert-label">Ref:</span> <span class="alert-value">${notif.reference || 'N/A'}</span></div>
+                            <div class="mt-2 text-start" style="font-size: 0.85rem; color: #666;">
+                                ${notif.message}
+                            </div>
+                            <div class="text-end mt-1">
+                                <span class="badge ${notif.status === 'unread' ? 'bg-warning' : 'bg-light text-muted'}">${notif.status.toUpperCase()}</span>
+                            </div>
+                        `;
+                        container.appendChild(item);
+                    });
+                }
+
+                function updateNotificationBadges(count) {
+                    const badges = document.querySelectorAll('.bi-bell-fill + .badge, .bi-bell + .badge');
+                    badges.forEach(badge => {
+                        if (count > 0) {
+                            badge.textContent = count;
+                            badge.style.display = 'block';
+                        } else {
+                            badge.style.display = 'none';
+                        }
+                    });
+                }
+                
+                // Global alerts storage
+                window.allAlerts = [];
+                
+                // Fetch and display alerts
+                function fetchAlerts() {
+                    fetch('/api/alerts/')
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.alerts) {
+                                window.allAlerts = data.alerts;
+                                updateAlertsModal(data.alerts);
+                            } else if (data.error) {
+                                console.error('Error fetching alerts:', data.error);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error fetching alerts:', error);
+                        });
+                }
+                
+                // Function to show individual alert details
+                window.showViewAlertModal = function(alertId) {
+                    let alert = null;
+                    
+                    // Try to get from event target first if called from static HTML
+                    if (event && event.target && event.target.dataset.alertData) {
+                        try {
+                            alert = JSON.parse(event.target.dataset.alertData);
+                        } catch(e) { console.error("Error parsing alert data", e); }
+                    }
+                    
+                    // Fallback to global storage
+                    if (!alert) {
+                        alert = window.allAlerts.find(a => a.id == alertId);
+                    }
+                    
+                    if (!alert) return;
+                    
+                    // Format date
+                    const date = new Date(alert.date);
+                    const formattedDate = date.toLocaleDateString('en-GB', { 
+                        day: '2-digit', 
+                        month: 'short', 
+                        year: 'numeric' 
+                    });
+                    
+                    // Update modal fields
+                    document.getElementById('viewAlertDate').innerText = formattedDate;
+                    document.getElementById('viewAlertSite').innerText = alert.site || 'N/A';
+                    document.getElementById('viewAlertType').innerText = alert.alert_type || 'N/A';
+                    document.getElementById('viewAlertSeverity').innerText = alert.severity || 'N/A';
+                    document.getElementById('viewAlertStatus').innerText = alert.status || 'N/A';
+                    document.getElementById('viewAlertDetails').value = `Source: ${alert.source || 'N/A'}\n\n${alert.message || ''}`;
+                    
+                    // Show modal
+                    const viewModal = new bootstrap.Modal(document.getElementById('viewAlertModal'));
+                    viewModal.show();
+                };
+                
+                // Update alerts modal with fetched data
+                function updateAlertsModal(alerts) {
+                    const alertsContainer = document.querySelector('#alertsModal .mt-4');
+                    
+                    if (!alertsContainer) return;
+                    
+                    // Clear existing alerts
+                    alertsContainer.innerHTML = '';
+                    
+                    if (alerts.length === 0) {
+                        alertsContainer.innerHTML = '<p class="text-muted">No alerts found.</p>';
+                        return;
+                    }
+                    
+                    // Render alerts
+                    alerts.forEach(alert => {
+                        const alertDiv = document.createElement('div');
+                        alertDiv.className = 'alert-item';
+                        
+                        // Format date
+                        const date = new Date(alert.date);
+                        const formattedDate = date.toLocaleDateString('en-GB', { 
+                            day: '2-digit', 
+                            month: 'short', 
+                            year: 'numeric' 
+                        });
+                        
+                        // Render alert details
+                        alertDiv.innerHTML = `
+                            <div class="alert-field"><span class="alert-label">Date:</span> <span class="alert-value">${formattedDate}</span></div>
+                            <div class="alert-field"><span class="alert-label">Customer Name:</span> <span class="alert-value">{{ customer.get_full_name }}</span></div>
+                            <div class="alert-field"><span class="alert-label">Site Name:</span> <span class="alert-value">${alert.site || 'N/A'}</span></div>
+                            <div class="alert-field"><span class="alert-label">Alert Type:</span> <span class="alert-value">${alert.alert_type || 'N/A'}</span></div>
+                            <div class="alert-field"><span class="alert-label">Severity:</span> <span class="alert-value">${alert.severity || 'N/A'}</span></div>
+                            <div class="alert-field"><span class="alert-label">Status:</span> <span class="alert-value">${alert.status || 'N/A'}</span></div>
+                            ${alert.message ? `<div class="mt-2 text-start" style="font-size: 0.8rem; color: #666; white-space: pre-wrap;">${alert.message}</div>` : ''}
+                            <button class="btn-view-alert" onclick="showViewAlertModal('${alert.id}')">View</button>
+                        `;
+                        
+                        alertsContainer.appendChild(alertDiv);
+                    });
+                }
+                
+                // Add event listener to alerts button to fetch alerts when modal is opened
+                document.addEventListener('DOMContentLoaded', function() {
+                    const alertsModal = document.getElementById('alertsModal');
+                    if (alertsModal) {
+                        alertsModal.addEventListener('show.bs.modal', function() {
+                            fetchAlerts();
+                        });
+                    }
+                });
+                // Handle opening modals via query parameter
+                const urlParams = new URLSearchParams(window.location.search);
+                const openModal = urlParams.get('open');
+                if (openModal) {
+                    let modalId = '';
+                    if (openModal === 'notifications') modalId = 'notificationsModal';
+                    else if (openModal === 'alerts') modalId = 'alertsModal';
+                    else if (openModal === 'incidents') modalId = 'incidentsModal';
+                    
+                    if (modalId) {
+                        const modalElement = document.getElementById(modalId);
+                        if (modalElement) {
+                            const modal = new bootstrap.Modal(modalElement);
+                            modal.show();
+                        }
+                    }
+                }
+            });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,23 @@
+<div class="sidebar" style="position: fixed; top: 0; left: 0; width: 250px; height: 100vh; overflow-y: auto; background: white; border-right: 1.5px solid #eee; z-index: 1000;">
+    <div class="sidebar-item">
+        <div style="display: flex; align-items: center; gap: 12px;">
+            <button style="width: 38px; height: 38px; border-radius: 50%; background: transparent; display: flex; align-items: center; justify-content: center; border: 1px solid #ddd; color: #888; padding: 0;">
+                <i class="bi bi-list" style="font-size: 1.4rem;"></i>
+            </button>
+            <div>
+                <a href="{% url 'admin-dashboard' %}" class="sidebar-link" style="font-size: 1.1rem; font-weight: 700; color: #333; margin: 0; line-height: 1.2; border-bottom: none; padding: 0;">My Vegrid</a>
+            </div>
+        </div>
+    </div>
+    <div class="sidebar-item"><a href="{% url 'admin-customers' %}" class="sidebar-link">Customers</a></div>
+    <div class="sidebar-item"><a href="{% url 'admin-applications' %}" class="sidebar-link">Applications</a></div>
+    <div class="sidebar-item"><a href="{% url 'admin-sites' %}" class="sidebar-link">Sites</a></div>
+    <div class="sidebar-item"><a href="{% url 'admin-rfqs' %}" class="sidebar-link">RFQs</a></div>
+    <div class="sidebar-item"><a href="{% url 'admin-dispatches' %}" class="sidebar-link">Dispatch</a></div>
+    <div class="sidebar-item"><a href="{% url 'admin-billings' %}" class="sidebar-link">Billings</a></div>
+    <div class="sidebar-item"><a href="{% url 'admin-partner-invoices' %}" class="sidebar-link">Invoices</a></div>
+    <div class="sidebar-item"><a href="{% url 'admin-payments' %}" class="sidebar-link">Payments</a></div>
+    <div class="sidebar-item"><a href="{% url 'admin-wallet' %}" class="sidebar-link">Wallet</a></div>
+    <div class="sidebar-item"><a href="{% url 'admin-team' %}" class="sidebar-link">Team</a></div>
+    <div class="sidebar-item"><a href="#" class="sidebar-link">Reports</a></div>
+</div>

@@ -1,0 +1,570 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="VeGrid - More About Solar Energy" />
+        <meta name="author" content="VeGrid" />
+        <title>VeGrid - More About Solar Energy</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="{% static 'vegrid-logo-BBC4G70n.ico' %}" />
+        <!-- Bootstrap Icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Inter:400,500,600,700" rel="stylesheet" />
+        <!-- Bootstrap CSS-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+        <!-- Custom CSS-->
+        <link href="{% static 'styles.css' %}" rel="stylesheet" />
+        <style>
+            body {
+                font-family: 'Inter', sans-serif;
+                color: #333;
+                overflow-x: hidden;
+            }
+            .primary-color {
+                color: #ff6600;
+            }
+            .primary-bg {
+                background-color: #ff6600;
+            }
+            .secondary-bg {
+                background-color: #f8f8f8;
+            }
+            .gradient-bg {
+                background: linear-gradient(135deg, #ff6600 0%, #ff8c00 100%);
+            }
+            .navbar-nav .nav-link {
+                font-size: 0.9rem;
+                font-weight: 500;
+                padding: 0.5rem 1rem !important;
+            }
+
+            .navbar-nav .nav-link.active {
+                color: #ff6600 !important;
+                border-bottom: 2px solid #ff6600;
+            }
+
+            /* Enable dropdown on hover for desktop */
+            @media (min-width: 992px) {
+                .nav-item.dropdown:hover .dropdown-menu {
+                    display: block;
+                }
+                .nav-item.dropdown .dropdown-menu {
+                    margin-top: 0;
+                }
+            }
+            .section-title {
+                font-size: 2rem;
+                font-weight: 700;
+                margin-bottom: 20px;
+                color: #333;
+            }
+            .section-subtitle {
+                font-size: 1rem;
+                color: #666;
+                line-height: 1.6;
+                margin-bottom: 40px;
+            }
+            .blog-card {
+                background: white;
+                border-radius: 15px;
+                overflow: hidden;
+                box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+                transition: all 0.3s ease;
+                margin-bottom: 30px;
+            }
+            .blog-card:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            }
+            .blog-image {
+                width: 100%;
+                height: 200px;
+                object-fit: cover;
+                background: #f0f0f0;
+            }
+            .blog-content {
+                padding: 30px;
+            }
+            .blog-date {
+                color: #666;
+                font-size: 0.9rem;
+                margin-bottom: 10px;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+            }
+            .blog-title {
+                font-size: 1.4rem;
+                font-weight: 600;
+                margin-bottom: 15px;
+                color: #333;
+            }
+            .blog-excerpt {
+                font-size: 0.95rem;
+                color: #666;
+                line-height: 1.6;
+                margin-bottom: 20px;
+            }
+            .blog-link {
+                color: #ff6600;
+                text-decoration: none;
+                font-weight: 500;
+                display: inline-flex;
+                align-items: center;
+                gap: 5px;
+                transition: all 0.3s ease;
+            }
+            .blog-link:hover {
+                color: #e65c00;
+                gap: 10px;
+            }
+            .hero-section {
+                position: relative;
+                height: 60vh;
+                background: url("{% static 'img/herosection/hero-home.jpg' %}") center/cover no-repeat;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: white;
+                text-align: center;
+            }
+            .hero-overlay {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.5) 100%);
+            }
+            .hero-content {
+                position: relative;
+                z-index: 2;
+                max-width: 900px;
+                padding: 0 20px;
+            }
+            .hero-title {
+                font-size: 3rem;
+                font-weight: 700;
+                margin-bottom: 20px;
+                line-height: 1.2;
+            }
+            .hero-description {
+                font-size: 1.2rem;
+                line-height: 1.6;
+                margin-bottom: 30px;
+                color: rgba(255, 255, 255, 0.9);
+            }
+            .resources-section {
+                padding: 100px 0;
+                background: #f8f8f8;
+            }
+            .resource-item {
+                text-align: center;
+                margin-bottom: 40px;
+            }
+            .resource-icon {
+                font-size: 3rem;
+                color: #ff6600;
+                margin-bottom: 20px;
+            }
+            .resource-title {
+                font-size: 1.4rem;
+                font-weight: 600;
+                margin-bottom: 15px;
+                color: #333;
+            }
+            .resource-description {
+                font-size: 1rem;
+                color: #666;
+                line-height: 1.6;
+            }
+            .categories-section {
+                padding: 100px 0;
+            }
+            .category-card {
+                background: white;
+                border-radius: 15px;
+                padding: 40px 30px;
+                text-align: center;
+                transition: all 0.3s ease;
+                box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+                margin-bottom: 30px;
+            }
+            .category-card:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            }
+            .category-icon {
+                font-size: 3rem;
+                color: #ff6600;
+                margin-bottom: 20px;
+            }
+            .category-title {
+                font-size: 1.4rem;
+                font-weight: 600;
+                margin-bottom: 15px;
+                color: #333;
+            }
+            .category-count {
+                font-size: 2rem;
+                font-weight: 700;
+                color: #ff6600;
+                margin-bottom: 10px;
+            }
+            .category-description {
+                font-size: 0.95rem;
+                color: #666;
+                line-height: 1.6;
+            }
+            @media (max-width: 768px) {
+                .hero-title {
+                    font-size: 2rem;
+                }
+                .hero-description {
+                    font-size: 1rem;
+                }
+                .section-title {
+                    font-size: 2rem;
+                }
+                .blog-image {
+                    height: 150px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); padding: 8px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+            <div class="container-fluid px-3">
+                <a class="navbar-brand" href="#page-top">
+                    <img src="{% static 'vegrid-logo-BBC4G70n.png' %}" alt="VeGrid Logo" style="height: 24px; margin-right: 8px;">
+                    <span style="color: #ff6600; font-weight: bold;">Ve</span><span style="color: #000000; font-weight: bold;">Grid</span>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ms-auto my-2 my-lg-0">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle active" href="{% url 'index' %}" id="homeDropdown" role="button" aria-expanded="false">
+                                Home
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="homeDropdown">
+                                <li><a class="dropdown-item" href="{% url 'about' %}">About Us</a></li>
+                                <li><a class="dropdown-item" href="{% url 'team' %}">Our Team</a></li>
+                                <li><a class="dropdown-item" href="{% url 'careers' %}">Careers</a></li>
+                                <li><a class="dropdown-item" href="{% url 'contact' %}">Contact Us</a></li>
+                                <li class="nav-item dropdown">
+                                    <a class="dropdown-item dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        VeGrid
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Login (Coming Soon)</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'solutions' %}">Solutions</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'how-it-works' %}">How It Works</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Customers
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a></li>
+                                <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#customerRegistrationModal">Register</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Partners
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a></li>
+                                <li><a class="dropdown-item" href="#">Register</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Investors
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a></li>
+                                <li><a class="dropdown-item" href="#">Register</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'impact' %}">Impact</a></li>
+                    </ul>
+                    <a class="btn btn-orange btn-tiny ms-lg-4" href="{% url 'get-quote' %}">Get Your Quote</a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero Section-->
+        <section class="hero-section">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <h1 class="hero-title">Learn More About Solar Energy</h1>
+                <p class="hero-description">
+                    Explore our blog, resources, and news about solar energy in Africa
+                </p>
+                <a href="#blog" class="btn-orange">Explore Content <i class="bi bi-arrow-right"></i></a>
+            </div>
+        </section>
+
+        <!-- Blog Section-->
+        <section id="blog" class="py-10">
+            <div class="container px-4 px-lg-5">
+                <div class="text-center mb-5">
+                    <h2 class="section-title">Latest Articles</h2>
+                    <p class="section-subtitle">Stay informed about solar energy trends and updates</p>
+                </div>
+                <div class="row gx-4 gx-lg-5">
+                    <!-- Blog Post 1 -->
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="blog-card">
+                            <div class="blog-image" style="background: linear-gradient(135deg, #ff6600, #ff8c00);"></div>
+                            <div class="blog-content">
+                                <div class="blog-date">
+                                    <i class="bi bi-calendar"></i>
+                                    <span>January 15, 2024</span>
+                                </div>
+                                <h3 class="blog-title">The Future of Solar Energy in Africa</h3>
+                                <p class="blog-excerpt">
+                                    Discover how solar energy is transforming the African energy landscape and creating new opportunities for sustainable development.
+                                </p>
+                                <a href="#" class="blog-link">
+                                    Read More <i class="bi bi-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Blog Post 2 -->
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="blog-card">
+                            <div class="blog-image" style="background: linear-gradient(135deg, #ff8c00, #ff6600);"></div>
+                            <div class="blog-content">
+                                <div class="blog-date">
+                                    <i class="bi bi-calendar"></i>
+                                    <span>January 10, 2024</span>
+                                </div>
+                                <h3 class="blog-title">Benefits of Solar Power for Businesses</h3>
+                                <p class="blog-excerpt">
+                                    Learn how solar energy can reduce your business costs, improve reliability, and enhance your brand's sustainability credentials.
+                                </p>
+                                <a href="#" class="blog-link">
+                                    Read More <i class="bi bi-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Blog Post 3 -->
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="blog-card">
+                            <div class="blog-image" style="background: linear-gradient(135deg, #ff6600, #ff8c00);"></div>
+                            <div class="blog-content">
+                                <div class="blog-date">
+                                    <i class="bi bi-calendar"></i>
+                                    <span>January 5, 2024</span>
+                                </div>
+                                <h3 class="blog-title">Solar Technology Advancements</h3>
+                                <p class="blog-excerpt">
+                                    Explore the latest innovations in solar panel technology and how they're making solar energy more efficient and affordable.
+                                </p>
+                                <a href="#" class="blog-link">
+                                    Read More <i class="bi bi-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Resources Section-->
+        <section class="resources-section">
+            <div class="container px-4 px-lg-5">
+                <div class="text-center mb-5">
+                    <h2 class="section-title">Resources</h2>
+                    <p class="section-subtitle">Educational materials and tools to help you learn about solar energy</p>
+                </div>
+                <div class="row gx-4 gx-lg-5">
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="resource-item">
+                            <div class="resource-icon"><i class="bi bi-file-earmark-pdf"></i></div>
+                            <h3 class="resource-title">Guides & Ebooks</h3>
+                            <p class="resource-description">Download our comprehensive guides and ebooks about solar energy.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="resource-item">
+                            <div class="resource-icon"><i class="bi bi-play-circle"></i></div>
+                            <h3 class="resource-title">Videos & Webinars</h3>
+                            <p class="resource-description">Watch our educational videos and webinars on solar energy topics.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="resource-item">
+                            <div class="resource-icon"><i class="bi bi-graph-up"></i></div>
+                            <h3 class="resource-title">Case Studies</h3>
+                            <p class="resource-description">Learn from real-life examples of solar energy projects.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="resource-item">
+                            <div class="resource-icon"><i class="bi bi-question-circle"></i></div>
+                            <h3 class="resource-title">FAQ</h3>
+                            <p class="resource-description">Answers to common questions about solar energy.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Categories Section-->
+        <section class="categories-section">
+            <div class="container px-4 px-lg-5">
+                <div class="text-center mb-5">
+                    <h2 class="section-title">Content Categories</h2>
+                    <p class="section-subtitle">Explore our content by topic</p>
+                </div>
+                <div class="row gx-4 gx-lg-5">
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="category-card">
+                            <div class="category-icon"><i class="bi bi-lightning"></i></div>
+                            <h3 class="category-title">Solar Technology</h3>
+                            <div class="category-count">24</div>
+                            <p class="category-description">Articles about solar panel technology, storage, and efficiency.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="category-card">
+                            <div class="category-icon"><i class="bi bi-building"></i></div>
+                            <h3 class="category-title">Business Solutions</h3>
+                            <div class="category-count">18</div>
+                            <p class="category-description">How solar energy benefits businesses of all sizes.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="category-card">
+                            <div class="category-icon"><i class="bi bi-geo-alt"></i></div>
+                            <h3 class="category-title">African Energy</h3>
+                            <div class="category-count">32</div>
+                            <p class="category-description">Solar energy trends and developments across Africa.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="category-card">
+                            <div class="category-icon"><i class="bi bi-currency-dollar"></i></div>
+                            <h3 class="category-title">Financial Benefits</h3>
+                            <div class="category-count">15</div>
+                            <p class="category-description">Cost savings and financial benefits of solar energy.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="category-card">
+                            <div class="category-icon"><i class="bi bi-globe"></i></div>
+                            <h3 class="category-title">Environmental Impact</h3>
+                            <div class="category-count">20</div>
+                            <p class="category-description">Solar energy's role in reducing carbon emissions.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="category-card">
+                            <div class="category-icon"><i class="bi bi-chat"></i></div>
+                            <h3 class="category-title">Industry News</h3>
+                            <div class="category-count">28</div>
+                            <p class="category-description">Latest news and trends in the solar energy industry.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter Section-->
+        <section class="py-10 secondary-bg">
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-lg-8 text-center">
+                        <h2 class="section-title">Stay Updated</h2>
+                        <p class="section-subtitle">Subscribe to our newsletter to receive the latest news and updates about solar energy</p>
+                        <form id="newsletterForm" class="d-flex gap-3 justify-content-center flex-wrap">
+                            <div class="form-group" style="flex: 1; min-width: 250px;">
+                                <input type="email" id="newsletterEmail" name="email" placeholder="Enter your email address" required style="padding: 15px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 1rem; width: 100%;">
+                            </div>
+                            <button type="submit" class="btn-orange">Subscribe</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        {% include 'includes/footer.html' %}
+
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="{% static 'scripts.js' %}"></script>
+        <script>
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+
+            // Navbar scroll effect
+            window.addEventListener('scroll', function() {
+                const navbar = document.querySelector('.navbar');
+                if (window.scrollY > 50) {
+                    navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+                    navbar.style.boxShadow = '0 4px 20px rgba(0,0,0,0.1)';
+                } else {
+                    navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+                    navbar.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+                }
+            });
+
+            // Newsletter form submission
+            document.getElementById('newsletterForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Get form data
+                const email = document.getElementById('newsletterEmail').value;
+                const formData = new FormData();
+                formData.append('email', email);
+                
+                fetch("{% url 'newsletter-subscribe' %}", {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    }
+                })
+                .then(response => response.text())
+                .then(message => {
+                    alert(message);
+                    this.reset();
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred. Please try again.');
+                });
+            });
+        </script>
+
+        {% include 'includes/registration_modals.html' %}
+
+    </body>
+</html>
+
+
+

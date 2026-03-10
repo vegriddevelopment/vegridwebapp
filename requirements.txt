@@ -1,0 +1,42 @@
+# Django core dependencies
+Django==4.2.28
+
+# Environment variables
+python-dotenv>=1.0.0
+
+# Image handling (compatible with older Python versions)
+Pillow>=10.0.0,<12.0.0
+
+# Form styling
+django-crispy-forms>=2.5
+
+# Rich text editing
+django-tinymce>=5.0.0,<6.0.0
+
+# Debugging
+django-debug-toolbar>=3.0.0,<4.0.0
+
+# Database (SQLite is default, but include other options)
+# psycopg2-binary>=2.9.9  # For PostgreSQL
+# mysqlclient>=2.2.8  # For MySQL
+
+# Testing (compatible with older Python versions)
+pytest-django>=4.11.0,<4.12.0
+factory-boy>=3.3.3
+Faker>=40.5.1
+
+# Deployment
+gunicorn>=25.1.0
+
+# SMS and Messaging
+africastalking>=1.2.3
+twilio>=8.0.0
+
+# PDF Generation
+reportlab>=4.4.10
+
+# Additional dependencies (from virtual environment)
+asgiref>=3.11.1
+sqlparse>=0.5.5
+tzdata>=2025.3
+requests>=2.31.0

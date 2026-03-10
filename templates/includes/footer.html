@@ -1,0 +1,103 @@
+<style>
+    .footer {
+        background: #1a1a1a;
+        color: white;
+        padding: 60px 0 20px;
+    }
+    .footer-logo {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+    }
+    .footer-link {
+        color: rgba(255, 255, 255, 0.7);
+        text-decoration: none;
+        display: block;
+        margin-bottom: 10px;
+        transition: color 0.3s ease;
+    }
+    .footer-link:hover {
+        color: white;
+    }
+    .footer-social {
+        margin-top: 20px;
+    }
+    .social-icon {
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        text-align: center;
+        line-height: 40px;
+        margin-right: 10px;
+        color: white;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+    .social-icon:hover {
+        background: #ff6600;
+        transform: translateY(-2px);
+    }
+</style>
+
+<!-- Footer-->
+<footer class="footer">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5">
+            <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+                <div class="footer-logo">
+                    <span style="color: #ff6600; font-weight: bold;">Ve</span><span style="color: #ffffff; font-weight: bold;">Grid</span>
+                </div>
+                <p style="color: rgba(255, 255, 255, 0.7); margin-bottom: 20px;">
+                    Solar Power-as-a-Service for Africa. Making clean, reliable energy accessible to businesses across the continent.
+                </p>
+                <div class="footer-social">
+                    <a href="#" class="social-icon"><i class="bi bi-facebook"></i></a>
+                    <a href="#" class="social-icon"><i class="bi bi-twitter-x"></i></a>
+                    <a href="#" class="social-icon"><i class="bi bi-linkedin"></i></a>
+                    <a href="#" class="social-icon"><i class="bi bi-instagram"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-6 mb-4 mb-lg-0">
+                <h4 style="margin-bottom: 20px; font-weight: 600;">Company</h4>
+                <a href="{% url 'about' %}" class="footer-link">About Us</a>
+                <a href="{% url 'team' %}" class="footer-link">Team</a>
+                <a href="{% url 'careers' %}" class="footer-link">Careers</a>
+                <a href="{% url 'partners' %}" class="footer-link">Partners</a>
+                <a href="{% url 'investors' %}" class="footer-link">Investors</a>
+                <a href="{% url 'contact' %}" class="footer-link">Contact</a>
+            </div>
+            <div class="col-lg-2 col-md-6 mb-4 mb-lg-0">
+                <h4 style="margin-bottom: 20px; font-weight: 600;">Solutions</h4>
+                <a href="{% url 'solutions' %}" class="footer-link">Solar Solutions</a>
+                <a href="{% url 'how-it-works' %}" class="footer-link">How It Works</a>
+                <a href="{% url 'impact' %}" class="footer-link">Impact</a>
+                <a href="{% url 'get-quote' %}" class="footer-link">Get a Quote</a>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+                <h4 style="margin-bottom: 20px; font-weight: 600;">Contact Info</h4>
+                <p style="color: rgba(255, 255, 255, 0.7); margin-bottom: 10px;">
+                    <i class="bi bi-geo-alt primary-color"></i>48, Mbabane Road, off James Gichuru Rd P.O.Box 30599 - 00100
+                </p>
+                <p style="color: rgba(255, 255, 255, 0.7); margin-bottom: 10px;">
+                    <i class="bi bi-envelope primary-color"></i> info@vegrid.co.ke
+                </p>
+                <p style="color: rgba(255, 255, 255, 0.7); margin-bottom: 10px;">
+                    <i class="bi bi-telephone primary-color"></i> +254 722 719 345
+                </p>
+            </div>
+        </div>
+        <div class="row gx-4 gx-lg-5 mt-5">
+            <div class="col-12 text-center" style="padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1);">
+                <p style="color: rgba(255, 255, 255, 0.5); font-size: 0.9rem;">
+                    &copy; {% now "Y" %} VeGrid. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+
+

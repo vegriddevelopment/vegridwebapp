@@ -1,0 +1,585 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="VeGrid - Get a Free Solar Quote" />
+        <meta name="author" content="VeGrid" />
+        <title>VeGrid - Get a Free Solar Quote</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="{% static 'vegrid-logo-BBC4G70n.ico' %}" />
+        <!-- Bootstrap Icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Inter:400,500,600,700" rel="stylesheet" />
+        <!-- Bootstrap CSS-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+        <!-- Custom CSS-->
+        <link href="{% static 'styles.css' %}" rel="stylesheet" />
+        <style>
+            body {
+                font-family: 'Inter', sans-serif;
+                color: #333;
+                overflow-x: hidden;
+            }
+            .primary-color {
+                color: #ff6600;
+            }
+            .primary-bg {
+                background-color: #ff6600;
+            }
+            .secondary-bg {
+                background-color: #f8f8f8;
+            }
+            .gradient-bg {
+                background: linear-gradient(135deg, #ff6600 0%, #ff8c00 100%);
+            }
+            .navbar-nav .nav-link {
+                font-size: 0.9rem;
+                font-weight: 500;
+                padding: 0.5rem 1rem !important;
+            }
+
+            .navbar-nav .nav-link.active {
+                color: #ff6600 !important;
+                border-bottom: 2px solid #ff6600;
+            }
+
+            /* Enable dropdown on hover for desktop */
+            @media (min-width: 992px) {
+                .nav-item.dropdown:hover .dropdown-menu {
+                    display: block;
+                }
+                .nav-item.dropdown .dropdown-menu {
+                    margin-top: 0;
+                }
+            }
+            .section-title {
+                font-size: 2rem;
+                font-weight: 700;
+                margin-bottom: 20px;
+                color: #333;
+            }
+            .section-subtitle {
+                font-size: 1rem;
+                color: #666;
+                line-height: 1.6;
+                margin-bottom: 40px;
+            }
+            .quote-form {
+                background: white;
+                border-radius: 15px;
+                padding: 40px 30px;
+                box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            }
+            .form-group {
+                margin-bottom: 20px;
+            }
+            .form-group label {
+                display: block;
+                margin-bottom: 10px;
+                font-weight: 500;
+                color: #333;
+            }
+            .form-group input,
+            .form-group select,
+            .form-group textarea {
+                width: 100%;
+                padding: 15px;
+                border: 2px solid #e0e0e0;
+                border-radius: 8px;
+                font-size: 1rem;
+                transition: all 0.3s ease;
+            }
+            .form-group input:focus,
+            .form-group select:focus,
+            .form-group textarea:focus {
+                outline: none;
+                border-color: #ff6600;
+                box-shadow: 0 0 0 3px rgba(255, 102, 0, 0.1);
+            }
+            .hero-section {
+                position: relative;
+                height: 60vh;
+                background: url("{% static 'img/herosection/hero-home.jpg' %}") center/cover no-repeat;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: white;
+                text-align: center;
+            }
+            .hero-overlay {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.5) 100%);
+            }
+            .hero-content {
+                position: relative;
+                z-index: 2;
+                max-width: 900px;
+                padding: 0 20px;
+            }
+            .hero-title {
+                font-size: 3rem;
+                font-weight: 700;
+                margin-bottom: 20px;
+                line-height: 1.2;
+            }
+            .hero-description {
+                font-size: 1.2rem;
+                line-height: 1.6;
+                margin-bottom: 30px;
+                color: rgba(255, 255, 255, 0.9);
+            }
+            .benefits-section {
+                padding: 100px 0;
+                background: #f8f8f8;
+            }
+            .benefit-item {
+                text-align: center;
+                margin-bottom: 40px;
+            }
+            .benefit-icon {
+                font-size: 3rem;
+                color: #ff6600;
+                margin-bottom: 20px;
+            }
+            .benefit-title {
+                font-size: 1.4rem;
+                font-weight: 600;
+                margin-bottom: 15px;
+                color: #333;
+            }
+            .benefit-description {
+                font-size: 1rem;
+                color: #666;
+                line-height: 1.6;
+            }
+            .quote-benefits {
+                background: white;
+                border-radius: 15px;
+                padding: 40px 30px;
+                box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            }
+            .benefit-list {
+                list-style: none;
+                padding: 0;
+            }
+            .benefit-list li {
+                padding: 8px 0;
+                color: #666;
+                font-size: 1rem;
+                display: flex;
+                align-items: center;
+                gap: 15px;
+            }
+            .benefit-list li:before {
+                content: "✓";
+                color: #ff6600;
+                font-weight: bold;
+                font-size: 1.2rem;
+            }
+            @media (max-width: 768px) {
+                .hero-title {
+                    font-size: 2rem;
+                }
+                .hero-description {
+                    font-size: 1rem;
+                }
+                .section-title {
+                    font-size: 2rem;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); padding: 8px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+            <div class="container-fluid px-3">
+                <a class="navbar-brand" href="#page-top">
+                    <img src="{% static 'vegrid-logo-BBC4G70n.png' %}" alt="VeGrid Logo" style="height: 24px; margin-right: 8px;">
+                    <span style="color: #ff6600; font-weight: bold;">Ve</span><span style="color: #000000; font-weight: bold;">Grid</span>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ms-auto my-2 my-lg-0">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle active" href="{% url 'index' %}" id="homeDropdown" role="button" aria-expanded="false">
+                                Home
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="homeDropdown">
+                                <li><a class="dropdown-item" href="{% url 'about' %}">About Us</a></li>
+                                <li><a class="dropdown-item" href="{% url 'team' %}">Our Team</a></li>
+                                <li><a class="dropdown-item" href="{% url 'careers' %}">Careers</a></li>
+                                <li><a class="dropdown-item" href="{% url 'contact' %}">Contact Us</a></li>
+                                <li class="nav-item dropdown">
+                                    <a class="dropdown-item dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        VeGrid
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Login (Coming Soon)</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'solutions' %}">Solutions</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'how-it-works' %}">How It Works</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Customers
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a></li>
+                                <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#customerRegistrationModal">Register</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Partners
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a></li>
+                                <li><a class="dropdown-item" href="#">Register</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Investors
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a></li>
+                                <li><a class="dropdown-item" href="#">Register</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'impact' %}">Impact</a></li>
+                    </ul>
+                    <a class="btn btn-orange btn-tiny active ms-lg-4" href="{% url 'get-quote' %}">Get Your Quote</a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero Section-->
+        <section class="hero-section">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <h1 class="hero-title">Get Your Free Solar Quote</h1>
+                <p class="hero-description">
+                    Start your solar journey today with a free, no-obligation quote tailored to your energy needs
+                </p>
+                <a href="#quote-form" class="btn-orange">Get Started <i class="bi bi-arrow-right"></i></a>
+            </div>
+        </section>
+
+        <!-- Quote Form Section-->
+        <section id="quote-form" class="py-10">
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 align-items-center">
+                    <div class="col-lg-6 mb-5 mb-lg-0">
+                        <div class="quote-benefits">
+                            <h2 class="section-title">Why Choose VeGrid?</h2>
+                            <p class="section-subtitle">Benefits of our solar energy solutions</p>
+                            <ul class="benefit-list">
+                                <li><strong>Zero upfront costs:</strong> No investment required, just fixed monthly payments</li>
+                                <li><strong>Cost savings:</strong> Reduce your electricity bills by up to 50%</li>
+                                <li><strong>Reliable power:</strong> 24/7 monitoring and maintenance for consistent performance</li>
+                                <li><strong>Environmental impact:</strong> Reduce your carbon footprint by switching to clean energy</li>
+                                <li><strong>Fast installation:</strong> Professional installation in as little as 2-4 weeks</li>
+                                <li><strong>Expert support:</strong> Dedicated team to guide you through every step</li>
+                            </ul>
+                            <div class="mt-5">
+                                <div class="d-flex align-items-center gap-3 mb-3">
+                                    <div class="benefit-icon" style="font-size: 2rem;"><i class="bi bi-currency-dollar"></i></div>
+                                    <div>
+                                        <h3 class="benefit-title" style="font-size: 1.2rem; margin-bottom: 5px;">Transparent Pricing</h3>
+                                        <p class="benefit-description" style="font-size: 0.95rem;">No hidden fees or surprises</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="benefit-icon" style="font-size: 2rem;"><i class="bi bi-shield-check"></i></div>
+                                    <div>
+                                        <h3 class="benefit-title" style="font-size: 1.2rem; margin-bottom: 5px;">Guaranteed Performance</h3>
+                                        <p class="benefit-description" style="font-size: 0.95rem;">Industry-leading warranties and performance guarantees</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="quote-form">
+                            <h3 class="section-title" style="font-size: 2rem;">Request Your Quote</h3>
+                            <p class="section-subtitle">Fill out the form below and we'll get back to you within 24 hours</p>
+                            <form id="quoteForm">
+                                <div class="row gx-4 gx-lg-5">
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-group">
+                                            <label for="name">Full Name</label>
+                                            <input type="text" id="name" name="name" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-group">
+                                            <label for="email">Email Address</label>
+                                            <input type="email" id="email" name="email" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-group">
+                                            <label for="phone">Phone Number</label>
+                                            <input type="tel" id="phone" name="phone" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-group">
+                                            <label for="business-name">Business Name</label>
+                                            <input type="text" id="business-name" name="business-name" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-group">
+                                            <label for="industry">Industry</label>
+                                            <select id="industry" name="industry" required>
+                                                <option value="">Select industry</option>
+                                                <option value="retail">Retail</option>
+                                                <option value="manufacturing">Manufacturing</option>
+                                                <option value="agriculture">Agriculture</option>
+                                                <option value="healthcare">Healthcare</option>
+                                                <option value="education">Education</option>
+                                                <option value="hospitality">Hospitality</option>
+                                                <option value="other">Other</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-group">
+                                            <label for="energy-consumption">Monthly Energy Consumption (kWh)</label>
+                                            <select id="energy-consumption" name="energy-consumption" required>
+                                                <option value="">Select consumption</option>
+                                                <option value="0-500">0-500 kWh</option>
+                                                <option value="501-1000">501-1000 kWh</option>
+                                                <option value="1001-2000">1001-2000 kWh</option>
+                                                <option value="2001-5000">2001-5000 kWh</option>
+                                                <option value="5001-10000">5001-10000 kWh</option>
+                                                <option value="10000+">10,000+ kWh</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-group">
+                                            <label for="location">Location</label>
+                                            <select id="location" name="location" required>
+                                                <option value="">Select location</option>
+                                                <option value="nairobi">Nairobi</option>
+                                                <option value="mombasa">Mombasa</option>
+                                                <option value="kisumu">Kisumu</option>
+                                                <option value="nakuru">Nakuru</option>
+                                                <option value="eldoret">Eldoret</option>
+                                                <option value="other">Other</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-group">
+                                            <label for="roof-type">Roof Type</label>
+                                            <select id="roof-type" name="roof-type" required>
+                                                <option value="">Select roof type</option>
+                                                <option value="flat">Flat</option>
+                                                <option value="pitched">Pitched</option>
+                                                <option value="metal">Metal</option>
+                                                <option value="concrete">Concrete</option>
+                                                <option value="other">Other</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 mb-3">
+                                        <div class="form-group">
+                                            <label for="additional-info">Additional Information</label>
+                                            <textarea id="additional-info" name="additional-info" rows="5" placeholder="Tell us more about your energy needs..."></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 text-center">
+                                        <button type="submit" class="btn-orange">Get My Free Quote</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Process Section-->
+        <section class="benefits-section">
+            <div class="container px-4 px-lg-5">
+                <div class="text-center mb-5">
+                    <h2 class="section-title">Our Quote Process</h2>
+                    <p class="section-subtitle">Simple steps to your personalized solar solution</p>
+                </div>
+                <div class="row gx-4 gx-lg-5">
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="benefit-item">
+                            <div class="benefit-icon"><i class="bi bi-chat"></i></div>
+                            <h3 class="benefit-title">1. Fill Out Form</h3>
+                            <p class="benefit-description">Complete our simple quote form with your details.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="benefit-item">
+                            <div class="benefit-icon"><i class="bi bi-envelope"></i></div>
+                            <h3 class="benefit-title">2. We Contact You</h3>
+                            <p class="benefit-description">Our team will contact you within 24 hours to discuss your needs.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="benefit-item">
+                            <div class="benefit-icon"><i class="bi bi-building"></i></div>
+                            <h3 class="benefit-title">3. Site Assessment</h3>
+                            <p class="benefit-description">We conduct a site assessment to determine feasibility.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="benefit-item">
+                            <div class="benefit-icon"><i class="bi bi-check-circle"></i></div>
+                            <h3 class="benefit-title">4. Receive Quote</h3>
+                            <p class="benefit-description">Get your personalized solar solution and financial proposal.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section-->
+        <section id="faq" class="py-10 secondary-bg">
+            <div class="container px-4 px-lg-5">
+                <div class="text-center mb-5">
+                    <h2 class="section-title">Frequently Asked Questions</h2>
+                    <p class="section-subtitle">Answers to common questions about our solar solutions</p>
+                </div>
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="accordion" id="faqAccordion">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingOne">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        How much does a solar system cost?
+                                    </button>
+                                </h2>
+                                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        <p style="color: #666;">
+                                            We offer a power-as-a-service model with zero upfront costs. You pay a fixed monthly fee based on your energy consumption. The cost is typically 30-50% lower than traditional grid electricity.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingTwo">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        How long does installation take?
+                                    </button>
+                                </h2>
+                                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        <p style="color: #666;">
+                                            Our installation process typically takes 2-4 weeks from approval. We handle all permits and logistics to ensure a smooth and efficient installation.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingThree">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                        What maintenance is required?
+                                    </button>
+                                </h2>
+                                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        <p style="color: #666;">
+                                            We include comprehensive maintenance in our service. Our team handles all maintenance and monitoring, including cleaning, inspections, and repairs.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingFour">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                        What if I move locations?
+                                    </button>
+                                </h2>
+                                <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        <p style="color: #666;">
+                                            We offer flexible terms that allow you to transfer your solar system to a new location if you move your business.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        {% include 'includes/footer.html' %}
+
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="{% static 'scripts.js' %}"></script>
+        <script>
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+
+            // Navbar scroll effect
+            window.addEventListener('scroll', function() {
+                const navbar = document.querySelector('.navbar');
+                if (window.scrollY > 50) {
+                    navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+                    navbar.style.boxShadow = '0 4px 20px rgba(0,0,0,0.1)';
+                } else {
+                    navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+                    navbar.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+                }
+            });
+
+            // Quote form submission
+            document.getElementById('quoteForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Get form data
+                const formData = new FormData(this);
+                const data = {};
+                formData.forEach((value, key) => {
+                    data[key] = value;
+                });
+
+                // Here you would typically send the data to a server
+                console.log('Quote form submitted:', data);
+
+                // Show success message
+                alert('Thank you for your request! We will contact you within 24 hours with your personalized quote.');
+                
+                // Reset form
+                this.reset();
+            });
+        </script>
+
+        {% include 'includes/registration_modals.html' %}
+
+    </body>
+</html>
+
+
+

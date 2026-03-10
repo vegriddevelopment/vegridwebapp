@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="{% static 'vegrid-logo-BBC4G70n.ico' %}" />
+<title>Create Your Team Login - VEGRID</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --vegrid-orange: #f59120; }
+        body { font-family: 'Inter', sans-serif; background-color: #f8f9fa; height: 100vh; display: flex; align-items: center; justify-content: center; }
+        .login-card { background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); width: 100%; max-width: 450px; }
+        .logo { text-align: center; margin-bottom: 30px; }
+        .logo img { height: 50px; }
+        .logo span { display: block; color: var(--vegrid-orange); font-weight: 900; font-size: 1.2rem; }
+        .btn-orange { background: var(--vegrid-orange); color: #fff; border: none; width: 100%; padding: 12px; border-radius: 6px; font-weight: 700; }
+        .form-label { font-weight: 600; color: #333; }
+        .error-msg { color: #dc3545; font-size: 0.9rem; margin-bottom: 15px; }
+        .password-field { position: relative; }
+        .eye-toggle { position: absolute; right: 10px; top: 38px; cursor: pointer; color: #666; }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <div class="logo">
+            <img src="{% static 'sun-logo.png' %}" alt="Sun Logo">
+            <span>VEGRID</span>
+        </div>
+        <h4 class="text-center mb-4">Create Team Login</h4>
+        <p class="text-muted text-center mb-4">Welcome, {{ user.get_full_name }}. Your username is: <strong>{{ user.username }}</strong></p>
+        
+        {% if error %}
+        <div class="error-msg text-center">{{ error }}</div>
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+            <div class="mb-3 password-field">
+                <label class="form-label">Create Password</label>
+                <input type="password" name="password" id="password" class="form-control" required>
+                <i class="bi bi-eye eye-toggle" onclick="togglePassword('password', this)"></i>
+            </div>
+            <div class="mb-4 password-field">
+                <label class="form-label">Confirm Password</label>
+                <input type="password" name="confirm_password" id="confirm_password" class="form-control" required>
+                <i class="bi bi-eye eye-toggle" onclick="togglePassword('confirm_password', this)"></i>
+            </div>
+            <button type="submit" class="btn-orange">Create Login</button>
+        </form>
+    </div>
+
+    <script>
+        function togglePassword(inputId, icon) {
+            const input = document.getElementById(inputId);
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('bi-eye');
+                icon.classList.add('bi-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('bi-eye-slash');
+                icon.classList.add('bi-eye');
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,862 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="How VeGrid Works - Solar Power-as-a-Service Process" />
+        <meta name="author" content="VeGrid" />
+        <title>How VeGrid Works - Solar Power-as-a-Service Process</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="{% static 'vegrid-logo-BBC4G70n.ico' %}" />
+        <!-- Bootstrap Icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Inter:400,500,600,700" rel="stylesheet" />
+        <!-- Bootstrap CSS-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+        <!-- Custom CSS-->
+        <link href="{% static 'styles.css' %}" rel="stylesheet" />
+        <style>
+            body {
+                font-family: 'Inter', sans-serif;
+                color: #333;
+                overflow-x: hidden;
+            }
+            .primary-color {
+                color: #ff6600;
+            }
+            .primary-bg {
+                background-color: #ff6600;
+            }
+            .secondary-bg {
+                background-color: #f8f8f8;
+            }
+            .gradient-bg {
+                background: linear-gradient(135deg, #ff6600 0%, #ff8c00 100%);
+            }
+            .hero-section {
+                position: relative;
+                height: 100vh;
+                background-position: center;
+                background-size: cover;
+                background-repeat: no-repeat;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: white;
+                text-align: center;
+            }
+            .hero-overlay {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.5) 100%);
+            }
+            .hero-content {
+                position: relative;
+                z-index: 2;
+                max-width: 900px;
+                padding: 0 20px;
+            }
+            .hero-badge {
+                display: inline-block;
+                background: rgba(255, 255, 255, 0.2);
+                backdrop-filter: blur(10px);
+                padding: 8px 16px;
+                border-radius: 20px;
+                font-size: 0.9rem;
+                font-weight: 500;
+                margin-bottom: 20px;
+            }
+            .hero-title {
+                font-size: 2.8rem;
+                font-weight: 700;
+                margin-bottom: 20px;
+                line-height: 1.2;
+            }
+            .hero-description {
+                font-size: 1.1rem;
+                line-height: 1.6;
+                margin-bottom: 30px;
+                color: rgba(255, 255, 255, 0.9);
+            }
+            .navbar-nav .nav-link {
+                font-size: 0.85rem;
+                font-weight: 500;
+                padding: 0.5rem 1rem !important;
+                color: white !important;
+                transition: all 0.3s ease;
+            }
+            
+            .navbar-nav .nav-link:hover {
+                color: rgba(255, 255, 255, 0.8) !important;
+            }
+
+            .navbar-nav .nav-link.active {
+                color: #ff6600 !important;
+                border-bottom: 2px solid #ff6600;
+            }
+
+            /* Enable dropdown on hover for desktop */
+            @media (min-width: 992px) {
+                .nav-item.dropdown:hover .dropdown-menu {
+                    display: block;
+                }
+                .nav-item.dropdown .dropdown-menu {
+                    margin-top: 0;
+                }
+            }
+            
+            .navbar-brand span {
+                color: white !important;
+            }
+            
+            .navbar-toggler {
+                border-color: rgba(255, 255, 255, 0.2) !important;
+            }
+            
+            .navbar-toggler-icon {
+                filter: invert(1);
+            }
+            .section-title {
+                font-size: 2rem;
+                font-weight: 700;
+                margin-bottom: 20px;
+                color: #333;
+            }
+            .section-subtitle {
+                font-size: 1rem;
+                color: #666;
+                line-height: 1.6;
+                margin-bottom: 40px;
+            }
+            .process-step {
+                background: white;
+                border-radius: 15px;
+                padding: 40px 30px;
+                text-align: center;
+                transition: all 0.3s ease;
+                box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+                margin-bottom: 30px;
+                position: relative;
+            }
+            .process-step:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            }
+            .step-number {
+                width: 60px;
+                height: 60px;
+                background: #ff6600;
+                color: white;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.5rem;
+                font-weight: 700;
+                margin: 0 auto 20px;
+            }
+            .step-icon {
+                font-size: 2.5rem;
+                color: #ff6600;
+                margin-bottom: 20px;
+            }
+            .step-title {
+                font-size: 1.2rem;
+                font-weight: 600;
+                margin-bottom: 15px;
+                color: #333;
+            }
+            .step-description {
+                font-size: 0.95rem;
+                color: #666;
+                line-height: 1.6;
+            }
+            .hero-section {
+                position: relative;
+                height: 100vh;
+                background-position: center;
+                background-size: cover;
+                background-repeat: no-repeat;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: white;
+                text-align: center;
+            }
+            .hero-overlay {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.5) 100%);
+            }
+            .hero-content {
+                position: relative;
+                z-index: 2;
+                max-width: 900px;
+                padding: 0 20px;
+            }
+            .hero-title {
+                font-size: 3rem;
+                font-weight: 700;
+                margin-bottom: 20px;
+                line-height: 1.2;
+            }
+            .hero-description {
+                font-size: 1.2rem;
+                line-height: 1.6;
+                margin-bottom: 30px;
+                color: rgba(255, 255, 255, 0.9);
+            }
+            .features-section {
+                padding: 100px 0;
+                background: #f8f8f8;
+            }
+            .feature-item {
+                text-align: center;
+                margin-bottom: 40px;
+            }
+            .feature-icon {
+                font-size: 3rem;
+                color: #ff6600;
+                margin-bottom: 20px;
+            }
+            .feature-title {
+                font-size: 1.4rem;
+                font-weight: 600;
+                margin-bottom: 15px;
+                color: #333;
+            }
+            .feature-description {
+                font-size: 1rem;
+                color: #666;
+                line-height: 1.6;
+            }
+            .timeline {
+                position: relative;
+                padding: 50px 0;
+            }
+            .timeline::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 50%;
+                width: 2px;
+                background: #ff6600;
+                transform: translateX(-50%);
+            }
+            .timeline-item {
+                position: relative;
+                margin-bottom: 50px;
+            }
+            .timeline-item:nth-child(odd) {
+                padding-right: calc(50% + 30px);
+                text-align: right;
+            }
+            .timeline-item:nth-child(even) {
+                padding-left: calc(50% + 30px);
+            }
+            .timeline-marker {
+                position: absolute;
+                top: 0;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 20px;
+                height: 20px;
+                background: #ff6600;
+                border-radius: 50%;
+                border: 3px solid white;
+                box-shadow: 0 0 0 4px #ff6600;
+            }
+            .timeline-content {
+                background: white;
+                border-radius: 15px;
+                padding: 30px;
+                box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            }
+            .timeline-title {
+                font-size: 1.2rem;
+                font-weight: 600;
+                margin-bottom: 10px;
+                color: #333;
+            }
+            .timeline-description {
+                font-size: 0.95rem;
+                color: #666;
+                line-height: 1.6;
+            }
+            @media (max-width: 768px) {
+                .hero-title {
+                    font-size: 2rem;
+                }
+                .hero-description {
+                    font-size: 1rem;
+                }
+                .section-title {
+                    font-size: 2rem;
+                }
+                .timeline::before {
+                    left: 30px;
+                }
+                .timeline-item:nth-child(odd),
+                .timeline-item:nth-child(even) {
+                    padding-left: 80px;
+                    padding-right: 0;
+                    text-align: left;
+                }
+                .timeline-marker {
+                    left: 30px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background: transparent; backdrop-filter: blur(10px); padding: 8px 0; box-shadow: none;">
+            <div class="container-fluid px-3">
+                <a class="navbar-brand" href="#page-top">
+                    <img src="{% static 'vegrid-logo-BBC4G70n.png' %}" alt="VeGrid Logo" style="height: 24px; margin-right: 8px;">
+                    <span style="color: #ff6600; font-weight: bold;">Ve</span><span style="color: #000000; font-weight: bold;">Grid</span>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ms-auto my-2 my-lg-0">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle active" href="{% url 'index' %}" id="homeDropdown" role="button" aria-expanded="false">
+                                Home
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="homeDropdown">
+                                <li><a class="dropdown-item" href="{% url 'about' %}">About Us</a></li>
+                                <li><a class="dropdown-item" href="{% url 'team' %}">Our Team</a></li>
+                                <li><a class="dropdown-item" href="{% url 'careers' %}">Careers</a></li>
+                                <li><a class="dropdown-item" href="{% url 'contact' %}">Contact Us</a></li>
+                                <li class="nav-item dropdown">
+                                    <a class="dropdown-item dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        VeGrid
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Login (Coming Soon)</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'solutions' %}">Solutions</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="{% url 'how-it-works' %}">How It Works</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Customers
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a></li>
+                                <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#customerRegistrationModal">Register</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Partners
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a></li>
+                                <li><a class="dropdown-item" href="#">Register</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Investors
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a></li>
+                                <li><a class="dropdown-item" href="#">Register</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'impact' %}">Impact</a></li>
+                    </ul>
+                    <a class="btn btn-orange btn-tiny ms-lg-4" href="{% url 'get-quote' %}">Get Your Quote</a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero Section-->
+        <section id="home" class="hero-section" style="background-image: url('{% static 'img/how it works.png' %}');">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <div class="hero-badge">Simple Process ⚡</div>
+                <h1 class="hero-title">How VeGrid Works</h1>
+                <p class="hero-description">
+                    Simple, transparent, and affordable solar solutions for your business. 
+                    From quote to installation, we make going solar easy with our streamlined process.
+                </p>
+                <div class="d-flex gap-3 justify-content-center flex-wrap">
+                    <a href="#process" class="btn-orange">Explore Process <i class="bi bi-arrow-right"></i></a>
+                    <a href="{% url 'get-quote' %}" class="btn-white">Get Your Quote</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Process Section-->
+        <section id="process" class="py-10">
+            <div class="container px-4 px-lg-5">
+                <div class="text-center mb-5">
+                    <h2 class="section-title">Our Simple Process</h2>
+                    <p class="section-subtitle">From quote to installation, we make going solar easy</p>
+                </div>
+                <div class="row gx-4 gx-lg-5">
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="process-step">
+                            <div class="step-number">01</div>
+                            <div class="step-icon"><i class="bi bi-file-earmark-text"></i></div>
+                            <h3 class="step-title">Request</h3>
+                            <p class="step-description">
+                                Customer submits energy needs via web or mobile app.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="process-step">
+                            <div class="step-number">02</div>
+                            <div class="step-icon"><i class="bi bi-geo-alt"></i></div>
+                            <h3 class="step-title">Feasibility</h3>
+                            <p class="step-description">
+                                VeGriddy conducts digital site survey and system sizing.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="process-step">
+                            <div class="step-number">03</div>
+                            <div class="step-icon"><i class="bi bi-currency-dollar"></i></div>
+                            <h3 class="step-title">Quotation</h3>
+                            <p class="step-description">
+                                Customer receives transparent pricing and financing options.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="process-step">
+                            <div class="step-number">04</div>
+                            <div class="step-icon"><i class="bi bi-check-circle"></i></div>
+                            <h3 class="step-title">Approval</h3>
+                            <p class="step-description">
+                                Financier underwrites loan using VeGriddy credit scoring.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="process-step">
+                            <div class="step-number">05</div>
+                            <div class="step-icon"><i class="bi bi-truck"></i></div>
+                            <h3 class="step-title">Procurement</h3>
+                            <p class="step-description">
+                                Distributor fulfills order with certified equipment.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="process-step">
+                            <div class="step-number">06</div>
+                            <div class="step-icon"><i class="bi bi-hammer"></i></div>
+                            <h3 class="step-title">Installation</h3>
+                            <p class="step-description">
+                                Licensed installer deploys system with remote QA.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="process-step">
+                            <div class="step-number">07</div>
+                            <div class="step-icon"><i class="bi bi-lightning"></i></div>
+                            <h3 class="step-title">Commissioning</h3>
+                            <p class="step-description">
+                                VeGriddy validates performance and activates monitoring.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="process-step">
+                            <div class="step-number">08</div>
+                            <div class="step-icon"><i class="bi bi-graph-up"></i></div>
+                            <h3 class="step-title">Operations</h3>
+                            <p class="step-description">
+                                Real-time monitoring, predictive maintenance, automated billing.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Timeline Section-->
+        <section id="timeline" class="py-10 secondary-bg">
+            <div class="container px-4 px-lg-5">
+                <div class="text-center mb-5">
+                    <h2 class="section-title">The VeGrid Journey</h2>
+                    <p class="section-subtitle">A detailed look at your solar transformation</p>
+                </div>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <h3 class="timeline-title">Request</h3>
+                            <p class="timeline-description">
+                                Customer submits energy needs via web or mobile app. Our digital platform makes it easy to get started with just a few clicks.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <h3 class="timeline-title">Feasibility</h3>
+                            <p class="timeline-description">
+                                VeGriddy conducts digital site survey and system sizing using advanced mapping and analytics tools to determine the optimal solar solution for your property.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <h3 class="timeline-title">Quotation</h3>
+                            <p class="timeline-description">
+                                Customer receives transparent pricing and financing options. Our quote includes detailed information about system size, costs, savings, and payment plans.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <h3 class="timeline-title">Approval</h3>
+                            <p class="timeline-description">
+                                Financier underwrites loan using VeGriddy credit scoring. Our digital credit assessment process is fast, secure, and transparent.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <h3 class="timeline-title">Procurement</h3>
+                            <p class="timeline-description">
+                                Distributor fulfills order with certified equipment. We ensure all components meet industry standards and are delivered on time.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <h3 class="timeline-title">Installation</h3>
+                            <p class="timeline-description">
+                                Licensed installer deploys system with remote QA. Our professional installation team ensures your solar system is set up correctly and efficiently.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <h3 class="timeline-title">Commissioning</h3>
+                            <p class="timeline-description">
+                                VeGriddy validates performance and activates monitoring. We conduct comprehensive testing to ensure your system is operating at optimal efficiency.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <h3 class="timeline-title">Operations</h3>
+                            <p class="timeline-description">
+                                Real-time monitoring, predictive maintenance, automated billing. Our digital platform provides ongoing support and insights to maximize your solar investment.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section-->
+        <section class="features-section">
+            <div class="container px-4 px-lg-5">
+                <div class="text-center mb-5">
+                    <h2 class="section-title">Why Our Process Works</h2>
+                    <p class="section-subtitle">Built on transparency, reliability, and customer focus</p>
+                </div>
+                <div class="row gx-4 gx-lg-5">
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="feature-item">
+                            <div class="feature-icon"><i class="bi bi-clock"></i></div>
+                            <h3 class="feature-title">Quick Installation</h3>
+                            <p class="feature-description">Systems installed in 2-4 weeks from approval</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="feature-item">
+                            <div class="feature-icon"><i class="bi bi-currency-dollar"></i></div>
+                            <h3 class="feature-title">Transparent Pricing</h3>
+                            <p class="feature-description">No hidden fees, fixed monthly payments</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="feature-item">
+                            <div class="feature-icon"><i class="bi bi-shield-check"></i></div>
+                            <h3 class="feature-title">Quality Guarantee</h3>
+                            <p class="feature-description">Industry-leading warranties and guarantees</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="feature-item">
+                            <div class="feature-icon"><i class="bi bi-people"></i></div>
+                            <h3 class="feature-title">Expert Support</h3>
+                            <p class="feature-description">Dedicated team available 24/7</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section-->
+        <section id="faq" class="py-10">
+            <div class="container px-4 px-lg-5">
+                <div class="text-center mb-5">
+                    <h2 class="section-title">Frequently Asked Questions</h2>
+                    <p class="section-subtitle">Answers to common questions about our process</p>
+                </div>
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="accordion" id="faqAccordion">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingOne">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        How long does the installation process take?
+                                    </button>
+                                </h2>
+                                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        <p style="color: #666;">
+                                            The installation process typically takes 2-4 weeks from approval. This includes site assessment, design, permitting, and installation. Our team works efficiently to minimize disruption to your business operations.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingTwo">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        What are the costs involved?
+                                    </button>
+                                </h2>
+                                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        <p style="color: #666;">
+                                            We offer a power-as-a-service model with zero upfront costs. You pay a fixed monthly fee for the solar power you use. The cost is typically 30-50% less than traditional grid electricity.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingThree">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                        What maintenance do I need to do?
+                                    </button>
+                                </h2>
+                                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        <p style="color: #666;">
+                                            We handle all maintenance and monitoring for your solar system. Our 24/7 monitoring system detects any issues immediately, and our maintenance team responds promptly. You don't need to worry about anything.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingFour">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                        What if I move my business?
+                                    </button>
+                                </h2>
+                                <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        <p style="color: #666;">
+                                            We offer flexible terms that allow you to transfer your solar contract to a new location. Our team will assess the new property and make any necessary adjustments to the system.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+        <!-- VESPMAN Platform Intelligence Section-->
+        <section class="py-10 secondary-bg">
+            <div class="container px-4 px-lg-5">
+                <div class="text-center mb-5">
+                    <h2 class="section-title">VESPMAN</h2>
+                    <p class="section-subtitle">Platform Intelligence</p>
+                </div>
+                <div class="row gx-4 gx-lg-5 align-items-center">
+                    <div class="col-lg-6 mb-5 mb-lg-0">
+                        <h3 class="section-title" style="font-size: 1.8rem;">VeGriddy's technology makes solar financing work.</h3>
+                        <p class="section-subtitle" style="font-size: 1.1rem; line-height: 1.8;">
+                            Traditional solar financing is expensive because it's opaque. VeGriddy's data infrastructure makes the invisible visible — turning solar from a risky alternative asset into a predictable, data-backed investment.
+                        </p>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="row gx-4 gx-lg-5">
+                            <div class="col-md-6 mb-4">
+                                <div class="feature-card">
+                                    <div class="feature-icon"><i class="bi bi-clock"></i></div>
+                                    <h3 class="feature-title">Real-Time Monitoring</h3>
+                                    <p class="feature-description">
+                                        IoT sensors track generation, consumption, battery health 24/7
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <div class="feature-card">
+                                    <div class="feature-icon"><i class="bi bi-credit-card"></i></div>
+                                    <h3 class="feature-title">Payment Analytics</h3>
+                                    <p class="feature-description">
+                                        Mobile money integration captures payment behavior
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <div class="feature-card">
+                                    <div class="feature-icon"><i class="bi bi-shield-check"></i></div>
+                                    <h3 class="feature-title">Risk Scoring</h3>
+                                    <p class="feature-description">
+                                        Financiers get transparent risk metrics
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="feature-card">
+                                    <div class="feature-icon"><i class="bi bi-lightning"></i></div>
+                                    <h3 class="feature-title">Predictive Models</h3>
+                                    <p class="feature-description">
+                                        Machine learning identifies maintenance needs
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Who We Serve Section-->
+        <section class="py-10">
+            <div class="container px-4 px-lg-5">
+                <div class="text-center mb-5">
+                    <h2 class="section-title">Who We Serve</h2>
+                    <p class="section-subtitle">The Underserved Mid-Market</p>
+                </div>
+                <div class="row gx-4 gx-lg-5">
+                    <div class="col-lg-8 mx-auto mb-5">
+                        <div class="text-center">
+                            <p class="section-subtitle" style="font-size: 1.1rem; line-height: 1.8;">
+                                200-50,000 kWh/month represents the largest underserved segment in Africa.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="bi bi-house-door"></i></div>
+                            <h3 class="feature-title">Residential</h3>
+                            <p class="feature-description">
+                                Middle-income households in peri-urban areas seeking backup power and cost savings.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="bi bi-briefcase"></i></div>
+                            <h3 class="feature-title">SMEs</h3>
+                            <p class="feature-description">
+                                Small manufacturers, workshops, and service businesses losing productivity to outages.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="bi bi-building"></i></div>
+                            <h3 class="feature-title">Commercial</h3>
+                            <p class="feature-description">
+                                Retail, hospitality, and office buildings with high daytime energy demand.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="bi bi-gear"></i></div>
+                            <h3 class="feature-title">Light Industrial</h3>
+                            <p class="feature-description">
+                                Agro-processing, cold storage, and light manufacturing facilities.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="bi bi-building-fill"></i></div>
+                            <h3 class="feature-title">Institutions</h3>
+                            <p class="feature-description">
+                                Schools, health centers, and community facilities requiring reliable power.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="feature-card">
+                            <div class="feature-icon"><i class="bi bi-building-fill-add"></i></div>
+                            <h3 class="feature-title">Estates & Apartments</h3>
+                            <p class="feature-description">
+                                Multi-dwelling residential complexes seeking shared solar solutions.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        {% include 'includes/footer.html' %}
+
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="{% static 'scripts.js' %}"></script>
+        <script>
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+
+            // Navbar scroll effect
+            window.addEventListener('scroll', function() {
+                const navbar = document.querySelector('.navbar');
+                if (window.scrollY > 50) {
+                    navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+                    navbar.style.boxShadow = '0 4px 20px rgba(0,0,0,0.1)';
+                } else {
+                    navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+                    navbar.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+                }
+            });
+        </script>
+
+        {% include 'includes/registration_modals.html' %}
+
+    </body>
+</html>
+
+
+

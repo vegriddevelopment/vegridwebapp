@@ -1,0 +1,524 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="{% static 'vegrid-logo-BBC4G70n.ico' %}" />
+    <title>Admin Dashboard - VEGRID</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --vegrid-orange: #f59120; }
+        body { font-family: 'Inter', sans-serif; background-color: #fff; margin: 0; padding: 0; }
+        .wrapper { display: flex; min-height: 100vh; }
+        
+        /* Sidebar Styles (Fixed/Non-scrollable) */
+        .sidebar-container { 
+            width: 250px; 
+            flex-shrink: 0;
+        }
+        .sidebar-item { padding: 10px 25px; border-bottom: 1px solid #eee; }
+        .sidebar-link { text-decoration: none; color: #333; font-weight: 700; font-size: 0.95rem; display: block; }
+        .sidebar-link:hover { color: var(--vegrid-orange); }
+        
+        /* Main Content */
+        .main-content { flex: 1; padding: 40px; padding-bottom: 220px; overflow-x: hidden; }
+        .header { display: flex; justify-content: flex-end; margin-bottom: 30px; }
+        .header-logo { display: flex; flex-direction: column; align-items: flex-end; }
+        .header-logo img { height: 60px; }
+        .header-logo span { color: var(--vegrid-orange); font-weight: 900; font-size: 1.2rem; margin-top: -5px; }
+
+        /* Filter Section Styles */
+        .sites-filter-section { margin-bottom: 50px; text-align: center; }
+        .our-sites-btn { 
+            background: var(--vegrid-orange); 
+            color: white; 
+            border: none; 
+            padding: 10px 20px; 
+            font-weight: 700; 
+            border-radius: 4px; 
+            margin-bottom: 25px;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            text-transform: uppercase;
+            font-size: 1.1rem;
+            cursor: pointer;
+            appearance: auto !important;
+        }
+        .filter-row { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
+        .filter-btn, .filter-select { 
+            background: var(--vegrid-orange); 
+            color: white; 
+            border: none; 
+            padding: 12px 10px; 
+            width: 170px;
+            font-weight: 700; 
+            border-radius: 4px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            appearance: auto !important;
+            text-align: center;
+        }
+        .filter-select {
+            text-align-last: center;
+        }
+        .filter-select option {
+            background: white;
+            color: #333;
+            font-weight: 400;
+        }
+
+        /* Summary Stats */
+        .stats-summary { border-top: 1.5px solid #eee; padding-top: 30px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .stat-row { display: flex; justify-content: space-between; margin-bottom: 10px; padding-right: 20px; border-bottom: 1px solid #eee; }
+        .stat-label { font-weight: 800; color: #333; font-size: 0.9rem; text-transform: uppercase; }
+        .stat-value { font-weight: 800; color: #333; font-size: 0.9rem; }
+
+        /* Footer Buttons */
+        .footer-nav { position: fixed; bottom: 0; left: 250px; right: 0; background: var(--vegrid-orange); padding: 20px 40px; display: flex; justify-content: center; gap: 50px; border-top-left-radius: 30px; border-top-right-radius: 30px; z-index: 1001; }
+        .footer-btn { background: #000; color: #fff; border: none; padding: 8px 40px; border-radius: 4px; font-weight: 700; text-transform: none; text-decoration: none; font-size: 0.9rem; }
+
+        /* Energy Flow Styling (Matching Customer Dashboard) */
+        .energy-flow-section {
+            padding: 40px 0;
+            position: relative;
+            max-width: 500px;
+            margin: 40px auto;
+            height: 400px;
+        }
+        .flow-node {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 2;
+        }
+        .flow-node.node-right { flex-direction: row-reverse; text-align: right; }
+        .flow-node.node-right .node-content { align-items: flex-end; }
+        
+        .node-icon {
+            width: 50px;
+            height: 50px;
+            border: 2px solid var(--vegrid-orange);
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--vegrid-orange);
+            font-size: 1.2rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            flex-shrink: 0;
+        }
+        .node-content { display: flex; flex-direction: column; justify-content: center; }
+        .node-label { font-size: 0.7rem; font-weight: 700; color: #333; text-transform: uppercase; line-height: 1; margin-bottom: 2px; }
+        .node-value { font-size: 0.75rem; font-weight: 700; color: var(--vegrid-orange); line-height: 1; }
+
+        .battery-percentage-inside {
+            position: absolute;
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: var(--vegrid-orange);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 5;
+        }
+
+        /* Positions */
+        .node-generation { top: 0; left: 0; }
+        .node-grid { top: 0; right: 0; }
+        .node-center { 
+            top: 50%; 
+            left: 50%; 
+            transform: translate(-50%, -50%);
+            width: 100px;
+        }
+        .node-center .node-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--vegrid-orange);
+            color: white;
+            border: none;
+            font-size: 2rem;
+        }
+        .node-storage { bottom: 0; left: 0; }
+        .node-consumption { bottom: 0; right: 0; }
+
+        /* Flow SVG */
+        .flow-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+        .flow-line {
+            fill: none;
+            stroke: #e0e0e0;
+            stroke-width: 4;
+            stroke-linecap: round;
+        }
+        .flow-active { stroke: var(--vegrid-orange); stroke-opacity: 0.3; }
+        
+        .flow-dot { fill: var(--vegrid-orange); }
+        .flow-active + .flow-dot {
+            animation: flow-dot-move 3s linear infinite;
+        }
+        .flow-reverse + .flow-dot {
+            animation: flow-dot-move-reverse 3s linear infinite;
+        }
+
+        @keyframes flow-dot-move { from { offset-distance: 0%; } to { offset-distance: 100%; } }
+        @keyframes flow-dot-move-reverse { from { offset-distance: 100%; } to { offset-distance: 0%; } }
+
+        @media (max-width: 768px) {
+            .sidebar-container { display: none; }
+            .footer-nav { left: 0; padding: 20px; }
+            .stats-summary { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <div class="sidebar-container">
+            {% include 'admin/sidebar.html' %}
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <header class="header">
+                <div class="header-logo">
+                    <img src="{% static 'sun-logo.png' %}" alt="Sun Logo">
+                    <span>VEGRID</span>
+                </div>
+            </header>
+
+            <!-- Sites Filter Section -->
+            <div class="sites-filter-section">
+                <select class="our-sites-btn" id="siteFilter" onchange="applyFilters()" style="width: auto; min-width: 250px; text-align-last: center;">
+                    <option value="all" {% if filters.site == 'all' or not filters.site %}selected{% endif %}>OUR SITES ({{ stats.online_sites }}/{{ stats.total_sites }})</option>
+                    {% for s in all_sites %}
+                    <option value="{{ s.id }}" {% if filters.site == s.id|stringformat:"s" %}selected{% endif %}>{{ s.name }} ({{ s.status }})</option>
+                    {% endfor %}
+                </select>
+
+                {% if selected_site %}
+                <div style="margin-top: -15px; margin-bottom: 20px; font-size: 0.9rem; color: #666; font-weight: 600;">
+                    Customer: <span style="color: var(--vegrid-orange);">{{ selected_site.customer.user.get_full_name|default:selected_site.customer.user.username }}</span> | 
+                    SN: <span style="color: var(--vegrid-orange);">{{ selected_site.device_sn }}</span> |
+                    Last Sync: <span style="color: var(--vegrid-orange);">{{ selected_site.updated_at|date:"H:i:s" }}</span>
+                </div>
+                {% endif %}
+
+                <div class="filter-row">
+                    <select class="filter-select" id="countryFilter" onchange="applyFilters()">
+                        <option value="">Country ({{ countries|length }})</option>
+                        {% for country in countries %}
+                        <option value="{{ country }}" {% if filters.country == country %}selected{% endif %}>{{ country }}</option>
+                        {% endfor %}
+                    </select>
+
+                    <select class="filter-select" id="countyFilter" onchange="applyFilters()">
+                        <option value="">County ({{ counties|length }})</option>
+                        {% for county in counties %}
+                        <option value="{{ county }}" {% if filters.county == county %}selected{% endif %}>{{ county }}</option>
+                        {% endfor %}
+                    </select>
+
+                    <select class="filter-select" id="townFilter" onchange="applyFilters()">
+                        <option value="">Town ({{ towns|length }})</option>
+                        {% for town in towns %}
+                        <option value="{{ town }}" {% if filters.town == town %}selected{% endif %}>{{ town }}</option>
+                        {% endfor %}
+                    </select>
+
+                    <select class="filter-select" id="areaFilter" onchange="applyFilters()">
+                        <option value="">Area ({{ areas|length }})</option>
+                        {% for area in areas %}
+                        <option value="{{ area }}" {% if filters.area == area %}selected{% endif %}>{{ area }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <!-- Energy Flow Visualization -->
+            <div class="energy-flow-section">
+                <svg class="flow-svg" viewBox="0 0 500 400">
+                    <defs>
+                        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                            <polygon points="0 0, 10 3.5, 0 7" fill="var(--vegrid-orange)" />
+                        </marker>
+                    </defs>
+                    
+                    <!-- Paths with dots -->
+                    <!-- PV to Center -->
+                    <path id="pvPath" d="M 40 60 V 180 H 210" class="flow-line flow-active"></path>
+                    <g id="pvDotGroup">
+                        <circle r="4" class="flow-dot"><animateMotion dur="3s" repeatCount="indefinite"><mpath href="#pvPath"/></animateMotion></circle>
+                    </g>
+
+                    <!-- Grid <-> Center -->
+                    <g id="gridFlowContainer">
+                        {% if stats.grid_direction == 'import' %}
+                            <path id="gridPath" d="M 460 60 V 180 H 290" class="flow-line flow-active"></path>
+                            <circle r="4" class="flow-dot"><animateMotion dur="3s" repeatCount="indefinite"><mpath href="#gridPath"/></animateMotion></circle>
+                        {% else %}
+                            <path id="gridPathRev" d="M 290 180 H 460 V 60" class="flow-line flow-active"></path>
+                            <circle r="4" class="flow-dot"><animateMotion dur="3s" repeatCount="indefinite"><mpath href="#gridPathRev"/></animateMotion></circle>
+                        {% endif %}
+                    </g>
+
+                    <!-- Storage <-> Center -->
+                    <g id="storageFlowContainer">
+                        {% if stats.storage_direction == 'charge' %}
+                            <path id="storagePath" d="M 210 220 H 60 V 340" class="flow-line flow-active"></path>
+                            <circle r="4" class="flow-dot"><animateMotion dur="3s" repeatCount="indefinite"><mpath href="#storagePath"/></animateMotion></circle>
+                        {% else %}
+                            <path id="storagePathRev" d="M 60 340 V 220 H 210" class="flow-line flow-active"></path>
+                            <circle r="4" class="flow-dot"><animateMotion dur="3s" repeatCount="indefinite"><mpath href="#storagePathRev"/></animateMotion></circle>
+                        {% endif %}
+                    </g>
+
+                    <!-- Center to Load -->
+                    <path id="loadPath" d="M 290 220 H 440 V 340" class="flow-line flow-active"></path>
+                    <g id="loadDotGroup">
+                        <circle r="4" class="flow-dot"><animateMotion dur="3s" repeatCount="indefinite"><mpath href="#loadPath"/></animateMotion></circle>
+                    </g>
+                </svg>
+
+                <!-- Generation -->
+                <div class="flow-node node-generation">
+                    <div class="node-icon"><i class="bi bi-sun"></i></div>
+                    <div class="node-content">
+                        <span class="node-label">Generation</span>
+                        <span id="generationValue" class="node-value">{{ stats.total_generation }} kW</span>
+                        {% if filters.site %}
+                        <div id="todayGenerationContainer" style="font-size: 0.6rem; color: #888; margin-top: 2px;">
+                            Today: <span id="todayGenerationValue">{{ stats.today_generation }}</span> kWh
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Grid -->
+                <div class="flow-node node-grid node-right">
+                    <div class="node-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2v20"></path>
+                            <path d="M7 22l5-20 5 20"></path>
+                            <path d="M2 12h20"></path>
+                            <path d="M5 12l2 4"></path>
+                            <path d="M19 12l-2 4"></path>
+                            <path d="M12 4l-4 3"></path>
+                            <path d="M12 4l4 3"></path>
+                        </svg>
+                    </div>
+                    <div class="node-content">
+                        <span class="node-label">Grid</span>
+                        <span id="gridValue" class="node-value">{{ stats.grid }} kW</span>
+                    </div>
+                </div>
+
+                <!-- Center -->
+                <div class="flow-node node-center">
+                    <div class="node-icon">
+                        <img src="{% static 'vegrid-logo-BBC4G70n.png' %}" alt="Logo" style="height: 50px; width: auto;">
+                    </div>
+                </div>
+
+                <!-- Storage -->
+                <div class="flow-node node-storage">
+                    <div class="node-icon" style="position: relative;">
+                        <i class="bi bi-battery-full" style="opacity: 0.3;"></i>
+                        <span id="batterySocValue" class="battery-percentage-inside">{{ stats.avg_soc }}%</span>
+                    </div>
+                    <div class="node-content">
+                        <span class="node-label">Storage</span>
+                        <span id="storageValue" class="node-value">{{ stats.total_storage }} kW</span>
+                    </div>
+                </div>
+
+                <!-- Consumption -->
+                <div class="flow-node node-consumption node-right">
+                    <div class="node-icon"><i class="bi bi-house-door"></i></div>
+                    <div class="node-content">
+                        <span class="node-label">Consumption</span>
+                        <span id="consumptionValue" class="node-value">{{ stats.consumption }} kW</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats-summary">
+                <div class="stats-col">
+                    <div class="stat-row">
+                        <span class="stat-label">TOTAL SITES</span>
+                        <span class="stat-value">{{ stats.total_sites }}</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">TOTAL CUSTOMERS</span>
+                        <span class="stat-value">{{ stats.total_customers }}</span>
+                    </div>
+                </div>
+                <div class="stats-col">
+                    <div class="stat-row">
+                        <span class="stat-label">TOTAL REVENUE</span>
+                        <span class="stat-value">KES {{ stats.total_revenue|floatformat:2 }}</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">TOTAL PAYMENTS</span>
+                        <span class="stat-value">{{ stats.total_payments }}</span>
+                    </div>
+                </div>
+                <div class="stats-col">
+                    <div class="stat-row">
+                        <span class="stat-label">OPEN INCIDENTS</span>
+                        <span class="stat-value">{{ stats.open_incidents }}</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">ACTIVE ALERTS</span>
+                        <span class="stat-value">{{ stats.active_alerts }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer-nav">
+        <a href="{% url 'admin-notifications' %}" class="footer-btn">Notification</a>
+        <a href="{% url 'admin-alerts' %}" class="footer-btn">Alerts</a>
+        <a href="{% url 'admin-incidents' %}" class="footer-btn">Incidents</a>
+    </footer>
+
+    <script>
+        function applyFilters() {
+            const country = document.getElementById('countryFilter').value;
+            const county = document.getElementById('countyFilter').value;
+            const town = document.getElementById('townFilter').value;
+            const area = document.getElementById('areaFilter').value;
+            const site = document.getElementById('siteFilter').value;
+            
+            let url = new URL(window.location.href);
+            if (country) url.searchParams.set('country', country);
+            else url.searchParams.delete('country');
+            
+            if (county) url.searchParams.set('county', county);
+            else url.searchParams.delete('county');
+            
+            if (town) url.searchParams.set('town', town);
+            else url.searchParams.delete('town');
+            
+            if (area) url.searchParams.set('area', area);
+            else url.searchParams.delete('area');
+
+            if (site) url.searchParams.set('site', site);
+            else url.searchParams.delete('site');
+            
+            window.location.href = url.toString();
+        }
+
+        function clearFilters() {
+            window.location.href = window.location.origin + window.location.pathname;
+        }
+
+        // Real-time Data Sync
+        async function updateDashboardData() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const site = urlParams.get('site');
+            const country = urlParams.get('country');
+            const county = urlParams.get('county');
+            const town = urlParams.get('town');
+            const area = urlParams.get('area');
+
+            let fetchUrl = "{% url 'admin-dashboard-data' %}?";
+            if (site) fetchUrl += `&site=${site}`;
+            if (country) fetchUrl += `&country=${country}`;
+            if (county) fetchUrl += `&county=${county}`;
+            if (town) fetchUrl += `&town=${town}`;
+            if (area) fetchUrl += `&area=${area}`;
+
+            try {
+                const response = await fetch(fetchUrl);
+                const data = await response.json();
+                
+                if (data.status === 'success') {
+                    const stats = data.stats;
+                    
+                    // Update Values
+                    document.getElementById('generationValue').textContent = `${stats.total_generation} kW`;
+                    document.getElementById('gridValue').textContent = `${stats.grid} kW`;
+                    document.getElementById('storageValue').textContent = `${stats.total_storage} kW`;
+                    document.getElementById('consumptionValue').textContent = `${stats.consumption} kW`;
+                    document.getElementById('batterySocValue').textContent = `${stats.avg_soc}%`;
+
+                    if (document.getElementById('todayGenerationValue')) {
+                        document.getElementById('todayGenerationValue').textContent = stats.today_generation;
+                    }
+
+                    // Update Grid Flow
+                    const gridContainer = document.getElementById('gridFlowContainer');
+                    if (stats.grid_direction === 'import') {
+                        gridContainer.innerHTML = `
+                            <path id="gridPath" d="M 460 60 V 180 H 290" class="flow-line flow-active"></path>
+                            <circle r="4" class="flow-dot"><animateMotion dur="3s" repeatCount="indefinite"><mpath href="#gridPath"/></animateMotion></circle>
+                        `;
+                    } else {
+                        gridContainer.innerHTML = `
+                            <path id="gridPathRev" d="M 290 180 H 460 V 60" class="flow-line flow-active"></path>
+                            <circle r="4" class="flow-dot"><animateMotion dur="3s" repeatCount="indefinite"><mpath href="#gridPathRev"/></animateMotion></circle>
+                        `;
+                    }
+
+                    // Update Storage Flow
+                    const storageContainer = document.getElementById('storageFlowContainer');
+                    if (stats.storage_direction === 'charge') {
+                        storageContainer.innerHTML = `
+                            <path id="storagePath" d="M 210 220 H 60 V 340" class="flow-line flow-active"></path>
+                            <circle r="4" class="flow-dot"><animateMotion dur="3s" repeatCount="indefinite"><mpath href="#storagePath"/></animateMotion></circle>
+                        `;
+                    } else {
+                        storageContainer.innerHTML = `
+                            <path id="storagePathRev" d="M 60 340 V 220 H 210" class="flow-line flow-active"></path>
+                            <circle r="4" class="flow-dot"><animateMotion dur="3s" repeatCount="indefinite"><mpath href="#storagePathRev"/></animateMotion></circle>
+                        `;
+                    }
+
+                    // Visibility of dots based on values
+                    document.getElementById('pvDotGroup').style.display = parseFloat(stats.total_generation) > 0 ? 'block' : 'none';
+                    document.getElementById('loadDotGroup').style.display = parseFloat(stats.consumption) > 0 ? 'block' : 'none';
+                    
+                    // Show dots only if active
+                    if (parseFloat(stats.grid) === 0) gridContainer.style.display = 'none';
+                    else gridContainer.style.display = 'block';
+
+                    if (parseFloat(stats.total_storage) === 0) storageContainer.style.display = 'none';
+                    else storageContainer.style.display = 'block';
+
+                    // Update timestamp if available in UI
+                    if (document.getElementById('lastSyncTime')) {
+                        const now = new Date();
+                        document.getElementById('lastSyncTime').textContent = now.toLocaleTimeString();
+                    }
+                }
+            } catch (error) {
+                console.error('Error fetching dashboard data:', error);
+            }
+        }
+
+        // Start real-time sync
+        const syncInterval = "{% if filters.site %}5000{% else %}15000{% endif %}";
+        setInterval(updateDashboardData, parseInt(syncInterval));
+    </script>
+</body>
+</html>

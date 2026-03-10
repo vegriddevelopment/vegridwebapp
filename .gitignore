@@ -1,0 +1,271 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so may be deleted later.
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# Scrapy stuff:
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+.pybuilder/
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+#   For a library or package, you might want to ignore these files since the code is
+#   intended to run in multiple environments; otherwise, check them in:
+# .python-version
+
+# pipenv
+#   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
+#   However, in case of collaboration, if having platform-specific dependencies or dependencies
+#   having no cross-platform support, pipenv may install dependencies that don't work, or even
+#   fail to install, on other platforms.
+#Pipfile.lock
+
+# poetry
+#   Similar to Pipfile.lock, it is generally recommended to include poetry.lock in version control.
+#   Poetry's lock file is always platform-independent, so it can be safely committed.
+#poetry.lock
+
+# pdm
+#   Similar to Pipfile.lock, it is generally recommended to include pdm.lock in version control.
+#pdm.lock
+#   pdm build plugins may create files here
+.pdm-build/
+
+# PEP 582; used by e.g. github.com/pdm-project/pdm
+__pypackages__/
+
+# Celery stuff
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# pytype static type analyzer
+.pytype/
+
+# Cython debug symbols
+cython_debug/
+
+# PyCharm
+#  JetBrains specific template is maintained in a separate repository:
+#  https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
+#  and can be added to the global git config or merged into this file. For now ignore only .idea
+.idea/
+
+# Visual Studio Code
+.vscode/
+
+# Zencoder files
+.zencoder/
+.zenflow/
+
+
+!bulk_fix_alerts.py
+!check_db_alerts_summary.py
+!check_db_alerts.py
+!check_db_devices_summary.py
+!check_db.py
+!check_device_connection.py
+!check_device_credentials.py
+!check_device_list.py
+!check_device_realtime_alerts.py
+!check_device_realtime_v2.py
+!check_deye_alerts_api.py
+!check_deye_api_response.py
+!check_deye_api_structure.py
+!check_deye_device_history.py
+!check_deye_total_dc_power.py
+!check_deye.py
+!check_first_alert.py
+!check_five_star_pv.py
+!check_latest.py
+!check_month_data_availability.py
+!check_points.py
+!check_pollmuni88.py
+!check_pv_data.py
+!check_raw_latest_pv.py
+!check_static_files.py
+!check_station_detail_api.py
+!check_station_detail_v2.py
+!check_station_detail_v3.py
+!check_station_detail_weather.py
+!check_station_detail.py
+!check_station_weather.py
+!check_sync_status.py
+!check_test_user.py
+!check_total_dc_power.py
+!check_users.py
+!cleanup.py
+!count_stations.py
+!create_admin_user.py
+!create_deye_customer.py
+!create_test_user_script.py
+!create_test_user.py
+!django_fetch_realtime.py
+!fetch_realtime_solar.py
+!finalize_setup.py
+!find_pv_value.py
+!fix_alert_names.py
+!fix_data.py
+!fix_image_404.py
+!fix_javascript_error.py
+!generate_customer_ids.py
+!get_measure_points.py
+!get_stations_debug.py
+!list_api_devices.py
+!list_deye_devices.py
+!list_users.py
+!migrate_customer_ids.py
+!pull_dashboard_pv_data.py
+!pull_deye_alerts_info.py
+!pull_deye_pv_data.py
+!pull_deye_utilization_data.py
+!pull_five_star_kwh_summary.py
+!pull_five_star_pv_app_value.py
+!pull_five_star_pv_latest.py
+!pull_latest_metrics.py
+!read_models.py
+!reset_test_user_password.py
+!reset_testcustomer_password.py
+!search_deye_service.py
+!simple_test_user.py
+!standalone_deye_test.py
+!startup.py
+!test_agg.py
+!test_alarm_endpoints.py
+!test_alarm_fallback_endpoints.py
+!test_api_alerts_view.py
+!test_api_alerts.py
+!test_daily_granularity_for_month.py
+!test_daily_granularity_null_points.py
+!test_device_alarm_variants.py
+!test_device_details.py
+!test_device_realtime_data.py
+!test_device_status.py
+!test_deye_api.py
+!test_deye_station_detail_raw.py
+!test_final_alerts.py
+!test_get_alarms.py
+!test_get_alerts_specific_device.py
+!test_get_station_id.py
+!test_granularity_2.py
+!test_granularity.py
+!test_list_alarms.py
+!test_month_data.py
+!test_resolve_sns.py
+!test_service_monthly_fallback.py
+!test_station_alarms.py
+!test_station_detail_alarms.py
+!test_station_detail_by_id.py
+!test_station_detail_raw.py
+!test_station_detail.py
+!test_station_energy_month.py
+!test_station_history_daily_for_month.py
+!test_station_history_monthly.py
+!test_station_latest_raw.py
+!test_station_list_with_device.py
+!try_device_realtime.py
+!verify_month_metrics.py
+!verify_sync.py

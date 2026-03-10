@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Date Parsing Test</title>
+</head>
+<body>
+    <h1>Date Parsing Test</h1>
+    <div id="results"></div>
+    
+    <script>
+        // Test with the date string from the API
+        const dateString = "2026-02-25 06:19:15";
+        const date = new Date(dateString);
+        
+        // Log the date and formatted date
+        const resultsDiv = document.getElementById('results');
+        resultsDiv.innerHTML = `
+            <p>Date string: ${dateString}</p>
+            <p>Date object: ${date}</p>
+            <p>Formatted date (en-GB): ${date.toLocaleDateString('en-GB', { 
+                day: '2-digit', 
+                month: 'short', 
+                year: 'numeric' 
+            })}</p>
+        `;
+        
+        console.log("Date string:", dateString);
+        console.log("Date object:", date);
+    </script>
+</body>
+</html>

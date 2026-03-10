@@ -1,0 +1,306 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="{% static 'vegrid-logo-BBC4G70n.ico' %}" />
+<title>Preview New System Setup - VEGRID</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --vegrid-orange: #f59120; }
+        body { font-family: 'Inter', sans-serif; background-color: #f8f9fa; margin: 0; padding-bottom: 40px; }
+        .wrapper { display: flex; min-height: 100vh; }
+        .sidebar-container { width: 250px; flex-shrink: 0; }
+        .sidebar-item { padding: 10px 25px; border-bottom: 1px solid #eee; }
+        .sidebar-link { text-decoration: none; color: #333; font-weight: 700; font-size: 0.95rem; display: block; }
+        .main-content { flex: 1; padding: 40px; max-width: 1400px; }
+        .header { display: flex; justify-content: center; margin-bottom: 30px; position: relative; }
+        .header h1 { background: var(--vegrid-orange); color: #fff; padding: 10px 40px; border-radius: 4px; font-size: 1.2rem; font-weight: 700; text-transform: uppercase; }
+        .header-logo { position: absolute; right: 0; top: 0; display: flex; flex-direction: column; align-items: flex-end; }
+        .header-logo img { height: 40px; }
+        .header-logo span { color: var(--vegrid-orange); font-weight: 900; font-size: 0.8rem; margin-top: -5px; }
+
+        .preview-card { background: #fff; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); overflow: hidden; margin-bottom: 30px; }
+        .card-section-header { background: var(--vegrid-orange); color: #fff; padding: 15px 30px; font-weight: 700; font-size: 1rem; text-transform: uppercase; }
+        .card-body { padding: 30px; }
+        
+        .detail-item { margin-bottom: 20px; }
+        .detail-label { display: block; font-size: 0.8rem; font-weight: 600; color: #888; margin-bottom: 5px; text-transform: none; }
+        .detail-value { font-size: 1rem; font-weight: 700; color: #333; }
+        
+        .action-btns { display: flex; gap: 20px; justify-content: center; margin-top: 40px; }
+        .btn-confirm { 
+            background: var(--vegrid-orange); 
+            color: #fff; 
+            border: none; 
+            padding: 15px 60px; 
+            border-radius: 12px; 
+            font-weight: 800; 
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(245, 145, 32, 0.3);
+            display: flex; align-items: center; gap: 10px;
+        }
+        .btn-confirm:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(245, 145, 32, 0.4); }
+        
+        .btn-back { 
+            background: #fff; 
+            color: #666; 
+            border: 2px solid #ddd; 
+            padding: 15px 60px; 
+            border-radius: 12px; 
+            font-weight: 800; 
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .btn-back:hover { background: #f8f9fa; color: #333; transform: translateY(-2px); border-color: #bbb; }
+        
+        .image-preview-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 10px; }
+        .preview-img-box { border-radius: 8px; overflow: hidden; height: 120px; border: 1px solid #eee; }
+        .preview-img-box img { width: 100%; height: 100%; object-fit: cover; }
+
+        .password-container { display: flex; align-items: center; gap: 10px; }
+        .password-toggle { cursor: pointer; color: var(--vegrid-orange); font-size: 1.1rem; }
+        .password-hidden { display: inline; }
+        .password-visible { display: none; }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <div class="sidebar-container">
+            {% include 'admin/sidebar.html' %}
+        </div>
+        <div class="main-content">
+        <header class="header">
+            {% if site.status == 'Online' %}
+            <h1>New Site Details</h1>
+            {% else %}
+            <h1>Preview New System Setup</h1>
+            {% endif %}
+            <div class="header-logo">
+                <img src="{% static 'sun-logo.png' %}" alt="Sun Logo">
+                <span>VEGRID</span>
+            </div>
+        </header>
+
+        <div class="row">
+            <!-- General Info -->
+            <div class="col-md-6 mb-4">
+                <div class="preview-card h-100">
+                    <div class="card-section-header">General Information</div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="detail-item">
+                                    <span class="detail-label">PLANT NAME</span>
+                                    <span class="detail-value">{{ site.name }}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">COUNTRY</span>
+                                    <span class="detail-value">{{ site.country }}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">REGION</span>
+                                    <span class="detail-value">{{ site.county }}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">TOWN</span>
+                                    <span class="detail-value">{{ site.town }}</span>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="detail-item">
+                                    <span class="detail-label">AREA</span>
+                                    <span class="detail-value">{{ site.area }}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">SERVICE AREA</span>
+                                    <span class="detail-value">{{ site.service_area|default:"-" }}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">TIME ZONE</span>
+                                    <span class="detail-value">{{ site.time_zone }}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">COORDINATES</span>
+                                    <span class="detail-value">{{ coords_display|default:"-" }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="detail-item mt-3">
+                            <span class="detail-label">LOCATION ADDRESS</span>
+                            <span class="detail-value">{{ site.location_address|default:"-" }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- System Info -->
+            <div class="col-md-6 mb-4">
+                <div class="preview-card h-100">
+                    <div class="card-section-header">System Information</div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="detail-item">
+                                    <span class="detail-label">INVERTER RATING (kVA)</span>
+                                    <span class="detail-value">{{ site.rating }}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">INVERTER BRAND</span>
+                                    <span class="detail-value">{{ site.inverter_brand|default:"-" }}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">INVERTER MODEL</span>
+                                    <span class="detail-value">{{ site.inverter_model|default:"-" }}</span>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="detail-item">
+                                    <span class="detail-label">INVERTER SN</span>
+                                    <span class="detail-value">{{ site.device_sn }}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">GENERATION (kWp)</span>
+                                    <span class="detail-value">{{ site.installed_capacity }}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">STORAGE (kW)</span>
+                                    <span class="detail-value">{{ site.battery_capacity }}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">BATTERY BRAND</span>
+                                    <span class="detail-value">{{ site.battery_brand|default:"-" }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+             <!-- Installation Info -->
+             <div class="col-md-6 mb-4">
+                <div class="preview-card h-100">
+                    <div class="card-section-header">Installation Information</div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="detail-item">
+                                    <span class="detail-label">CUSTOMER</span>
+                                    <span class="detail-value">{{ site.customer.user.get_full_name }}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">INSTALLER</span>
+                                    <span class="detail-value">{{ site.installer|default:"-" }}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">INSTALLATION ENGINEER</span>
+                                    <span class="detail-value">{{ site.installation_engineer|default:"-" }}</span>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="detail-item">
+                                    <span class="detail-label">INSTALLATION DATE</span>
+                                    <span class="detail-value">{{ site.installation_date|date:"F j, Y, g:i a"|default:"-" }}</span>
+                                </div>
+                                <div class="mt-4">
+                                    <a href="{% url 'admin-system-setup-images' site.id %}" class="btn-back w-100 justify-content-center" style="padding: 10px; font-size: 0.8rem;">
+                                        <i class="bi bi-images"></i> VIEW PLANT IMAGES
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Commission Info -->
+            <div class="col-md-6 mb-4">
+                <div class="preview-card h-100">
+                    <div class="card-section-header">Commission Information</div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="detail-item">
+                                    <span class="detail-label">OWNER</span>
+                                    <span class="detail-value">{{ site.owner }}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">CURRENCY</span>
+                                    <span class="detail-value">{{ site.currency|lower|capfirst }}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">FINANCIER</span>
+                                    <span class="detail-value">{{ site.financier_type }}: {{ site.financier|default:"-" }}</span>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="detail-item">
+                                    <span class="detail-label">SERVICE REP</span>
+                                    <span class="detail-value">{{ site.service_rep|default:"-" }}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">USER NAME</span>
+                                    <span class="detail-value">{{ site.deye_username|default:"-" }}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">PASSWORD</span>
+                                    <div class="detail-value password-container">
+                                        <span id="passwordText" class="password-hidden">••••••••</span>
+                                        <span id="actualPassword" class="password-visible" style="display: none;">{{ site.deye_password|default:"-" }}</span>
+                                        <i class="bi bi-eye password-toggle" id="togglePassword"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <form method="POST">
+            {% csrf_token %}
+            <div class="action-btns">
+                <button type="submit" name="action" value="back" class="btn-back">
+                    <i class="bi bi-arrow-left"></i> {% if site.status == 'Online' %}Back to Sites{% else %}Go Back{% endif %}
+                </button>
+                {% if site.status != 'Online' %}
+                <button type="submit" name="action" value="confirm" class="btn-confirm">
+                    <i class="bi bi-check-all"></i> Confirm & Finalize
+                </button>
+                {% endif %}
+            </div>
+        </form>
+    </div>
+</div>
+
+    <script>
+        document.getElementById('togglePassword').addEventListener('click', function() {
+            const passwordText = document.getElementById('passwordText');
+            const actualPassword = document.getElementById('actualPassword');
+            const icon = this;
+
+            if (actualPassword.style.display === 'none') {
+                actualPassword.style.display = 'inline';
+                passwordText.style.display = 'none';
+                icon.classList.remove('bi-eye');
+                icon.classList.add('bi-eye-slash');
+            } else {
+                actualPassword.style.display = 'none';
+                passwordText.style.display = 'inline';
+                icon.classList.remove('bi-eye-slash');
+                icon.classList.add('bi-eye');
+            }
+        });
+    </script>
+</body>
+</html>

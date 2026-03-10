@@ -1,0 +1,161 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="{% static 'vegrid-logo-BBC4G70n.ico' %}" />
+<title>New Site - VEGRID</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --vegrid-orange: #f59120; }
+        body { font-family: 'Inter', sans-serif; background-color: #fff; margin: 0; padding-bottom: 40px; }
+        .wrapper { display: flex; min-height: 100vh; }
+        .sidebar-container { width: 250px; flex-shrink: 0; }
+        .sidebar-item { padding: 10px 25px; border-bottom: 1px solid #eee; }
+        .sidebar-link { text-decoration: none; color: #333; font-weight: 700; font-size: 0.95rem; display: block; }
+        .main-content { flex: 1; padding: 40px; max-width: 1400px; }
+        .header { display: flex; justify-content: center; margin-bottom: 30px; position: relative; }
+        .header h1 { background: var(--vegrid-orange); color: #fff; padding: 10px 40px; border-radius: 4px; font-size: 1.2rem; font-weight: 700; text-transform: uppercase; }
+        .header-logo { position: absolute; right: 0; top: 0; display: flex; flex-direction: column; align-items: flex-end; }
+        .header-logo img { height: 40px; }
+        .header-logo span { color: var(--vegrid-orange); font-weight: 900; font-size: 0.8rem; margin-top: -5px; }
+
+        .form-section { background: var(--vegrid-orange); border-radius: 12px; padding: 30px; height: 100%; color: #fff; }
+        .section-title { font-weight: 700; font-size: 1rem; margin-bottom: 25px; border-bottom: 1px solid rgba(255,255,255,0.3); padding-bottom: 10px; }
+        
+        .form-group { margin-bottom: 20px; }
+        .form-label { display: block; font-size: 0.9rem; font-weight: 600; margin-bottom: 5px; }
+        .form-input { width: 100%; background: transparent; border: none; border-bottom: 1.5px solid #fff; color: #fff; padding: 5px 0; outline: none; }
+        .form-input::placeholder { color: rgba(255,255,255,0.7); }
+        .form-select { width: 100%; background: transparent; border: none; border-bottom: 1.5px solid #fff; color: #fff; padding: 5px 0; outline: none; appearance: none; }
+        .form-select option { color: #333; }
+
+        .action-btns { display: flex; justify-content: space-around; margin-top: 40px; }
+        .btn-white { background: #fff; color: var(--vegrid-orange); border: none; padding: 8px 60px; border-radius: 4px; font-weight: 700; text-decoration: none; font-size: 0.9rem; }
+        
+        .password-container { position: relative; width: 100%; }
+        .password-toggle { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #fff; z-index: 10; font-size: 1.1rem; }
+        .form-input-password { padding-right: 40px !important; }
+
+        .footer-nav { position: fixed; bottom: 0; left: 250px; right: 0; background: var(--vegrid-orange); padding: 20px 40px; display: flex; justify-content: center; gap: 50px; border-top-left-radius: 30px; border-top-right-radius: 30px; z-index: 1001; }
+        .footer-btn { background: #000; color: #fff; border: none; padding: 8px 40px; border-radius: 4px; font-weight: 700; text-decoration: none; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Sidebar -->
+        {% include 'admin/sidebar.html' %}
+        <div class="sidebar-container"></div>
+        <div class="main-content">
+        <header class="header">
+            <h1>New Site Registration</h1>
+            <div class="header-logo">
+                <img src="{% static 'sun-logo.png' %}" alt="Sun Logo">
+                <span>VEGRID</span>
+            </div>
+        </header>
+
+        <form method="POST">
+            {% csrf_token %}
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="form-section">
+                        <div class="section-title">Site & Customer</div>
+                        <div class="form-group">
+                            <label class="form-label">Customer: *</label>
+                            <select name="customer_id" class="form-select" required>
+                                <option value=""></option>
+                                {% for customer in customers %}
+                                <option value="{{ customer.id }}">{{ customer.user.get_full_name|default:customer.user.username }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Site Name: *</label>
+                            <input type="text" name="name" class="form-input" placeholder="e.g. Nairobi Residence" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Device Serial Number (SN): *</label>
+                            <input type="text" name="device_sn" class="form-input" placeholder="Enter Deye SN" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Rating (kVA):</label>
+                            <input type="number" step="0.01" name="rating" class="form-input" placeholder="5.0">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Storage Capacity (kWh):</label>
+                            <input type="number" step="0.01" name="storage" class="form-input" placeholder="10.0">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-section">
+                        <div class="section-title">DeyeCloud Credentials</div>
+                        <div class="form-group">
+                            <label class="form-label">Deye Username: (Optional)</label>
+                            <input type="text" name="deye_username" class="form-input" placeholder="Enter Username">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Deye Password: (Optional)</label>
+                            <div class="password-container">
+                                <input type="password" name="deye_password" id="password_input" class="form-input form-input-password" placeholder="Enter Password">
+                                <i class="bi bi-eye password-toggle" id="togglePassword"></i>
+                            </div>
+                        </div>
+                        <p class="small mt-4" style="opacity: 0.8;">Note: If username and password are not provided, Zencoder will use the default system credentials configured in .env.</p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-section">
+                        <div class="section-title">Location Details</div>
+                        <div class="form-group">
+                            <label class="form-label">County: *</label>
+                            <input type="text" name="county" class="form-input" value="Nairobi" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Town: *</label>
+                            <input type="text" name="town" class="form-input" placeholder="Enter Town" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Area: *</label>
+                            <input type="text" name="area" class="form-input" placeholder="Enter Area" required>
+                        </div>
+
+                        <div class="action-btns">
+                            <button type="submit" class="btn-white">Create</button>
+                            <a href="{% url 'admin-sites' %}" class="btn-white">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+    <footer class="footer-nav">
+        <a href="{% url 'admin-notifications' %}" class="footer-btn">Notification</a>
+        <a href="{% url 'admin-alerts' %}" class="footer-btn">Alerts</a>
+        <a href="{% url 'admin-incidents' %}" class="footer-btn">Incidents</a>
+    </footer>
+
+    <script>
+        const togglePassword = document.querySelector('#togglePassword');
+        const passwordInput = document.querySelector('#password_input');
+
+        if (togglePassword && passwordInput) {
+            togglePassword.addEventListener('click', function (e) {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                this.classList.toggle('bi-eye');
+                this.classList.toggle('bi-eye-slash');
+            });
+        }
+    </script>
+</body>
+</html>

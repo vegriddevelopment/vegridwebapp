@@ -1,12 +1,34 @@
 {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VeGrid Registration</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body>
 
 <style>
+    :root {
+        --vegrid-orange: #f59120;
+        --vegrid-orange-dark: #e07b0c;
+        --vegrid-orange-light: #ff9933;
+        --vegrid-black: #0b0a08;
+        --vegrid-gray: #666;
+        --vegrid-light-gray: #f8f9fa;
+    }
+
     .modal-content {
         font-size: 0.8rem !important;
         overflow: hidden;
     }
+    
     .modal-header-orange {
-        background-color: #ff6600;
+        background-color: var(--vegrid-orange);
         padding: 40px 20px;
         text-align: center;
         position: relative;
@@ -14,29 +36,33 @@
         border-bottom-right-radius: 50% 20%;
         margin-bottom: 30px;
     }
+    
     .modal-logo-white {
         height: 80px;
         margin-bottom: 10px;
         filter: brightness(0) invert(1);
     }
+    
     .modal-brand-white {
         color: white;
-        font-weight: 900;
+        font-weight: 500;
         font-size: 1.8rem;
         letter-spacing: 2px;
         margin-bottom: 0;
         text-transform: uppercase;
     }
+    
     .registration-title {
         color: #333;
-        font-weight: 700;
-        font-size: 0.9rem;
+        font-weight: 500;
+        font-size: 1.2rem;
         letter-spacing: 1px;
         text-transform: uppercase;
         margin-bottom: 25px;
     }
+    
     .btn-orange-full {
-        background-color: #ff9933;
+        background-color: var(--vegrid-orange-light);
         color: white;
         border: none;
         border-radius: 10px;
@@ -47,11 +73,13 @@
         margin-bottom: 10px;
         transition: all 0.3s ease;
     }
+    
     .btn-orange-full:hover {
-        background-color: #ff8811;
+        background-color: var(--vegrid-orange-dark);
         color: white;
         transform: translateY(-2px);
     }
+    
     .btn-back {
         background-color: #f8f9fa;
         color: #666;
@@ -61,17 +89,58 @@
         font-weight: 600;
         transition: all 0.3s ease;
     }
+    
     .btn-back:hover {
         background-color: #e9ecef;
         color: #333;
     }
+    
+    .btn-black-next {
+        background-color: #1a1a1a !important;
+        color: white !important;
+        border: none !important;
+        border-radius: 6px !important;
+        padding: 8px 30px !important;
+        font-weight: 700 !important;
+        font-size: 0.9rem !important;
+        text-transform: uppercase;
+        width: auto !important;
+        min-width: 120px;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-black-next:hover {
+        background-color: #333 !important;
+        transform: translateY(-2px);
+    }
+    
+    .btn-black-back {
+        background-color: #6c757d;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        padding: 8px 30px;
+        font-weight: 700;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-black-back:hover {
+        background-color: #5a6268;
+        color: white;
+        transform: translateY(-2px);
+    }
+    
     .modal-logo {
         height: 35px;
         margin-bottom: 15px;
     }
+    
     .rounded-20 {
         border-radius: 15px !important;
     }
+    
     .otp-input, .email-otp-input {
         width: 45px;
         height: 55px;
@@ -81,81 +150,115 @@
         border-radius: 10px;
         transition: all 0.3s ease;
         background: #fcfcfc;
+        text-align: center;
     }
+    
     .otp-input:focus, .email-otp-input:focus {
-        border-color: #ff6600;
+        border-color: var(--vegrid-orange);
         box-shadow: 0 0 15px rgba(255, 102, 0, 0.15);
         background: #fff;
         outline: none;
     }
+    
     .bg-gradient-primary {
         background: linear-gradient(135deg, #ff6600 0%, #ff8c00 100%) !important;
     }
+    
     .btn-primary.bg-gradient-primary:hover {
         opacity: 0.9;
         transform: translateY(-1px);
     }
+    
     .hover-border-orange:hover {
-        border-color: #ff6600 !important;
-        color: #ff6600 !important;
+        border-color: var(--vegrid-orange) !important;
+        color: var(--vegrid-orange) !important;
     }
+    
     .form-control-lg {
         border-radius: 10px;
         padding: 8px 15px;
         font-size: 0.85rem;
     }
+    
     h3 {
         font-size: 1.25rem !important;
     }
+    
     .lead {
         font-size: 0.9rem !important;
     }
+    
     .btn-lg {
         padding: 10px 20px;
         font-size: 0.9rem;
     }
+    
     .tiny {
         font-size: 0.7rem !important;
     }
-    /* New styles for Review Modal */
+    
     .review-field {
         border-bottom: 1.5px solid #e0e0e0;
         margin-bottom: 8px;
         padding-bottom: 2px;
         display: flex;
-        justify-content: flex-start;
+        justify-content: space-between;
         align-items: center;
     }
+    
     .review-label {
         color: #b0b0b0;
         font-size: 0.95rem;
         margin-right: 10px;
         min-width: fit-content;
     }
+    
     .review-value {
         color: #000;
         font-weight: 700;
         font-size: 0.95rem;
     }
+    
     .profile-photo-circle {
         width: 160px;
         height: 160px;
-        background-color: #f59120;
+        background-color: var(--vegrid-orange);
         border-radius: 50%;
         margin: 0 auto 30px;
         position: relative;
         display: flex;
         align-items: center;
         justify-content: center;
+        cursor: pointer;
+        overflow: hidden;
+        border: 2px solid var(--vegrid-orange);
+        transition: all 0.3s ease;
     }
+    
+    .profile-photo-circle:hover {
+        border-color: var(--vegrid-orange-dark);
+        transform: scale(1.02);
+    }
+    
     .camera-icon-badge {
-        position: absolute;
-        bottom: 8px;
-        right: 8px;
-        background: transparent;
-        color: #f59120;
-        font-size: 1.2rem;
+        cursor: pointer;
+        background-color: var(--vegrid-orange);
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid white;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     }
+    
+    .camera-icon-badge:hover {
+        background-color: var(--vegrid-orange-dark);
+        transform: scale(1.1);
+    }
+    
     .btn-black-caps {
         background-color: #0b0a08;
         color: white;
@@ -168,11 +271,12 @@
         text-transform: none;
         font-size: 0.9rem;
     }
+    
     .btn-black-caps:hover {
         background-color: #222;
         color: white;
     }
-    /* T&C Styles */
+    
     .tc-box {
         border: 1px solid #c0c0c0;
         border-radius: 8px;
@@ -186,8 +290,9 @@
         position: relative;
         color: #333;
     }
+    
     .tc-header-btn {
-        background-color: #f59120;
+        background-color: var(--vegrid-orange);
         color: white;
         border: none;
         border-radius: 6px;
@@ -197,6 +302,7 @@
         display: inline-block;
         font-size: 1rem;
     }
+    
     .success-box {
         border: 1.5px solid #c0c0c0;
         border-radius: 12px;
@@ -205,24 +311,16 @@
         font-size: 0.95rem;
         color: #333;
     }
-    .tc-caret {
-        position: absolute;
-        right: 12px;
-        color: #f59120;
-        font-size: 0.8rem;
-    }
-    .tc-caret-up { top: 15px; }
-    .tc-caret-down { bottom: 15px; }
     
-    /* Login Modal Specific Styles */
     .login-modal-content {
-        background-color: #f59120;
+        background-color: var(--vegrid-orange);
         color: white;
         border: none;
         border-radius: 20px;
         padding: 40px 30px;
         position: relative;
     }
+    
     .login-modal-title {
         text-align: center;
         font-weight: 700;
@@ -231,11 +329,13 @@
         margin-bottom: 50px;
         text-transform: uppercase;
     }
+    
     .login-input-group {
         margin-bottom: 30px;
         border-bottom: 1.5px solid rgba(255,255,255,0.8);
         position: relative;
     }
+    
     .login-input-label {
         display: block;
         font-weight: 500;
@@ -243,6 +343,7 @@
         margin-bottom: 5px;
         color: rgba(255,255,255,0.9);
     }
+    
     .login-input {
         background: transparent !important;
         border: none !important;
@@ -252,18 +353,21 @@
         width: 100%;
         outline: none;
     }
+    
     .login-input::placeholder {
         color: rgba(255,255,255,0.6);
     }
+    
     .login-modal-buttons {
         display: flex;
         justify-content: space-between;
-        margin-top: 60px;
+        margin-bottom: 60px;
         gap: 20px;
     }
+    
     .btn-login-white {
         background-color: white;
-        color: #f59120;
+        color: var(--vegrid-orange);
         border: none;
         border-radius: 8px;
         padding: 10px 0;
@@ -272,9 +376,10 @@
         text-align: center;
         text-decoration: none;
     }
+    
     .btn-exit-white {
         background-color: white;
-        color: #f59120;
+        color: var(--vegrid-orange);
         border: none;
         border-radius: 8px;
         padding: 10px 0;
@@ -287,6 +392,7 @@
         justify-content: center;
         gap: 5px;
     }
+    
     .underline-input {
         border: none !important;
         border-bottom: 1.5px solid #c0c0c0 !important;
@@ -297,36 +403,35 @@
         font-size: 0.95rem !important;
         color: #333 !important;
     }
+    
+    .underline-input:focus {
+        outline: none !important;
+        border-bottom-color: var(--vegrid-orange) !important;
+    }
+    
     .underline-input::placeholder {
         color: #b0b0b0 !important;
+        font-size: 0.85rem;
     }
-    .btn-black-next {
-        background-color: #1a1a1a !important;
-        color: white !important;
-        border: none !important;
-        border-radius: 6px !important;
-        padding: 8px 30px !important;
-        font-weight: 700 !important;
-        font-size: 0.9rem !important;
-        text-transform: uppercase;
-        width: auto !important;
-        min-width: 120px;
-    }
+    
     .modal-logo-right {
         position: absolute;
         top: 20px;
         right: 20px;
         text-align: right;
     }
+    
     .modal-logo-right img {
         height: 40px;
     }
+    
     .modal-logo-right p {
-        color: #f59120;
+        color: var(--vegrid-orange);
         font-weight: 900;
         font-size: 0.9rem;
         margin: -5px 0 0 0;
     }
+    
     .business-details-title {
         color: #333;
         font-weight: 700;
@@ -335,17 +440,20 @@
         margin-bottom: 30px;
         text-align: left;
     }
+    
     .commercial-textarea {
         border: 1px solid #c0c0c0 !important;
         border-radius: 8px !important;
         min-height: 120px !important;
     }
+    
     .login-modal-bg {
-        background-color: #f59120;
+        background-color: var(--vegrid-orange);
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
     }
+    
     .otp-instruction {
         text-align: center;
         margin-bottom: 40px;
@@ -353,19 +461,44 @@
         line-height: 1.5;
         font-size: 1.1rem;
     }
+    
     .resend-otp-container {
         margin: 40px 0;
         display: flex;
         justify-content: center;
     }
+    
     .btn-resend-white {
         background-color: white;
-        color: #f59120;
+        color: var(--vegrid-orange);
         border: none;
         border-radius: 8px;
         padding: 8px 25px;
         font-weight: 700;
         text-decoration: none;
+    }
+    
+    .edit-pencil {
+        color: var(--vegrid-orange);
+        cursor: pointer;
+        font-size: 0.9rem;
+        opacity: 0.7;
+        transition: opacity 0.2s;
+    }
+    
+    .edit-pencil:hover {
+        opacity: 1;
+    }
+    
+    .save-icon {
+        color: #28a745;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: transform 0.2s;
+    }
+    
+    .save-icon:hover {
+        transform: scale(1.1);
     }
 </style>
 
@@ -376,7 +509,7 @@
             <div class="modal-header-orange">
                 <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="Close"></button>
                 <div style="display: flex; flex-direction: column; align-items: center;">
-                    <img src="{% static 'sun-logo.png' %}" alt="Sun Logo" style="height: 80px; margin-bottom: 10px;">
+                    <img src="{% static 'vegrid-logo-BBC4G70n.png' %}" alt="VeGrid Logo" style="height: 80px; margin-bottom: 10px;">
                     <h1 class="modal-brand-white">VEGRID</h1>
                 </div>
             </div>
@@ -384,7 +517,7 @@
                 <h4 class="registration-title">Customer Registration</h4>
                 <div class="d-grid gap-2 mb-4">
                     <button type="button" class="btn btn-orange-full registration-type-main-btn" data-type="individual" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#verificationModal">Individual</button>
-                    <button type="button" class="btn btn-orange-full registration-type-main-btn" data-type="commercial" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#commercialRegistrationModal">Commercial</button>
+                    <button type="button" class="btn btn-orange-full registration-type-main-btn" data-type="commercial" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#commercialRegistrationModal">Business</button>
                     <button type="button" class="btn btn-orange-full registration-type-main-btn" data-type="other" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#otherRegistrationChoiceModal">Other</button>
                 </div>
                 <div class="text-center mt-4">
@@ -402,7 +535,7 @@
             <div class="modal-header-orange">
                 <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="Close"></button>
                 <div style="display: flex; flex-direction: column; align-items: center;">
-                    <img src="{% static 'sun-logo.png' %}" alt="Sun Logo" style="height: 80px; margin-bottom: 10px;">
+                    <img src="{% static 'vegrid-logo-BBC4G70n.png' %}" alt="VeGrid Logo" style="height: 80px; margin-bottom: 10px;">
                     <h1 class="modal-brand-white">VEGRID</h1>
                 </div>
             </div>
@@ -429,7 +562,7 @@
             <div class="modal-header-orange">
                 <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="Close"></button>
                 <div style="display: flex; flex-direction: column; align-items: center;">
-                    <img src="{% static 'sun-logo.png' %}" alt="Sun Logo" style="height: 80px; margin-bottom: 10px;">
+                    <img src="{% static 'vegrid-logo-BBC4G70n.png' %}" alt="VeGrid Logo" style="height: 80px; margin-bottom: 10px;">
                     <h1 class="modal-brand-white">VEGRID</h1>
                 </div>
             </div>
@@ -455,7 +588,7 @@
             <div class="modal-header-orange">
                 <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="Close"></button>
                 <div style="display: flex; flex-direction: column; align-items: center;">
-                    <img src="{% static 'sun-logo.png' %}" alt="Sun Logo" style="height: 80px; margin-bottom: 10px;">
+                    <img src="{% static 'vegrid-logo-BBC4G70n.png' %}" alt="VeGrid Logo" style="height: 80px; margin-bottom: 10px;">
                     <h1 class="modal-brand-white">VEGRID</h1>
                 </div>
             </div>
@@ -480,7 +613,7 @@
                         <label for="phoneNumber" class="form-label fw-bold small">Phone No:</label>
                         <div class="input-group">
                             <span class="input-group-text bg-light border-2 border-end-0 small" id="phoneCode" style="border-radius: 10px 0 0 10px;">+254</span>
-                            <input type="tel" class="form-control form-control-lg border-2 border-start-0" id="phoneNumber" placeholder="700 000 000" required style="border-radius: 0 10px 10px 0;">
+                            <input type="tel" class="form-control form-control-lg border-2 border-start-0" id="phoneNumber" placeholder="700 000 000" pattern="[0-9+\-\s]{9,}" required style="border-radius: 0 10px 10px 0;">
                         </div>
                         <small class="text-muted mt-1 d-block">Enter your number without the country code or leading zero (e.g., 700000000 for 0700000000)</small>
                     </div>
@@ -495,6 +628,7 @@
         </div>
     </div>
 </div>
+
 <!-- OTP Verification Modal -->
 <div class="modal fade" id="otpVerificationModal" tabindex="-1" aria-labelledby="otpVerificationModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-md">
@@ -502,7 +636,7 @@
             <div class="modal-header-orange">
                 <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="Close"></button>
                 <div style="display: flex; flex-direction: column; align-items: center;">
-                    <img src="{% static 'sun-logo.png' %}" alt="Sun Logo" style="height: 80px; margin-bottom: 10px;">
+                    <img src="{% static 'vegrid-logo-BBC4G70n.png' %}" alt="VeGrid Logo" style="height: 80px; margin-bottom: 10px;">
                     <h1 class="modal-brand-white">VEGRID</h1>
                 </div>
             </div>
@@ -512,14 +646,12 @@
                         <p class="text-muted small">Please enter your one time pin (OTP) for your registration.</p>
                     </div>
                     <div class="mb-4 d-flex justify-content-center gap-2">
-                        <input type="text" maxlength="1" class="form-control text-center otp-input" required autofocus>
-                        <input type="text" maxlength="1" class="form-control text-center otp-input" required>
-                        <input type="text" maxlength="1" class="form-control text-center otp-input" required>
-                        <input type="text" maxlength="1" class="form-control text-center otp-input" required>
+                        <input type="text" maxlength="1" pattern="[0-9]*" class="form-control text-center otp-input" required autofocus>
+                        <input type="text" maxlength="1" pattern="[0-9]*" class="form-control text-center otp-input" required>
+                        <input type="text" maxlength="1" pattern="[0-9]*" class="form-control text-center otp-input" required>
+                        <input type="text" maxlength="1" pattern="[0-9]*" class="form-control text-center otp-input" required>
                     </div>
-                    <div class="d-grid gap-2 mb-4">
-                        <button type="button" class="btn btn-orange-full px-5 rounded-10" style="min-width: 150px;">Resend</button>
-                    </div>
+                    
                     <div class="d-flex gap-2">
                         <button type="button" class="btn btn-dark btn-lg w-100 py-2 rounded-10" data-bs-toggle="modal" data-bs-target="#verificationModal">
                             BACK
@@ -527,6 +659,10 @@
                         <button type="submit" class="btn btn-dark btn-lg w-100 py-2 rounded-10">
                             VERIFY
                         </button>
+                    </div>
+
+                    <div class="d-grid gap-2 mt-4">
+                        <button type="button" class="btn btn-orange-full px-5 rounded-10" style="min-width: 150px;">Resend</button>
                     </div>
                 </form>
                 <div class="text-center mt-5">
@@ -540,50 +676,39 @@
 <!-- Customer Personal Details Modal -->
 <div class="modal fade" id="customerDetailsModal" tabindex="-1" aria-labelledby="customerDetailsModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-md">
-        <div class="modal-content border-0 shadow-lg rounded-20">
-            <div class="modal-header border-0 pt-3 pe-3 pb-0">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-content border-0 shadow-lg p-4" style="border-radius: 12px; min-height: 600px;">
+            <div class="modal-logo-right">
+                <img src="{% static 'vegrid-logo-BBC4G70n.png' %}" alt="VeGrid Logo">
+                <p>VEGRID</p>
             </div>
-            <div class="modal-body p-4">
-                <div class="text-center mb-4">
-                    <img src="{% static 'sun-logo.png' %}" alt="Sun Logo" class="modal-logo">
-                    <h3 class="fw-bold mb-1">Customer Personal Details</h3>
-                </div>
+            <div class="modal-body p-2 mt-5">
+                <h5 class="business-details-title">Customer Personal Details</h5>
                 <form id="customerDetailsForm">
-                    <div class="row g-2 mb-3">
-                        <div class="col-md-4">
-                            <label for="firstName" class="form-label fw-bold small">First Name: *</label>
-                            <input type="text" class="form-control form-control-lg border-2" id="firstName" required placeholder="John">
-                        </div>
-                        <div class="col-md-4">
-                            <label for="middleName" class="form-label fw-bold small">Middle Name: *</label>
-                            <input type="text" class="form-control form-control-lg border-2" id="middleName" required placeholder="Doe">
-                        </div>
-                        <div class="col-md-4">
-                            <label for="lastName" class="form-label fw-bold small">Last Name: *</label>
-                            <input type="text" class="form-control form-control-lg border-2" id="lastName" required placeholder="Smith">
-                        </div>
+                    <div class="mb-3">
+                        <label for="firstName" class="form-label small fw-bold mb-1">First Name <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control underline-input" id="firstName" placeholder="John" required>
                     </div>
                     <div class="mb-3">
-                        <label for="detailsPhoneNumber" class="form-label fw-bold small">Phone Number: *</label>
-                        <input type="tel" class="form-control form-control-lg border-2 bg-light" id="detailsPhoneNumber" readonly required>
+                        <label for="middleName" class="form-label small fw-bold mb-1">Middle Name</label>
+                        <input type="text" class="form-control underline-input" id="middleName" placeholder="Doe">
                     </div>
-                    <div class="mb-4">
-                        <label for="emailAddress" class="form-label fw-bold small">Email Address: *</label>
-                        <input type="email" class="form-control form-control-lg border-2" id="emailAddress" required placeholder="john.doe@example.com">
+                    <div class="mb-3">
+                        <label for="lastName" class="form-label small fw-bold mb-1">Last Name <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control underline-input" id="lastName" placeholder="Smith" required>
                     </div>
-                    <div class="d-flex gap-2">
-                        <button type="button" class="btn btn-back w-100" data-bs-toggle="modal" data-bs-target="#otpVerificationModal">
-                            <i class="bi bi-arrow-left me-1"></i> Back
-                        </button>
-                        <button type="submit" class="btn btn-primary btn-lg w-100 py-2 rounded-20 bg-gradient-primary border-0 shadow-sm transition-all">
-                            Next <i class="bi bi-arrow-right ms-1"></i>
-                        </button>
+                    <div class="mb-3">
+                        <label for="detailsPhoneNumber" class="form-label small fw-bold mb-1">Phone Number <span class="text-danger">*</span></label>
+                        <input type="tel" class="form-control underline-input bg-light" id="detailsPhoneNumber" placeholder="(555) 123-4567" pattern="[0-9+\-\s]{10,}" readonly required>
+                    </div>
+                    <div class="mb-5">
+                        <label for="emailAddress" class="form-label small fw-bold mb-1">Email Address <span class="text-danger">*</span></label>
+                        <input type="email" class="form-control underline-input" id="emailAddress" placeholder="john.doe@example.com" required>
+                    </div>
+                    <div class="text-center mt-4">
+                        <button type="button" class="btn btn-black-back me-2" data-bs-toggle="modal" data-bs-target="#otpVerificationModal">BACK</button>
+                        <button type="submit" class="btn btn-black-next">NEXT</button>
                     </div>
                 </form>
-                <div class="text-center mt-4">
-                    <p class="text-muted tiny mb-0">©Vegrid {% now "Y" %}</p>
-                </div>
             </div>
         </div>
     </div>
@@ -594,40 +719,51 @@
     <div class="modal-dialog modal-dialog-centered modal-md">
         <div class="modal-content border-0 shadow-lg p-4" style="border-radius: 12px; min-height: 600px;">
             <div class="modal-logo-right">
-                <img src="{% static 'sun-logo.png' %}" alt="VeGrid Logo">
+                <img src="{% static 'vegrid-logo-BBC4G70n.png' %}" alt="VeGrid Logo">
                 <p>VEGRID</p>
             </div>
             <div class="modal-body p-2 mt-5">
-                <h5 class="business-details-title">Customer Business Details</h5>
+                <h5 class="business-details-title">Commercial Business Details</h5>
                 <form id="commercialBusinessDetailsForm">
                     <div class="mb-3">
-                        <input type="text" class="form-control underline-input" id="businessName" placeholder="Business Name: *" required>
+                        <label for="businessName" class="form-label small fw-bold mb-1">Business Name <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control underline-input" id="businessName" placeholder="e.g., ABC Corporation" required>
                     </div>
                     <div class="mb-3">
-                        <input type="text" class="form-control underline-input" id="industryType" placeholder="Industry Type: *" required>
+                        <label for="industryType" class="form-label small fw-bold mb-1">Industry Type <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control underline-input" id="industryType" placeholder="e.g., Technology, Healthcare" required>
                     </div>
                     <div class="mb-3">
-                        <input type="text" class="form-control underline-input" id="businessContactName" placeholder="Contact Name: *" required>
+                        <label for="businessContactName" class="form-label small fw-bold mb-1">Contact Name <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control underline-input" id="businessContactName" placeholder="Full name" required>
                     </div>
                     <div class="mb-3">
-                        <input type="tel" class="form-control underline-input" id="businessContactNumber" placeholder="Contact Number: *" required>
+                        <label for="businessContactNumber" class="form-label small fw-bold mb-1">Contact Number <span class="text-danger">*</span></label>
+                        <input type="tel" class="form-control underline-input" id="businessContactNumber" placeholder="(555) 123-4567" pattern="[0-9+\-\s]{10,}" required>
                     </div>
                     <div class="mb-3">
-                        <input type="text" class="form-control underline-input" id="businessAddress" placeholder="Business Address (P.O Box):">
+                        <label for="businessAddress" class="form-label small fw-bold mb-1">Business Address (P.O Box)</label>
+                        <input type="text" class="form-control underline-input" id="businessAddress" placeholder="P.O Box 12345">
                     </div>
                     <div class="mb-3">
-                        <input type="text" class="form-control underline-input" id="physicalAddress" placeholder="Physical Address:">
+                        <label for="physicalAddress" class="form-label small fw-bold mb-1">Physical Address</label>
+                        <input type="text" class="form-control underline-input" id="physicalAddress" placeholder="123 Main Street">
                     </div>
                     <div class="mb-3">
-                        <input type="email" class="form-control underline-input" id="businessEmail" placeholder="Email Address:">
+                        <label for="businessEmail" class="form-label small fw-bold mb-1">Email Address</label>
+                        <input type="email" class="form-control underline-input" id="businessEmail" placeholder="business@example.com">
                     </div>
-                    <div class="mb-5 position-relative">
+                    <div class="mb-5">
+                        <label for="businessTown" class="form-label small fw-bold mb-1">Town</label>
                         <select class="form-select underline-input" id="businessTown">
-                            <option value="">Town:</option>
+                            <option value="">Select a town</option>
+                            <option value="newyork">New York</option>
+                            <option value="losangeles">Los Angeles</option>
+                            <option value="chicago">Chicago</option>
                         </select>
-                        <span style="position: absolute; right: 0; bottom: 12px; color: #f59120; pointer-events: none;">▼</span>
                     </div>
                     <div class="text-center mt-4">
+                        <button type="button" class="btn btn-black-back me-2" data-bs-toggle="modal" data-bs-target="#commercialRegistrationModal">BACK</button>
                         <button type="submit" class="btn btn-black-next">NEXT</button>
                     </div>
                 </form>
@@ -641,34 +777,40 @@
     <div class="modal-dialog modal-dialog-centered modal-md">
         <div class="modal-content border-0 shadow-lg p-4" style="border-radius: 12px; min-height: 600px;">
             <div class="modal-logo-right">
-                <img src="{% static 'sun-logo.png' %}" alt="VeGrid Logo">
+                <img src="{% static 'vegrid-logo-BBC4G70n.png' %}" alt="VeGrid Logo">
                 <p>VEGRID</p>
             </div>
             <div class="modal-body p-2 mt-5">
                 <h5 class="business-details-title">Other Details</h5>
                 <form id="commercialOtherDetailsForm">
                     <div class="mb-3">
-                        <input type="text" class="form-control underline-input" id="otherContactName" placeholder="Other Contact Name: *" required>
+                        <label class="form-label small fw-bold mb-1">Other Contact Name <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control underline-input" id="otherContactName" placeholder="Other Contact Name" required>
                     </div>
                     <div class="mb-3">
-                        <input type="tel" class="form-control underline-input" id="otherContactNumber" placeholder="Other Contact Number: *" required>
+                        <label class="form-label small fw-bold mb-1">Other Contact Number <span class="text-danger">*</span></label>
+                        <input type="tel" class="form-control underline-input" id="otherContactNumber" placeholder="Other Contact Number" pattern="[0-9+\-\s]{10,}" required>
                     </div>
                     <div class="mb-3">
-                        <input type="email" class="form-control underline-input" id="alternativeEmail" placeholder="Alternative Email Address: *" required>
+                        <label class="form-label small fw-bold mb-1">Alternative Email Address <span class="text-danger">*</span></label>
+                        <input type="email" class="form-control underline-input" id="alternativeEmail" placeholder="Alternative Email Address" required>
                     </div>
                     <div class="mb-3">
-                        <input type="text" class="form-control underline-input" id="commercialPinNumber" placeholder="Kra Pin: *" required>
+                        <label class="form-label small fw-bold mb-1">KRA Pin <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control underline-input" id="commercialPinNumber" placeholder="KRA Pin" required>
                     </div>
                     <div class="mb-3">
-                        <input type="text" class="form-control underline-input" id="businessRegNumber" placeholder="Business Registration Number: *" required>
+                        <label class="form-label small fw-bold mb-1">Business Registration Number <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control underline-input" id="businessRegNumber" placeholder="Business Registration Number" required>
                     </div>
                     
                     <div class="mt-4 mb-5">
                         <label class="fw-bold small mb-2">Business Description</label>
-                        <textarea class="form-control commercial-textarea" id="businessDescription"></textarea>
+                        <textarea class="form-control commercial-textarea" id="businessDescription" placeholder="Describe your business..."></textarea>
                     </div>
                     
                     <div class="text-center mt-4">
+                        <button type="button" class="btn btn-black-back me-2" data-bs-toggle="modal" data-bs-target="#commercialBusinessDetailsModal">BACK</button>
                         <button type="submit" class="btn btn-black-next">NEXT</button>
                     </div>
                 </form>
@@ -680,37 +822,38 @@
 <!-- Email OTP Verification Modal -->
 <div class="modal fade" id="emailOtpVerificationModal" tabindex="-1" aria-labelledby="emailOtpVerificationModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-md">
-        <div class="modal-content border-0 shadow-lg rounded-20">
-            <div class="modal-header border-0 pt-3 pe-3 pb-0">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-content border-0 shadow-lg p-4" style="border-radius: 12px; min-height: auto;">
+            <div class="modal-logo-right">
+                <img src="{% static 'vegrid-logo-BBC4G70n.png' %}" alt="VeGrid Logo">
+                <p>VEGRID</p>
             </div>
-            <div class="modal-body p-4 text-center">
+            <div class="modal-body p-2 mt-5 text-center">
+                <h5 class="business-details-title mb-3">Email Verification</h5>
+                
                 <div class="mb-4">
-                    <img src="{% static 'sun-logo.png' %}" alt="Sun Logo" class="modal-logo">
-                    <p class="text-muted small">Enter the 4-digit code sent to: <br><strong id="displayEmail" class="text-dark small"></strong></p>
+                    <p class="text-muted small">Enter the 4-digit code sent to:</p>
+                    <strong id="displayEmail" class="text-dark d-block mb-3">user@example.com</strong>
                 </div>
+                
                 <form id="emailOtpVerificationForm">
                     <div class="mb-4 d-flex justify-content-center gap-2">
-                        <input type="text" maxlength="1" class="form-control text-center email-otp-input" required>
-                        <input type="text" maxlength="1" class="form-control text-center email-otp-input" required>
-                        <input type="text" maxlength="1" class="form-control text-center email-otp-input" required>
-                        <input type="text" maxlength="1" class="form-control text-center email-otp-input" required>
+                        <input type="text" maxlength="1" pattern="[0-9]*" class="form-control text-center email-otp-input" style="width: 60px; height: 60px; font-size: 1.5rem; border: 2px solid #ddd; border-radius: 10px;" required>
+                        <input type="text" maxlength="1" pattern="[0-9]*" class="form-control text-center email-otp-input" style="width: 60px; height: 60px; font-size: 1.5rem; border: 2px solid #ddd; border-radius: 10px;" required>
+                        <input type="text" maxlength="1" pattern="[0-9]*" class="form-control text-center email-otp-input" style="width: 60px; height: 60px; font-size: 1.5rem; border: 2px solid #ddd; border-radius: 10px;" required>
+                        <input type="text" maxlength="1" pattern="[0-9]*" class="form-control text-center email-otp-input" style="width: 60px; height: 60px; font-size: 1.5rem; border: 2px solid #ddd; border-radius: 10px;" required>
                     </div>
-                    <div class="d-flex gap-2">
-                        <button type="button" class="btn btn-back w-100" data-bs-toggle="modal" data-bs-target="#customerDetailsModal">
-                            <i class="bi bi-arrow-left me-1"></i> Back
-                        </button>
-                        <button type="submit" class="btn btn-primary btn-lg w-100 py-2 rounded-20 bg-gradient-primary border-0 shadow-sm transition-all">
-                            Verify Email <i class="bi bi-check-circle ms-1"></i>
-                        </button>
+                    
+                    <div class="text-center mt-4">
+                        <button type="button" class="btn btn-black-back me-2" data-bs-toggle="modal" data-bs-target="#customerDetailsModal">BACK</button>
+                        <button type="submit" class="btn btn-black-next">VERIFY EMAIL</button>
+                    </div>
+                    
+                    <div class="mt-3">
+                        <p class="text-muted small mb-0">Didn't receive code? 
+                            <button type="button" class="btn btn-link text-orange p-0 fw-bold text-decoration-none small" style="color: #f59120;">Resend</button>
+                        </p>
                     </div>
                 </form>
-                <div class="mt-3">
-                    <p class="text-muted small mb-0">Didn't receive code? <button type="button" class="btn btn-link text-orange p-0 fw-bold text-decoration-none small">Resend</button></p>
-                </div>
-                <div class="text-center mt-4">
-                    <p class="text-muted tiny mb-0">©Vegrid {% now "Y" %}</p>
-                </div>
             </div>
         </div>
     </div>
@@ -719,63 +862,58 @@
 <!-- Other Details Modal -->
 <div class="modal fade" id="otherDetailsModal" tabindex="-1" aria-labelledby="otherDetailsModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-md">
-        <div class="modal-content border-0 shadow-lg rounded-20">
-            <div class="modal-header border-0 pt-3 pe-3 pb-0">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-content border-0 shadow-lg p-4" style="border-radius: 12px; min-height: 600px;">
+            <div class="modal-logo-right">
+                <img src="{% static 'vegrid-logo-BBC4G70n.png' %}" alt="VeGrid Logo">
+                <p>VEGRID</p>
             </div>
-            <div class="modal-body p-4">
-                <div class="text-center mb-4">
-                    <img src="{% static 'sun-logo.png' %}" alt="Sun Logo" class="modal-logo">
-                    <h3 class="fw-bold mb-1">Other Details</h3>
-                    
-                </div>
+            <div class="modal-body p-2 mt-5">
+                <h5 class="business-details-title">Other Details</h5>
                 <form id="otherDetailsForm">
                     <div class="mb-3">
-                        <label for="detailsCountry" class="form-label fw-bold small">Country: *</label>
-                        <input type="text" class="form-control form-control-lg border-2 bg-light" id="detailsCountry" readonly required>
+                        <label for="detailsCountry" class="form-label small fw-bold mb-1">Country <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control underline-input bg-light" id="detailsCountry" placeholder="Country" readonly required>
                     </div>
-                    <div class="row g-2 mb-3">
-                        <div class="col-md-6">
-                            <label for="idNumber" class="form-label fw-bold small">ID Number: *</label>
-                            <input type="text" class="form-control form-control-lg border-2" id="idNumber" required placeholder="ID Number">
-                        </div>
-                        <div class="col-md-6">
-                            <label for="pinNumber" class="form-label fw-bold small">Kra Pin: *</label>
-                            <input type="text" class="form-control form-control-lg border-2" id="pinNumber" required placeholder="KRA PIN">
-                        </div>
-                    </div>
+                    
                     <div class="mb-3">
-                        <label for="address" class="form-label fw-bold small">Address (P.O Box): *</label>
-                        <input type="text" class="form-control form-control-lg border-2" id="address" required placeholder="P.O. Box 12345">
+                        <label for="address" class="form-label small fw-bold mb-1">Address (P.O Box) <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control underline-input" id="address" placeholder="P.O. Box 12345" required>
                     </div>
-                    <div class="row g-2 mb-4">
-                        <div class="col-md-6">
-                            <label for="county" class="form-label fw-bold small">County: *</label>
-                            <select class="form-select form-control-lg border-2" id="county" required>
-                                <option value="">Select County</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="town" class="form-label fw-bold small">Town: *</label>
-                            <select class="form-select form-control-lg border-2" id="town" required>
-                                <option value="">Select Town</option>
-                            </select>
-                        </div>
+                    
+                    <div class="mb-3">
+                        <label for="county" class="form-label small fw-bold mb-1">County <span class="text-danger">*</span></label>
+                        <select class="form-select underline-input" id="county" required>
+                            <option value="">Select County</option>
+                            <option value="county1">County 1</option>
+                            <option value="county2">County 2</option>
+                            <option value="county3">County 3</option>
+                        </select>
                     </div>
-                    <div class="mb-4">
-                        <label for="passportPhoto" class="form-label fw-bold small">Passport Photo: *</label>
+                    
+                    <div class="mb-3">
+                        <label for="town" class="form-label small fw-bold mb-1">Town <span class="text-danger">*</span></label>
+                        <select class="form-select underline-input" id="town" required>
+                            <option value="">Select Town</option>
+                            <option value="town1">Town 1</option>
+                            <option value="town2">Town 2</option>
+                            <option value="town3">Town 3</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-5">
+                        <label for="passportPhoto" class="form-label small fw-bold mb-1">Passport Photo <span class="text-danger">*</span></label>
                         <div class="input-group">
                             <input type="file" class="form-control form-control-lg border-2" id="passportPhoto" accept="image/*" required>
-                            <label class="input-group-text border-2 small" for="passportPhoto" style="border-radius: 0 10px 10px 0;"><i class="bi bi-cloud-upload"></i></label>
+                            <label class="input-group-text border-2 small" for="passportPhoto" style="border-radius: 0 10px 10px 0; background-color: #fff1e0;">
+                                <i class="bi bi-cloud-upload"></i>
+                            </label>
                         </div>
+                        <small class="text-muted d-block mt-1">Accepted formats: JPG, PNG (max 5MB)</small>
                     </div>
-                    <div class="d-flex gap-2">
-                        <button type="button" class="btn btn-back w-100" data-bs-toggle="modal" data-bs-target="#emailOtpVerificationModal">
-                            <i class="bi bi-arrow-left me-1"></i> Back
-                        </button>
-                        <button type="submit" class="btn btn-primary btn-lg w-100 py-2 rounded-20 bg-gradient-primary border-0 shadow-sm transition-all">
-                            Complete <i class="bi bi-check2-all ms-1"></i>
-                        </button>
+                    
+                    <div class="text-center mt-4">
+                        <button type="button" class="btn btn-black-back me-2" data-bs-toggle="modal" data-bs-target="#emailOtpVerificationModal">BACK</button>
+                        <button type="button" class="btn btn-black-next" data-bs-toggle="modal" data-bs-target="#customerDetailsReviewModal">NEXT</button>
                     </div>
                 </form>
             </div>
@@ -786,87 +924,114 @@
 <!-- Customer Details Review Modal -->
 <div class="modal fade" id="customerDetailsReviewModal" tabindex="-1" aria-labelledby="customerDetailsReviewModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-md">
-        <div class="modal-content border-0 shadow-lg rounded-20">
-            <div class="modal-header border-0 pt-3 pe-3 pb-0 d-flex justify-content-end">
-                <img src="{% static 'sun-logo.png' %}" alt="VeGrid Logo" style="height: 50px;">
-                <button type="button" class="btn-close position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-content border-0 shadow-lg p-4" style="border-radius: 12px;">
+            
+            <div class="modal-logo-right">
+                <img src="{% static 'vegrid-logo-BBC4G70n.png' %}" alt="VeGrid Logo">
+                <p>VEGRID</p>
             </div>
-            <div class="modal-body p-4 pt-0">
-                <div class="d-flex justify-content-end mb-2">
-                    <div class="d-flex flex-column align-items-end">
-                        <img src="{% static 'sun-logo.png' %}" alt="VeGrid Logo" style="height: 50px;">
-                        <span style="color: #ff6600; font-weight: 900; font-size: 1rem; margin-top: -5px; margin-right: 5px;">VEGRID</span>
-                    </div>
-                </div>
-
-                <h5 class="fw-bold mb-4" style="font-size: 1.1rem; color: #333;">Confirm Customer Details</h5>
+            
+            <button type="button" class="btn-close position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="Close"></button>
+            
+            <div class="modal-body p-2 mt-5">
                 
-                <div class="profile-photo-circle" id="previewPhotoContainer" style="cursor: pointer; overflow: hidden; border: 2px solid #f59120;">
-                    <!-- Preview for passport photo -->
-                    <img id="reviewPassportPreview" src="" alt="Passport Photo" style="width: 100%; height: 100%; object-fit: cover; display: none;">
-                    <div id="photoPlaceholderIcon" style="display: flex; align-items: center; justify-content: center; height: 100%; width: 100%;">
-                        <i class="bi bi-person-fill" style="font-size: 5rem; color: white;"></i>
-                    </div>
-                    <div class="camera-icon-badge">
-                        <i class="bi bi-camera"></i>
-                    </div>
-                    <input type="file" id="reuploadPassport" accept="image/*" style="display: none;">
-                </div>
-
-                <div class="review-fields-container px-2">
-                    <div class="review-field">
-                        <span class="review-label">First Name: <span class="text-danger">*</span></span>
-                        <span class="review-value" id="reviewFirstName"></span>
-                    </div>
-                    <div class="review-field">
-                        <span class="review-label">First Name: <span class="text-danger">*</span></span>
-                        <span class="review-value" id="reviewLastName"></span>
-                    </div>
-                    <div class="review-field">
-                        <span class="review-label">Middle Name:</span>
-                        <span class="review-value" id="reviewMiddleName"></span>
-                    </div>
-                    <div class="review-field">
-                        <span class="review-label">Phone Number:</span>
-                        <span class="review-value" id="reviewPhoneNumber"></span>
-                    </div>
-                    <div class="review-field">
-                        <span class="review-label">Email Address:</span>
-                        <span class="review-value" id="reviewEmailAddress"></span>
-                    </div>
-                    <div class="review-field">
-                        <span class="review-label">ID Number:</span>
-                        <span class="review-value" id="reviewIdNumber"></span>
-                    </div>
-                    <div class="review-field">
-                        <span class="review-label">Kra Pin:</span>
-                        <span class="review-value" id="reviewPinNumber"></span>
-                    </div>
-                    <div class="review-field">
-                        <span class="review-label">Address (P.O Box Number): <span class="text-danger">*</span></span>
-                        <span class="review-value" id="reviewAddress"></span>
-                    </div>
-                    <div class="review-field">
-                        <span class="review-label">County:</span>
-                        <div class="d-flex align-items-center w-100 justify-content-between">
-                            <span class="review-value" id="reviewCounty"></span>
-                            <i class="bi bi-caret-down-fill" style="color: #ff6600; font-size: 0.7rem;"></i>
+                <h5 class="business-details-title mb-4">Confirm Customer Details</h5>
+                
+                <div class="text-center mb-4 d-flex justify-content-center align-items-center position-relative" style="gap: 5px;">
+                    <div class="profile-photo-circle" id="previewPhotoContainer">
+                        <img id="reviewPassportPreview" src="" alt="Passport Photo" style="width: 100%; height: 100%; object-fit: cover; display: none;">
+                        <div id="photoPlaceholderIcon" style="display: flex; align-items: center; justify-content: center; height: 100%; width: 100%; background-color: #f0f0f0;">
+                            <i class="bi bi-person-fill" style="font-size: 3rem; color: #ccc;"></i>
                         </div>
+                        <input type="file" id="reuploadPassport" accept="image/*" style="display: none;" aria-label="Upload passport photo">
                     </div>
-                    <div class="review-field">
-                        <span class="review-label">Town:</span>
-                        <div class="d-flex align-items-center w-100 justify-content-between">
-                            <span class="review-value" id="reviewTown"></span>
-                            <i class="bi bi-caret-down-fill" style="color: #ff6600; font-size: 0.7rem;"></i>
-                        </div>
+                    
+                    <div class="camera-icon-badge" id="cameraUploadBtn" role="button" tabindex="0" aria-label="Upload photo">
+                        <i class="bi bi-camera" style="color: white; font-size: 1.2rem;"></i>
                     </div>
                 </div>
 
-                <div class="mt-4 text-center">
-                    <button type="button" id="submitRegistration" class="btn btn-black-caps">
-                        View & Accept T&C
+                <div class="review-fields-container" style="display: flex; flex-direction: column; gap: 16px;">
+                    
+                    <div class="review-field">
+                        <span class="review-label fw-bold" style="color: #666;">First Name: <span class="text-danger">*</span></span>
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="review-value" id="reviewFirstName" style="color: #333;"></span>
+                            <i class="bi bi-pencil-fill edit-pencil" data-field="reviewFirstName" role="button" tabindex="0" aria-label="Edit first name"></i>
+                            <i class="bi bi-check-circle-fill save-icon" data-field="reviewFirstName" style="display: none;" role="button" tabindex="0" aria-label="Save first name"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="review-field">
+                        <span class="review-label fw-bold" style="color: #666;">Middle Name:</span>
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="review-value" id="reviewMiddleName" style="color: #333;"></span>
+                            <i class="bi bi-pencil-fill edit-pencil" data-field="reviewMiddleName" role="button" tabindex="0" aria-label="Edit middle name"></i>
+                            <i class="bi bi-check-circle-fill save-icon" data-field="reviewMiddleName" style="display: none;" role="button" tabindex="0" aria-label="Save middle name"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="review-field">
+                        <span class="review-label fw-bold" style="color: #666;">Last Name: <span class="text-danger">*</span></span>
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="review-value" id="reviewLastName" style="color: #333;"></span>
+                            <i class="bi bi-pencil-fill edit-pencil" data-field="reviewLastName" role="button" tabindex="0" aria-label="Edit last name"></i>
+                            <i class="bi bi-check-circle-fill save-icon" data-field="reviewLastName" style="display: none;" role="button" tabindex="0" aria-label="Save last name"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="review-field">
+                        <span class="review-label fw-bold" style="color: #666;">Phone Number: <span class="text-danger">*</span></span>
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="review-value" id="reviewPhoneNumber" style="color: #333;"></span>
+                            <i class="bi bi-pencil-fill edit-pencil" data-field="reviewPhoneNumber" role="button" tabindex="0" aria-label="Edit phone number"></i>
+                            <i class="bi bi-check-circle-fill save-icon" data-field="reviewPhoneNumber" style="display: none;" role="button" tabindex="0" aria-label="Save phone number"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="review-field">
+                        <span class="review-label fw-bold" style="color: #666;">Email Address: <span class="text-danger">*</span></span>
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="review-value" id="reviewEmailAddress" style="color: #333;"></span>
+                            <i class="bi bi-pencil-fill edit-pencil" data-field="reviewEmailAddress" role="button" tabindex="0" aria-label="Edit email"></i>
+                            <i class="bi bi-check-circle-fill save-icon" data-field="reviewEmailAddress" style="display: none;" role="button" tabindex="0" aria-label="Save email"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="review-field">
+                        <span class="review-label fw-bold" style="color: #666;">Address (P.O Box): <span class="text-danger">*</span></span>
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="review-value" id="reviewAddress" style="color: #333;"></span>
+                            <i class="bi bi-pencil-fill edit-pencil" data-field="reviewAddress" role="button" tabindex="0" aria-label="Edit address"></i>
+                            <i class="bi bi-check-circle-fill save-icon" data-field="reviewAddress" style="display: none;" role="button" tabindex="0" aria-label="Save address"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="review-field">
+                        <span class="review-label fw-bold" style="color: #666;">County: <span class="text-danger">*</span></span>
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="review-value" id="reviewCounty" style="color: #333;"></span>
+                            <i class="bi bi-pencil-fill edit-pencil" data-field="reviewCounty" role="button" tabindex="0" aria-label="Edit county"></i>    
+                            <i class="bi bi-check-circle-fill save-icon" data-field="reviewCounty" style="display: none;" role="button" tabindex="0" aria-label="Save county"></i>           
+                        </div>
+                    </div>
+                    
+                    <div class="review-field">
+                        <span class="review-label fw-bold" style="color: #666;">Town: <span class="text-danger">*</span></span>
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="review-value" id="reviewTown" style="color: #333;"></span>
+                            <i class="bi bi-pencil-fill edit-pencil" data-field="reviewTown" role="button" tabindex="0" aria-label="Edit town"></i>
+                            <i class="bi bi-check-circle-fill save-icon" data-field="reviewTown" style="display: none;" role="button" tabindex="0" aria-label="Save town"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-5 text-center">
+                    <button type="button" id="viewTermsBtn" class="btn btn-black-next px-4" data-bs-toggle="modal" data-bs-target="#termsConditionsModal">
+                        VIEW & ACCEPT T&C
                     </button>
                 </div>
+                
             </div>
         </div>
     </div>
@@ -875,47 +1040,37 @@
 <!-- Terms & Conditions Modal -->
 <div class="modal fade" id="termsConditionsModal" tabindex="-1" aria-labelledby="termsConditionsModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-md">
-        <div class="modal-content border-0 shadow-lg rounded-20">
-            <div class="modal-header border-0 pt-3 pe-3 pb-0 d-flex justify-content-between align-items-start">
-                <div class="d-flex align-items-center gap-2 mt-2 ms-2">
-                    <div class="bg-light rounded-circle d-flex align-items-center justify-content-center" style="width: 30px; height: 30px; border: 1px solid #ddd;">
-                        <i class="bi bi-list" style="font-size: 1.2rem; color: #888;"></i>
-                    </div>
-                    <span class="fw-bold" style="color: #333; font-size: 0.9rem;">My Vegrid</span>
-                </div>
-                <div class="d-flex flex-column align-items-end">
-                    <img src="{% static 'sun-logo.png' %}" alt="VeGrid Logo" style="height: 50px;">
-                    <span style="color: #ff6600; font-weight: 900; font-size: 1rem; margin-top: -5px; margin-right: 5px;">VEGRID</span>
-                </div>
-                <button type="button" class="btn-close position-absolute top-0 end-0 m-3 d-none" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-content border-0 shadow-lg p-4" style="border-radius: 12px;">
+            
+            <div class="modal-logo-right">
+                <img src="{% static 'vegrid-logo-BBC4G70n.png' %}" alt="VeGrid Logo">
+                <p>VEGRID</p>
             </div>
-            <div class="modal-body p-4 text-center">
-                <div class="tc-header-btn">TERMS & CONDITIONS</div>
+            
+            <button type="button" class="btn-close position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="Close"></button>
+            
+            <div class="modal-body p-2 mt-5">
+                <h5 class="business-details-title text-center mb-4">TERMS & CONDITIONS</h5>
                 
-                <div class="tc-box">
-                    <p><strong>VEGRID SERVICES TERMS AND CONDITIONS</strong></p>
-                    <p>1. <strong>Introduction</strong>: Welcome to VeGrid. These Terms and Conditions govern your use of our solar energy services and the registration process. By registering, you agree to be bound by these terms.</p>
-                    <p>2. <strong>Registration</strong>: You agree to provide accurate, current, and complete information during the registration process. You are responsible for maintaining the confidentiality of your account details.</p>
-                    <p>3. <strong>Services</strong>: VeGrid provides solar power solutions as a service. Detailed specifications of your chosen solution will be provided in your specific service agreement.</p>
-                    <p>4. <strong>Data Privacy</strong>: Your personal information is collected and processed in accordance with our Privacy Policy and local data protection laws. We use your data to facilitate service delivery and communication.</p>
-                    <p>5. <strong>Verification</strong>: OTP verification via phone and email is required to ensure account security. You agree to receive these communications from us.</p>
-                    <p>6. <strong>Usage</strong>: You agree not to use VeGrid services for any unlawful purpose or in any way that could damage or disable our infrastructure.</p>
-                    <p>7. <strong>Payments</strong>: Service fees and payment terms are as specified in your individual contract. Late payments may result in service interruption.</p>
-                    <p>8. <strong>Termination</strong>: Either party may terminate the agreement according to the notice periods specified in the final service contract.</p>
-                    <!-- Indicators from image -->
-                    <i class="bi bi-caret-up-fill tc-caret tc-caret-up"></i>
-                    <i class="bi bi-caret-down-fill tc-caret tc-caret-down"></i>
+                <div class="terms-box mb-4 p-3" style="background-color: #f9f9f9; border-radius: 10px; max-height: 300px; overflow-y: auto; border: 1px solid #eee;">
+                    <p class="fw-bold text-center mb-3">VEGRID SERVICES TERMS AND CONDITIONS</p>
+                    <p><strong>1. Introduction:</strong> Welcome to VeGrid. These Terms and Conditions govern your use of our solar energy services and the registration process. By registering, you agree to be bound by these terms.</p>
+                    <p><strong>2. Registration:</strong> You agree to provide accurate, current, and complete information during the registration process. You are responsible for maintaining the confidentiality of your account details.</p>
+                    <p><strong>3. Services:</strong> VeGrid provides solar power solutions as a service. Detailed specifications of your chosen solution will be provided in your specific service agreement.</p>
+                    <p><strong>4. Data Privacy:</strong> Your personal information is collected and processed in accordance with our Privacy Policy and local data protection laws. We use your data to facilitate service delivery and communication.</p>
+                    <p><strong>5. Verification:</strong> OTP verification via phone and email is required to ensure account security. You agree to receive these communications from us.</p>
+                    <p><strong>6. Usage:</strong> You agree not to use VeGrid services for any unlawful purpose or in any way that could damage or disable our infrastructure.</p>
+                    <p><strong>7. Payments:</strong> Service fees and payment terms are as specified in your individual contract. Late payments may result in service interruption.</p>
+                    <p><strong>8. Termination:</strong> Either party may terminate the agreement according to the notice periods specified in the final service contract.</p>
                 </div>
 
                 <div class="mb-4 d-flex align-items-center justify-content-center gap-2">
-                    <input type="checkbox" id="acceptTerms" class="form-check-input" style="border-color: #ff9933; margin-top: 0;">
-                    <label for="acceptTerms" class="fw-bold" style="color: #333; font-size: 0.95rem;">Accept Terms & Condotions</label>
+                    <input type="checkbox" id="acceptTermsCheckbox" class="form-check-input" style="border-color: #f59120; width: 18px; height: 18px; cursor: pointer;">
+                    <label for="acceptTermsCheckbox" class="fw-bold" style="color: #333; font-size: 0.95rem; cursor: pointer;">Accept Terms & Conditions</label>
                 </div>
 
-                <div class="text-center">
-                    <button type="button" id="finalSubmitBtn" class="btn btn-black-caps py-2" style="font-size: 1.1rem; width: 140px;">
-                        Submit
-                    </button>
+                <div class="text-center mt-4">
+                    <button type="button" id="finalSubmitBtn" class="btn btn-black-next px-5" disabled>SUBMIT</button>
                 </div>
             </div>
         </div>
@@ -925,26 +1080,33 @@
 <!-- Registration Success Modal -->
 <div class="modal fade" id="registrationSuccessModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="registrationSuccessModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-md">
-        <div class="modal-content border-0 shadow-lg rounded-20">
-            <div class="modal-header border-0 pt-3 pe-3 pb-0 d-flex justify-content-end">
-                <div class="d-flex flex-column align-items-end">
-                    <img src="{% static 'sun-logo.png' %}" alt="VeGrid Logo" style="height: 50px;">
-                    <span style="color: #ff6600; font-weight: 900; font-size: 1rem; margin-top: -5px; margin-right: 5px;">VEGRID</span>
-                </div>
+        <div class="modal-content border-0 shadow-lg p-4" style="border-radius: 12px;">
+            
+            <div class="modal-logo-right">
+                <img src="{% static 'vegrid-logo-BBC4G70n.png' %}" alt="VeGrid Logo">
+                <p>VEGRID</p>
             </div>
-            <div class="modal-body p-4 text-center">
-                <div class="success-box">
-                    <p class="fw-bold mb-3" id="finalSuccessName" style="font-size: 1.1rem; color: #000;"></p>
-                    <p class="mb-1" style="font-weight: 500;">You have succesfully registered</p>
-                    <p class="mb-1" style="font-weight: 500;">as a VEGRID INDIVIDUAL CUSTOMER.</p>
-                    <p class="mb-1" style="font-weight: 500;">Our Terms & Conditions have been sent</p>
-                    <p class="mb-5" style="font-weight: 500;">to your email.</p>
-                    
-                    <p class="fw-bold" style="font-size: 1.1rem;">Thank you.</p>
+            
+            <div class="modal-body p-2 mt-5 text-center">
+                
+                <div class="mb-4 d-flex justify-content-center">
+                    <div style="width: 80px; height: 80px; background-color: #28a745; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(40, 167, 69, 0.3);">
+                        <i class="bi bi-check-lg" style="font-size: 3.5rem; color: white;"></i>
+                    </div>
                 </div>
                 
-                <div class="text-center">
-                    <button type="button" id="redirectToDashboard" class="btn btn-black-caps py-2" style="font-size: 1.1rem; width: 140px;" data-bs-dismiss="modal">
+                <div class="success-box mb-4">
+                    <p class="fw-bold mb-3" id="finalSuccessName" style="font-size: 1.2rem; color: #333;"></p>
+                    <p class="mb-1" style="font-weight: 500; color: #555;">You have successfully registered</p>
+                    <p class="mb-1" style="font-weight: 500; color: #555;">as a VEGRID INDIVIDUAL CUSTOMER.</p>
+                    <p class="mb-1" style="font-weight: 500; color: #555;">Our Terms & Conditions have been sent</p>
+                    <p class="mb-4" style="font-weight: 500; color: #555;">to your email.</p>
+                    
+                    <p class="fw-bold" style="font-size: 1.2rem; color: #f59120;">Thank you.</p>
+                </div>
+                
+                <div class="text-center mt-3">
+                    <button type="button" id="redirectToDashboard" class="btn btn-black-next px-5" data-bs-dismiss="modal">
                         OK
                     </button>
                 </div>
@@ -955,32 +1117,41 @@
 
 <!-- Login Modal -->
 <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" style="max-width: 600px;">
-        <div class="modal-content border-0 shadow-lg rounded-20 login-modal-bg">
-            <div class="p-3 d-flex justify-content-end">
-                <div class="d-flex flex-column align-items-end">
-                    <img src="{% static 'sun-logo.png' %}" alt="VeGrid Logo" style="height: 50px; filter: brightness(0) invert(1);">
-                    <span style="color: white; font-weight: 900; font-size: 1rem; margin-top: -5px; margin-right: 5px;">VEGRID</span>
+    <div class="modal-dialog modal-dialog-centered modal-md">
+        <div class="modal-content border-0 shadow-lg rounded-20">
+            <div class="modal-header-orange">
+                <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <img src="{% static 'vegrid-logo-BBC4G70n.png' %}" alt="VeGrid Logo" style="height: 80px; margin-bottom: 10px;">
+                    <h1 class="modal-brand-white">VEGRID</h1>
                 </div>
             </div>
-            <div class="modal-body p-5">
-                <div class="login-modal-content">
-                    <h2 class="login-modal-title">VEGRID LOGIN</h2>
-                    <form id="loginForm">
-                        <div class="login-input-group">
-                            <label class="login-input-label">Username</label>
-                            <input type="text" id="loginPhoneNumber" class="login-input" required>
+            
+            <div class="modal-body p-4 pt-0">
+                <h4 class="registration-title text-center mb-4">LOGIN</h4>
+                
+                <form id="loginForm">
+                    <div class="mb-4">
+                        <label class="text-muted mb-1 small fw-bold">USERNAME</label>
+                        <input type="text" id="loginPhoneNumber" class="form-control underline-input" placeholder="Enter your username" required>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="text-muted mb-1 small fw-bold">PASSWORD</label>
+                        <div class="position-relative">
+                            <input type="password" id="loginPassword" class="form-control underline-input" placeholder="Enter your password" required>
+                            <i class="bi bi-eye-slash position-absolute end-0" id="togglePassword" style="cursor: pointer; color: #f59120; bottom: 12px; right: 0;" role="button" tabindex="0" aria-label="Toggle password visibility"></i>
                         </div>
-                        <div class="login-input-group">
-                            <label class="login-input-label">Password</label>
-                            <input type="password" id="loginPassword" class="login-input">
-                            <i class="bi bi-eye-slash position-absolute end-0" id="togglePassword" style="cursor: pointer; color: rgba(255,255,255,0.8); z-index: 10; bottom: 10px;"></i>
-                        </div>
-                        <div class="login-modal-buttons">
-                            <button type="submit" class="btn-login-white">Login</button>
-                            <button type="button" class="btn-exit-white" data-bs-dismiss="modal">Exit <i class="bi bi-arrow-right"></i></button>
-                        </div>
-                    </form>
+                    </div>
+                    
+                    <div class="d-flex gap-3 mt-5">
+                        <button type="submit" class="btn btn-orange-full flex-fill">LOGIN</button>
+                        <button type="button" class="btn btn-orange-full flex-fill" data-bs-dismiss="modal">EXIT <i class="bi bi-arrow-right ms-2"></i></button>
+                    </div>
+                </form>
+                
+                <div class="text-center mt-4">
+                    <p class="text-muted tiny mb-0">©Vegrid {% now "Y" %}</p>
                 </div>
             </div>
         </div>
@@ -989,52 +1160,629 @@
 
 <!-- Login OTP Modal -->
 <div class="modal fade" id="loginOtpModal" tabindex="-1" aria-labelledby="loginOtpModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" style="max-width: 600px;">
-        <div class="modal-content border-0 shadow-lg rounded-20 login-modal-bg">
-            <div class="p-3 d-flex justify-content-end">
-                <div class="d-flex flex-column align-items-end">
-                    <img src="{% static 'sun-logo.png' %}" alt="VeGrid Logo" style="height: 50px; filter: brightness(0) invert(1);">
-                    <span style="color: white; font-weight: 900; font-size: 1rem; margin-top: -5px; margin-right: 5px;">VEGRID</span>
+    <div class="modal-dialog modal-dialog-centered modal-md">
+        <div class="modal-content border-0 shadow-lg rounded-20">
+            
+            <div class="modal-header-orange">
+                <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <img src="{% static 'vegrid-logo-BBC4G70n.png' %}" alt="VeGrid Logo" style="height: 80px; margin-bottom: 10px;">
+                    <h1 class="modal-brand-white">VEGRID</h1>
                 </div>
             </div>
-            <div class="modal-body p-5">
-                <div class="login-modal-content">
-                    <h2 class="login-modal-title">VEGRID LOGIN</h2>
-                    <p class="otp-instruction">Please enter the one time pin (OTP)<br>Sent to your phone number.</p>
-                    <form id="loginOtpForm">
-                        <div class="login-input-group">
-                            <label class="login-input-label">OTP Number:</label>
-                            <input type="text" class="login-input text-center login-otp-input" style="font-size: 1.5rem; letter-spacing: 10px;" required>
-                        </div>
-                        <div class="resend-otp-container">
-                            <button type="button" id="resendLoginOtp" class="btn-resend-white">Resend OTP</button>
-                        </div>
-                        <div class="login-modal-buttons">
-                            <button type="submit" class="btn-login-white">Next</button>
-                            <button type="button" class="btn-exit-white" data-bs-dismiss="modal">Exit</button>
-                        </div>
-                    </form>
+            
+            <div class="modal-body p-4 pt-0 text-center">
+                <form id="loginOtpVerificationForm">
+                    <div class="mb-4">
+                        <p class="text-muted small">Please enter the one time pin (OTP)<br>Sent to your phone number.</p>
+                    </div>
+                    
+                    <div class="mb-4 d-flex justify-content-center gap-2">
+                        <input type="text" maxlength="1" pattern="[0-9]*" class="form-control text-center otp-input" required autofocus>
+                        <input type="text" maxlength="1" pattern="[0-9]*" class="form-control text-center otp-input" required>
+                        <input type="text" maxlength="1" pattern="[0-9]*" class="form-control text-center otp-input" required>
+                        <input type="text" maxlength="1" pattern="[0-9]*" class="form-control text-center otp-input" required>
+                    </div>
+                    
+                    <div class="d-flex gap-2">
+                        <button type="button" class="btn btn-dark btn-lg w-100 py-2 rounded-10" data-bs-dismiss="modal">
+                            EXIT
+                        </button>
+                        <button type="submit" class="btn btn-dark btn-lg w-100 py-2 rounded-10">
+                            VERIFY
+                        </button>
+                    </div>
+
+                    <div class="d-grid gap-2 mt-4">
+                        <button type="button" id="resendLoginOtp" class="btn btn-orange-full px-5 rounded-10" style="min-width: 150px;">Resend</button>
+                    </div>
+                </form>
+                
+                <div class="text-center mt-5">
+                    <p class="text-muted tiny mb-0">©Vegrid {% now "Y" %}</p>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const togglePassword = document.querySelector('#togglePassword');
-        const password = document.querySelector('#loginPassword');
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-        if (togglePassword && password) {
-            togglePassword.addEventListener('click', function (e) {
-                // Toggle the type attribute
-                const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-                password.setAttribute('type', type);
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // Initialize all modals
+    var modals = [].slice.call(document.querySelectorAll('.modal'));
+    modals.forEach(function(modal) {
+        new bootstrap.Modal(modal);
+    });
+
+    // Password toggle functionality
+    const togglePassword = document.querySelector('#togglePassword');
+    const password = document.querySelector('#loginPassword');
+
+    if (togglePassword && password) {
+        togglePassword.addEventListener('click', function (e) {
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            this.classList.toggle('bi-eye');
+            this.classList.toggle('bi-eye-slash');
+        });
+        
+        // Add keyboard support
+        togglePassword.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                this.click();
+            }
+        });
+    }
+
+    // OTP auto-focus functionality
+    function setupOtpInputs(containerClass) {
+        document.querySelectorAll(containerClass + ' .otp-input, ' + containerClass + ' .email-otp-input').forEach((input, index, inputs) => {
+            input.addEventListener('input', (e) => {
+                // Allow only numbers
+                e.target.value = e.target.value.replace(/[^0-9]/g, '');
                 
-                // Toggle the eye / eye-slash icon
-                this.classList.toggle('bi-eye');
-                this.classList.toggle('bi-eye-slash');
+                if (e.target.value && index < inputs.length - 1) {
+                    inputs[index + 1].focus();
+                }
             });
+            
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Backspace' && !e.target.value && index > 0) {
+                    inputs[index - 1].focus();
+                }
+            });
+            
+            // Prevent non-numeric input
+            input.addEventListener('keypress', (e) => {
+                if (!/[0-9]/.test(e.key)) {
+                    e.preventDefault();
+                }
+            });
+        });
+    }
+    
+    setupOtpInputs('#otpVerificationModal');
+    setupOtpInputs('#loginOtpModal');
+    setupOtpInputs('#emailOtpVerificationModal');
+
+    // Update country code based on selection
+    const countrySelect = document.getElementById('country');
+    const phoneCode = document.getElementById('phoneCode');
+    
+    if (countrySelect && phoneCode) {
+        countrySelect.addEventListener('change', function() {
+            const selectedOption = this.options[this.selectedIndex];
+            const code = selectedOption.getAttribute('data-code');
+            if (code) {
+                phoneCode.textContent = '+' + code;
+            }
+        });
+    }
+
+    // Verification form submission
+    const verificationForm = document.getElementById('verificationForm');
+    if (verificationForm) {
+        verificationForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const phoneNumber = document.getElementById('phoneNumber').value;
+            const countryCode = phoneCode.textContent;
+            
+            // Store phone number for later use
+            const detailsPhone = document.getElementById('detailsPhoneNumber');
+            if (detailsPhone) {
+                detailsPhone.value = phoneNumber;
+            }
+            
+            console.log('Sending OTP to:', countryCode + phoneNumber);
+            
+            // Hide current modal and show OTP modal
+            const verificationModal = bootstrap.Modal.getInstance(document.getElementById('verificationModal'));
+            if (verificationModal) {
+                verificationModal.hide();
+            }
+            
+            setTimeout(() => {
+                const otpModal = new bootstrap.Modal(document.getElementById('otpVerificationModal'));
+                otpModal.show();
+            }, 500);
+        });
+    }
+
+    // OTP Verification form submission
+    const otpForm = document.getElementById('otpVerificationForm');
+    if (otpForm) {
+        otpForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const otpInputs = document.querySelectorAll('#otpVerificationForm .otp-input');
+            const otpCode = Array.from(otpInputs).map(input => input.value).join('');
+            
+            if (otpCode.length === 4) {
+                console.log('OTP Verified:', otpCode);
+                
+                const otpModal = bootstrap.Modal.getInstance(document.getElementById('otpVerificationModal'));
+                if (otpModal) {
+                    otpModal.hide();
+                }
+                
+                setTimeout(() => {
+                    const detailsModal = new bootstrap.Modal(document.getElementById('customerDetailsModal'));
+                    detailsModal.show();
+                }, 500);
+            } else {
+                alert('Please enter all 4 digits');
+            }
+        });
+    }
+
+    // Customer details form submission
+    const customerDetailsForm = document.getElementById('customerDetailsForm');
+    if (customerDetailsForm) {
+        customerDetailsForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Validate form
+            if (!this.checkValidity()) {
+                e.stopPropagation();
+                this.classList.add('was-validated');
+                return;
+            }
+            
+            const email = document.getElementById('emailAddress').value;
+            const displayEmail = document.getElementById('displayEmail');
+            if (displayEmail) {
+                displayEmail.textContent = email;
+            }
+            
+            const detailsModal = bootstrap.Modal.getInstance(document.getElementById('customerDetailsModal'));
+            if (detailsModal) {
+                detailsModal.hide();
+            }
+            
+            setTimeout(() => {
+                const emailOtpModal = new bootstrap.Modal(document.getElementById('emailOtpVerificationModal'));
+                emailOtpModal.show();
+            }, 500);
+        });
+    }
+
+    // Email OTP form submission
+    const emailOtpForm = document.getElementById('emailOtpVerificationForm');
+    if (emailOtpForm) {
+        emailOtpForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const otpInputs = document.querySelectorAll('#emailOtpVerificationForm .email-otp-input');
+            const otpCode = Array.from(otpInputs).map(input => input.value).join('');
+            
+            if (otpCode.length === 4) {
+                console.log('Email OTP Verified:', otpCode);
+                
+                const emailOtpModal = bootstrap.Modal.getInstance(document.getElementById('emailOtpVerificationModal'));
+                if (emailOtpModal) {
+                    emailOtpModal.hide();
+                }
+                
+                setTimeout(() => {
+                    const otherDetailsModal = new bootstrap.Modal(document.getElementById('otherDetailsModal'));
+                    otherDetailsModal.show();
+                }, 500);
+            } else {
+                alert('Please enter all 4 digits');
+            }
+        });
+    }
+
+    // Populate review modal when opened
+    const reviewModal = document.getElementById('customerDetailsReviewModal');
+    if (reviewModal) {
+        reviewModal.addEventListener('show.bs.modal', function() {
+            
+            const firstNameEl = document.getElementById('reviewFirstName');
+            const middleNameEl = document.getElementById('reviewMiddleName');
+            const lastNameEl = document.getElementById('reviewLastName');
+            const phoneEl = document.getElementById('reviewPhoneNumber');
+            const emailEl = document.getElementById('reviewEmailAddress');
+            const addressEl = document.getElementById('reviewAddress');
+            const countyEl = document.getElementById('reviewCounty');
+            const townEl = document.getElementById('reviewTown');
+            
+            if (firstNameEl) firstNameEl.textContent = document.getElementById('firstName')?.value || 'Not provided';
+            if (middleNameEl) middleNameEl.textContent = document.getElementById('middleName')?.value || 'Not provided';
+            if (lastNameEl) lastNameEl.textContent = document.getElementById('lastName')?.value || 'Not provided';
+            if (phoneEl) phoneEl.textContent = document.getElementById('detailsPhoneNumber')?.value || 'Not provided';
+            if (emailEl) emailEl.textContent = document.getElementById('emailAddress')?.value || 'Not provided';
+            
+            if (addressEl) addressEl.textContent = document.getElementById('address')?.value || 'Not provided';
+            if (countyEl) countyEl.textContent = document.getElementById('county')?.value || 'Not provided';
+            if (townEl) townEl.textContent = document.getElementById('town')?.value || 'Not provided';
+            
+            // Handle passport photo preview
+            const passportInput = document.getElementById('passportPhoto');
+            const reviewPassportPreview = document.getElementById('reviewPassportPreview');
+            const photoPlaceholderIcon = document.getElementById('photoPlaceholderIcon');
+            
+            if (passportInput && passportInput.files && passportInput.files[0] && reviewPassportPreview && photoPlaceholderIcon) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    reviewPassportPreview.src = e.target.result;
+                    reviewPassportPreview.style.display = 'block';
+                    photoPlaceholderIcon.style.display = 'none';
+                }
+                reader.readAsDataURL(passportInput.files[0]);
+            }
+        });
+    }
+
+    // Camera upload functionality
+    const previewContainer = document.getElementById('previewPhotoContainer');
+    const cameraBtn = document.getElementById('cameraUploadBtn');
+    const fileInput = document.getElementById('reuploadPassport');
+    const previewImg = document.getElementById('reviewPassportPreview');
+    const placeholderIcon = document.getElementById('photoPlaceholderIcon');
+    
+    function triggerFileUpload() {
+        if (fileInput) fileInput.click();
+    }
+    
+    if (previewContainer) {
+        previewContainer.addEventListener('click', triggerFileUpload);
+    }
+    
+    if (cameraBtn) {
+        cameraBtn.addEventListener('click', triggerFileUpload);
+        cameraBtn.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                triggerFileUpload();
+            }
+        });
+    }
+    
+    if (fileInput && previewImg && placeholderIcon) {
+        fileInput.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                // Check file size (max 5MB)
+                if (file.size > 5 * 1024 * 1024) {
+                    alert('File size must be less than 5MB');
+                    return;
+                }
+                
+                // Check file type
+                if (!file.type.match('image.*')) {
+                    alert('Please upload an image file');
+                    return;
+                }
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImg.src = e.target.result;
+                    previewImg.style.display = 'block';
+                    placeholderIcon.style.display = 'none';
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+    
+    // Make fields editable with pencil icons
+    document.querySelectorAll('.edit-pencil').forEach(pencil => {
+        pencil.addEventListener('click', function() {
+            const fieldId = this.getAttribute('data-field');
+            const valueSpan = document.getElementById(fieldId);
+            const parentDiv = valueSpan.parentNode;
+            const saveIcon = parentDiv.querySelector('.save-icon');
+            
+            if (!valueSpan) return;
+            
+            const currentValue = valueSpan.textContent;
+            
+            this.style.display = 'none';
+            saveIcon.style.display = 'inline-block';
+            
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.value = currentValue !== 'Not provided' ? currentValue : '';
+            input.className = 'form-control form-control-sm';
+            input.style.width = '150px';
+            input.style.display = 'inline-block';
+            
+            parentDiv.replaceChild(input, valueSpan);
+            input.focus();
+            
+            input.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    saveIcon.click();
+                }
+            });
+            
+            saveIcon.onclick = function() {
+                const newValue = input.value || 'Not provided';
+                const newSpan = document.createElement('span');
+                newSpan.className = 'review-value';
+                newSpan.id = fieldId;
+                newSpan.textContent = newValue;
+                newSpan.style.color = '#333';
+                
+                parentDiv.replaceChild(newSpan, input);
+                
+                saveIcon.style.display = 'none';
+                pencil.style.display = 'inline-block';
+            };
+        });
+        
+        // Add keyboard support
+        pencil.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                this.click();
+            }
+        });
+    });
+
+    // Terms and Conditions functionality
+    const termsCheckbox = document.getElementById('acceptTermsCheckbox');
+    const submitBtn = document.getElementById('finalSubmitBtn');
+    
+    if (termsCheckbox && submitBtn) {
+        termsCheckbox.addEventListener('change', function() {
+            submitBtn.disabled = !this.checked;
+        });
+        
+        submitBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const firstName = document.getElementById('firstName')?.value || 'Customer';
+            const lastName = document.getElementById('lastName')?.value || '';
+            
+            const successNameElement = document.getElementById('finalSuccessName');
+            if (successNameElement) {
+                successNameElement.textContent = `${firstName} ${lastName}`.trim();
+            }
+            
+            const termsModalEl = document.getElementById('termsConditionsModal');
+            const termsModal = bootstrap.Modal.getInstance(termsModalEl);
+            if (termsModal) {
+                termsModal.hide();
+            }
+            
+            setTimeout(() => {
+                const successModalEl = document.getElementById('registrationSuccessModal');
+                if (successModalEl) {
+                    const successModal = new bootstrap.Modal(successModalEl);
+                    successModal.show();
+                }
+            }, 500);
+        });
+    }
+    
+    // OK button handler
+    const redirectBtn = document.getElementById('redirectToDashboard');
+    if (redirectBtn) {
+        redirectBtn.addEventListener('click', function() {
+            console.log('Registration complete! Redirecting to dashboard...');
+            // Uncomment the line below when ready to redirect
+            // window.location.href = '/dashboard';
+        });
+    }
+
+    // Login OTP Verification
+   // Login OTP Verification - Fixed redirect
+const loginOtpForm = document.getElementById('loginOtpVerificationForm');
+if (loginOtpForm) {
+    loginOtpForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const otpInputs = document.querySelectorAll('#loginOtpVerificationForm .otp-input');
+        const otpCode = Array.from(otpInputs).map(input => input.value).join('');
+        
+        if (otpCode.length === 4) {
+            console.log('Login OTP Verified:', otpCode);
+            
+            // Show loading state on the verify button
+            const verifyBtn = this.querySelector('button[type="submit"]');
+            const originalText = verifyBtn.textContent;
+            verifyBtn.disabled = true;
+            verifyBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Verifying...';
+            
+            // Simulate API verification (replace with actual API call)
+            setTimeout(() => {
+                // Close the OTP modal
+                const loginOtpModal = bootstrap.Modal.getInstance(document.getElementById('loginOtpModal'));
+                if (loginOtpModal) {
+                    loginOtpModal.hide();
+                }
+                
+                // Show success message (optional)
+                const toast = document.createElement('div');
+                toast.className = 'position-fixed top-0 start-50 translate-middle-x p-3';
+                toast.style.zIndex = '9999';
+                toast.innerHTML = `
+                    <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+                        <div class="toast-header bg-success text-white">
+                            <strong class="me-auto">Success</strong>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"></button>
+                        </div>
+                        <div class="toast-body">
+                            Login successful! Redirecting to dashboard...
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(toast);
+                
+                // Auto-remove toast after 2 seconds
+                setTimeout(() => {
+                    toast.remove();
+                }, 2000);
+                
+                // ACTUAL REDIRECT - Uncomment the line below when ready
+                window.location.href = '/dashboard'; // Replace with your actual dashboard URL
+                
+                // If you want to redirect to a specific page based on user type:
+                // window.location.href = '/customer/dashboard/';
+                
+                // Reset button state (in case redirect fails)
+                verifyBtn.disabled = false;
+                verifyBtn.innerHTML = originalText;
+            }, 1500); // Simulate API delay
+            
+        } else {
+            alert('Please enter all 4 digits');
+            
+            // Shake animation for invalid OTP
+            const otpContainer = document.querySelector('#loginOtpVerificationForm .d-flex.justify-content-center');
+            otpContainer.style.animation = 'shake 0.5s';
+            setTimeout(() => {
+                otpContainer.style.animation = '';
+            }, 500);
         }
     });
+}
+
+// Add shake animation for invalid OTP
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+        20%, 40%, 60%, 80% { transform: translateX(5px); }
+    }
+`;
+document.head.appendChild(style);
+    // Login form submission
+    const loginForm = document.getElementById('loginForm');
+    if (loginForm) {
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('loginPhoneNumber').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            console.log('Login attempt for:', username);
+            
+            const loginModal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
+            if (loginModal) {
+                loginModal.hide();
+            }
+            
+            setTimeout(() => {
+                const loginOtpModal = new bootstrap.Modal(document.getElementById('loginOtpModal'));
+                loginOtpModal.show();
+            }, 500);
+        });
+    }
+
+    // Resend OTP functionality
+    const resendButtons = document.querySelectorAll('#resendLoginOtp, .btn-orange-full:contains("Resend")');
+    resendButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            console.log('Resending OTP...');
+            // Add your resend logic here
+            alert('OTP resent successfully!');
+        });
+    });
+
+    // Commercial business details form submission
+    const commercialBusinessForm = document.getElementById('commercialBusinessDetailsForm');
+    if (commercialBusinessForm) {
+        commercialBusinessForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (!this.checkValidity()) {
+                e.stopPropagation();
+                this.classList.add('was-validated');
+                return;
+            }
+            
+            const businessModal = bootstrap.Modal.getInstance(document.getElementById('commercialBusinessDetailsModal'));
+            if (businessModal) {
+                businessModal.hide();
+            }
+            
+            setTimeout(() => {
+                const otherDetailsModal = new bootstrap.Modal(document.getElementById('commercialOtherDetailsModal'));
+                otherDetailsModal.show();
+            }, 500);
+        });
+    }
+
+    // Commercial other details form submission
+    const commercialOtherForm = document.getElementById('commercialOtherDetailsForm');
+    if (commercialOtherForm) {
+        commercialOtherForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (!this.checkValidity()) {
+                e.stopPropagation();
+                this.classList.add('was-validated');
+                return;
+            }
+            
+            console.log('Commercial registration complete!');
+            alert('Commercial registration successful!');
+        });
+    }
+
+    // Add loading states to buttons
+    const allForms = document.querySelectorAll('form');
+    allForms.forEach(form => {
+        form.addEventListener('submit', function(e) {
+            const submitBtn = this.querySelector('button[type="submit"]');
+            if (submitBtn && !submitBtn.disabled) {
+                const originalText = submitBtn.textContent;
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Loading...';
+                
+                // Re-enable after 2 seconds (for demo purposes)
+                setTimeout(() => {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = originalText;
+                }, 2000);
+            }
+        });
+    });
+
+    // Form validation styling
+    const forms = document.querySelectorAll('.needs-validation');
+    Array.from(forms).forEach(form => {
+        form.addEventListener('submit', event => {
+            if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+        }, false);
+    });
+
+    console.log('VeGrid Registration System Initialized');
+});
 </script>
+</body>
+</html>

@@ -15,6 +15,45 @@ document.addEventListener('DOMContentLoaded', function() {
     const commercialOtherDetailsModal = new bootstrap.Modal(document.getElementById('commercialOtherDetailsModal'));
     const otherRegistrationChoiceModal = new bootstrap.Modal(document.getElementById('otherRegistrationChoiceModal'));
 
+    function cleanupModalBackdrops() {
+        const openModalCount = document.querySelectorAll('.modal.show').length;
+        const backdrops = document.querySelectorAll('.modal-backdrop');
+
+        if (openModalCount === 0) {
+            backdrops.forEach(backdrop => backdrop.remove());
+            document.body.classList.remove('modal-open');
+            document.body.style.removeProperty('padding-right');
+            return;
+        }
+
+        if (backdrops.length > 1) {
+            for (let i = 0; i < backdrops.length - 1; i++) {
+                backdrops[i].remove();
+            }
+        }
+    }
+
+    // Keep modal navigation singular so views never stack on screen.
+    document.addEventListener('show.bs.modal', function(event) {
+        const targetModal = event.target;
+        document.querySelectorAll('.modal.show').forEach(openModal => {
+            if (openModal !== targetModal) {
+                const modalInstance = bootstrap.Modal.getInstance(openModal);
+                if (modalInstance) {
+                    modalInstance.hide();
+                }
+            }
+        });
+    });
+
+    document.addEventListener('shown.bs.modal', function() {
+        setTimeout(cleanupModalBackdrops, 0);
+    });
+
+    document.addEventListener('hidden.bs.modal', function() {
+        setTimeout(cleanupModalBackdrops, 0);
+    });
+
     let registrationType = 'individual'; // default
     const locationData = {
         'kenya': {
@@ -485,12 +524,23 @@ document.addEventListener('DOMContentLoaded', function() {
     if (commercialBusinessDetailsForm) {
         commercialBusinessDetailsForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            const businessEmail = document.getElementById('businessEmail').value;
-            if (displayEmailSpan && businessEmail) {
-                displayEmailSpan.textContent = businessEmail;
+
+            if (!this.checkValidity()) {
+                e.stopPropagation();
+                this.classList.add('was-validated');
+                return;
             }
+
             commercialBusinessDetailsModal.hide();
-            setTimeout(() => emailOtpVerificationModal.show(), 300);
+
+            const otpModalEl = document.getElementById('otpVerificationModal');
+            const otpModalInstance = bootstrap.Modal.getInstance(otpModalEl);
+            if (otpModalInstance) {
+                otpModalInstance.hide();
+            }
+
+            emailOtpVerificationModal.hide();
+            setTimeout(() => commercialOtherDetailsModal.show(), 300);
         });
     }
 
@@ -736,7 +786,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const loginPhoneNumber = document.getElementById('loginPhoneNumber').value;
             
             if (!loginPhoneNumber) {
-                alert('Please enter your phone number');
+                alert('Please enter your phone number or username');
                 return;
             }
             
@@ -767,7 +817,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Login OTP handling
-    const loginOtpInputs = document.querySelectorAll('.login-otp-input');
+    const loginOtpInputs = document.querySelectorAll('#loginOtpVerificationForm .otp-input');
     
     loginOtpInputs.forEach((input, index) => {
         input.addEventListener('input', function() {
@@ -783,7 +833,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    const loginOtpForm = document.getElementById('loginOtpForm');
+    const loginOtpForm = document.getElementById('loginOtpVerificationForm');
     
     if (loginOtpForm) {
         loginOtpForm.addEventListener('submit', function(e) {
@@ -814,7 +864,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (data.success) {
                     loginOtpModal.hide();
                     // Redirect to dashboard
-                    window.location.href = data.redirect_url || '/dashboard';
+                    window.location.href = data.redirect_url || '/dashboard/';
                 } else {
                     alert(data.message || 'Invalid OTP');
                 }

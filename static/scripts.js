@@ -485,12 +485,23 @@ document.addEventListener('DOMContentLoaded', function() {
     if (commercialBusinessDetailsForm) {
         commercialBusinessDetailsForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            const businessEmail = document.getElementById('businessEmail').value;
-            if (displayEmailSpan && businessEmail) {
-                displayEmailSpan.textContent = businessEmail;
+
+            if (!this.checkValidity()) {
+                e.stopPropagation();
+                this.classList.add('was-validated');
+                return;
             }
+
             commercialBusinessDetailsModal.hide();
-            setTimeout(() => emailOtpVerificationModal.show(), 300);
+
+            const otpModalEl = document.getElementById('otpVerificationModal');
+            const otpModalInstance = bootstrap.Modal.getInstance(otpModalEl);
+            if (otpModalInstance) {
+                otpModalInstance.hide();
+            }
+
+            emailOtpVerificationModal.hide();
+            setTimeout(() => commercialOtherDetailsModal.show(), 300);
         });
     }
 

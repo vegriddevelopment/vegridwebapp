@@ -957,8 +957,7 @@ def team_verify_otp(request, user_id):
             login(request, user)
             
             # Redirect based on role
-            role = user.team_member.role
-            if role == 'Admin' or role == 'Supervisor':
+            if user.is_staff or user.is_superuser:
                 return redirect('admin-dashboard')
             else:
                 return redirect('dashboard')

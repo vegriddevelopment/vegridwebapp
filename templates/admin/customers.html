@@ -60,38 +60,42 @@
 
             <div class="table-container">
                 <table class="table">
-                    <thead>
-                        <tr>
-                            <th>NAME</th>
-                            <th>CUSTOMER ID</th>
-                            <th>SITES</th>
-                            <th>STORAGE (kW)</th>
-                            <th>GENERATION (kWp)</th>
-                            <th>STATUS</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for customer in customers %}
-                        <tr>
-                            <td>{{ customer.user.get_full_name|default:customer.user.username }}</td>
-                            <td>{{ customer.customer_id }}</td>
-                            <td>{{ customer.deye_devices.count }}</td>
-                            <td>{{ customer.aggregate_storage|floatformat:2 }}</td>
-                            <td>{{ customer.aggregate_generation_today|floatformat:2 }}</td>
-                            <td class="status-cell">{% if customer.is_verified %}Verified{% else %}Unverified{% endif %}</td>
-                            <td>
-                                <a href="{% url 'admin-customer-update' customer.id %}" class="text-decoration-none">
-                                    <i class="bi bi-eye action-icon"></i>
-                                </a>
-                                <a href="{% url 'admin-customer-print' customer.id %}" target="_blank" class="text-decoration-none">
-                                    <i class="bi bi-printer action-icon"></i>
-                                </a>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+    <thead>
+        <tr>
+            <th>NAME</th>
+            <th>CUSTOMER ID</th>
+            <th>CUSTOMER TYPE</th>
+            <th>SITES</th>
+            <th>STORAGE (kW)</th>
+            <th>GENERATION (kWp)</th>
+            <th>CONSUMPTION (kWh)</th>
+            <th>STATUS</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for customer in customers %}
+        <tr>
+            <td>{{ customer.get_full_name|default:customer.user.username }}</td>
+            <td>{{ customer.customer_id }}</td>
+            <td>{{ customer.get_registration_type_display|default:"Individual" }}</td>
+            <td>{{ customer.deye_devices.count }}</td>
+            <td>{{ customer.aggregate_storage|floatformat:2 }}</td>
+            <td>{{ customer.aggregate_generation_today|floatformat:2 }}</td>
+            <td>{{ customer.aggregate_consumption_today|floatformat:2 }}</td>
+            <td class="status-cell">{% if customer.is_verified %}Verified{% else %}Unverified{% endif %}</td>
+            <td>
+                <a href="{% url 'admin-customer-update' customer.id %}" class="text-decoration-none">
+                    <i class="bi bi-eye action-icon"></i>
+                </a>
+                <a href="{% url 'admin-customer-print' customer.id %}" target="_blank" class="text-decoration-none">
+                    <i class="bi bi-printer action-icon"></i>
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
         </div>
 
         <div class="stats-summary">

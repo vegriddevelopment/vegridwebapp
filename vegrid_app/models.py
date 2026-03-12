@@ -23,7 +23,7 @@ class Customer(models.Model):
     passport_photo = models.ImageField(upload_to='passport_photos/', blank=True, null=True)
     registration_type = models.CharField(max_length=50, choices=[
         ('individual', 'Individual'),
-        ('commercial', 'Commercial'),
+        ('commercial', 'Business'),
         ('other', 'Other'),
     ], default='individual')
     is_verified = models.BooleanField(default=False)

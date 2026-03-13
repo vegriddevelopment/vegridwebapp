@@ -15,7 +15,7 @@
         body { font-family: 'Inter', sans-serif; background-color: #fff; margin: 0; padding-bottom: 220px; }
         .wrapper { display: flex; min-height: 100vh; }
         .sidebar-container { 
-            width: 250px; 
+            width: 200px; 
             flex-shrink: 0;
         }
         .sidebar-item { padding: 10px 25px; border-bottom: 1px solid #eee; }
@@ -23,6 +23,7 @@
         .main-content { flex: 1; padding: 40px; margin-left: 0; }
         
         .header { display: flex; justify-content: flex-end; margin-bottom: 30px; }
+        .title { font-weight: 800; color: #333; font-size: 1.5rem; text-align:center; }
         .header-logo { display: flex; flex-direction: column; align-items: flex-end; }
         .header-logo img { height: 50px; }
         .header-logo span { color: var(--vegrid-orange); font-weight: 900; font-size: 1rem; margin-top: -5px; }
@@ -52,8 +53,9 @@
 
         <div class="main-content">
             <header class="header">
+                <h2 class="title">Our Customers</h2>
                 <div class="header-logo">
-                    <img src="{% static 'sun-logo.png' %}" alt="Sun Logo">
+                   <img src="{% static 'vegrid-logo-BBC4G70n.png' %}" alt="Vegrid Logo">
                     <span>VEGRID</span>
                 </div>
             </header>
@@ -63,8 +65,8 @@
     <thead>
         <tr>
             <th>NAME</th>
-            <th>CUSTOMER ID</th>
-            <th>CUSTOMER TYPE</th>
+            <th>ID</th>
+            <th>TYPE</th>
             <th>SITES</th>
             <th>STORAGE (kW)</th>
             <th>GENERATION (kWp)</th>

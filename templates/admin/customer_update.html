@@ -54,7 +54,7 @@
         <div class="main-content">
             <header class="header">
             <div class="header-logo">
-                <img src="{% static 'sun-logo.png' %}" alt="Sun Logo">
+                <img src="{% static 'vegrid-logo-BBC4G70n.png' %}" alt="Vegrid Logo">
                 <span>VEGRID</span>
             </div>
         </header>
@@ -67,12 +67,12 @@
                     <h5 class="fw-bold mb-3">Customer Details</h5>
                     <p><strong>Name:</strong> {{ customer.get_full_name|default:customer.user.username }}</p>
                     <p><strong>Phone:</strong> {{ customer.phone_number }}</p>
-                    <p><strong>Aggregate Rating (kVA):</strong> {{ customer.aggregate_rating|floatformat:2 }}</p>
-                    <p><strong>Aggregate Storage (kW/kWh):</strong> {{ customer.aggregate_storage|floatformat:2 }}</p>
+                    <p><strong>Total Rating (kVA):</strong> {{ customer.aggregate_rating|floatformat:2 }}</p>
+                    <p><strong>Total Storage (kW):</strong> {{ customer.aggregate_storage|floatformat:2 }}</p>
                     <p><strong>Total Consumption (kWh):</strong> {{ customer.aggregate_consumption_total|floatformat:2 }}</p>
                     <p><strong>Daily Consumption (kWh):</strong> {{ customer.aggregate_consumption_today|floatformat:2 }}</p>
-                    <p><strong>Total Generation (kWh):</strong> {{ customer.aggregate_generation_total|floatformat:2 }}</p>
-                    <p><strong>Today's Generation (kWh):</strong> {{ customer.aggregate_generation_today|floatformat:2 }}</p>
+                    <p><strong>Total Generation (kWp):</strong> {{ customer.aggregate_generation_total|floatformat:2 }}</p>
+                    <p><strong>Today's Generation (kWp):</strong> {{ customer.aggregate_generation_today|floatformat:2 }}</p>
                 </div>
             </div>
             <div class="col-md-6">

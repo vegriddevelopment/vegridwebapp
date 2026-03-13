@@ -24,16 +24,19 @@
                 overflow-x: hidden;
             }
             .primary-color {
-                color: #ff6600;
+                color: #F7941E;
             }
             .primary-bg {
-                background-color: #ff6600;
+                background-color: #F7941E;
             }
             .secondary-bg {
                 background-color: #f8f8f8;
             }
+            .tertiary-bg {
+                background-color: white;
+            }
             .gradient-bg {
-                background: linear-gradient(135deg, #ff6600 0%, #ff8c00 100%);
+                background: linear-gradient(135deg, #F7941E 0%, #ff8c00 100%);
             }
             .hero-section {
                 position: relative;
@@ -83,6 +86,31 @@
                 margin-bottom: 30px;
                 color: rgba(255, 255, 255, 0.9);
             }
+            /* Base Orange Button */
+            .btn-orange {
+                background-color: #F7941E !important;
+                border-color: #F7941E !important;
+                color: #ffffff !important;
+            }
+
+            /* Hover State */
+            .btn-orange:hover {
+                background-color: #e68519 !important; /* Slightly darker for feedback */
+                border-color: #e68519 !important;
+                color: #ffffff !important;
+            }
+
+            /* Custom Tiny Size */
+            .btn-tiny {
+            padding: 6px 16px !important; 
+            
+            border-radius: 50px !important; 
+            
+            font-size: 0.75rem !important;
+            line-height: 1.2 !important;
+            display: inline-block;
+            }
+
             .navbar-nav .nav-link {
                 font-size: 0.85rem;
                 font-weight: 500;
@@ -96,8 +124,8 @@
             }
 
             .navbar-nav .nav-link.active {
-                color: #ff6600 !important;
-                border-bottom: 2px solid #ff6600;
+                color: #F7941E !important;
+                border-bottom: 2px solid #F7941E;
             }
 
             /* Enable dropdown on hover for desktop */
@@ -111,7 +139,7 @@
             }
             
             .navbar-brand span {
-                color: white !important;
+                color: white ;
             }
             
             .navbar-toggler {
@@ -134,66 +162,115 @@
                 margin-bottom: 40px;
             }
             .feature-card {
-                background: white;
+                background: #fff;
+                padding: 2.5rem;
                 border-radius: 15px;
-                padding: 40px 30px;
-                text-align: center;
-                transition: all 0.3s ease;
-                box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+                height: 100%; /* Makes card fill the column height */
+                display: flex; /* Flexbox for internal alignment */
+                flex-direction: column;
+                align-items: center; /* Centers items horizontally */
+                text-align: center; /* Centers text */
+                transition: all 0.3s ease-in-out;
+                border: 1px solid rgba(0,0,0,0.05);
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
             }
+
             .feature-card:hover {
                 transform: translateY(-10px);
-                box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+                border-color: transparent;
             }
+
             .feature-icon {
                 font-size: 2.5rem;
-                color: #ff6600;
-                margin-bottom: 20px;
+                margin-bottom: 1.5rem;
+                color: #198754; /* Adjust color as needed */
             }
+            .features-section {
+                padding: 100px 0;
+                background: #f8f8f8;
+            }
+            .feature-item {
+                text-align: center;
+                margin-bottom: 40px;
+                /* Preparation for the scale effect */
+                transition: transform 0.3s ease-in-out;
+                will-change: transform;
+            }
+
+            .feature-item:hover {
+                /* Scales the item up by 5% */
+                transform: scale(1.05);
+            }
+            .feature-icon {
+                font-size: 3rem;
+                margin-bottom: 1.5rem;
+                color: #F7941E; /* Your orange brand color */
+                display: inline-block;
+            }
+
             .feature-title {
-                font-size: 1.2rem;
+                font-size: 1.4rem;
                 font-weight: 600;
                 margin-bottom: 15px;
                 color: #333;
             }
+
             .feature-description {
-                font-size: 0.95rem;
+                font-size: 1rem;
                 color: #666;
                 line-height: 1.6;
+                margin-bottom: 0;
             }
             .about-section {
                 padding: 150px 0 100px;
             }
             .values-section {
                 padding: 100px 0;
-                background: #f8f8f8;
+                background: white;
             }
-            .value-item {
-                text-align: center;
-                margin-bottom: 40px;
+            .padding-section {
+                padding: 60px 0;
             }
-            .value-icon {
-                font-size: 3rem;
-                color: #ff6600;
-                margin-bottom: 20px;
-                transition: all 0.3s ease;
-                cursor: pointer;
+            .mission-box {
+                position: relative;
+                overflow: hidden;
             }
-            .value-icon:hover {
-                color: #ff8c00;
-                transform: scale(1.1);
-                filter: saturate(1.5);
+
+            .value-card {
+                border-radius: 15px;
+                transition: background 0.3s ease;
             }
-            .value-title {
-                font-size: 1.4rem;
-                font-weight: 600;
-                margin-bottom: 15px;
-                color: #333;
+
+            .value-card:hover {
+                background: #fdfdfd;
             }
-            .value-description {
-                font-size: 1rem;
-                color: #666;
-                line-height: 1.6;
+
+            .value-icon-wrap {
+                width: 60px;
+                height: 60px;
+                background: rgba(247, 148, 30, 0.1); /* Light version of brand orange */
+                color: #F7941E; /* Brand orange */
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0 auto;
+                font-size: 1.5rem;
+                transition: 0.3s;
+            }
+
+            .value-card:hover .value-icon-wrap {
+                background: #F7941E;
+                color: #fff;
+                transform: rotateY(360deg);
+            }
+
+            .title-underline {
+                width: 50px;
+                height: 3px;
+                background: #F7941E;
+                margin-top: 10px;
             }
             .stats-section {
                 padding: 100px 0;
@@ -202,7 +279,7 @@
             .stat-number {
                 font-size: 3.5rem;
                 font-weight: 700;
-                color: #ff6600;
+                color: #F7941E;
                 margin-bottom: 10px;
             }
             .stat-label {
@@ -320,7 +397,7 @@
             <div class="container-fluid px-3">
                 <a class="navbar-brand" href="#page-top">
                     <img src="{% static 'vegrid-logo-BBC4G70n.png' %}" alt="VeGrid Logo" style="height: 24px; margin-right: 8px;">
-                    <span style="color: #ff6600; font-weight: bold;">Ve</span><span style="color: #000000; font-weight: bold;">Grid</span>
+                    <span style="color: #F7941E; font-weight: bold;">Ve</span><span style="color: #000000; font-weight: bold;">Grid</span>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -334,7 +411,6 @@
                             <ul class="dropdown-menu" aria-labelledby="homeDropdown">
                                 <li><a class="dropdown-item active" href="{% url 'about' %}">About Us</a></li>
                                 <li><a class="dropdown-item" href="{% url 'team' %}">Our Team</a></li>
-                                <li><a class="dropdown-item" href="{% url 'careers' %}">Careers</a></li>
                                 <li><a class="dropdown-item" href="{% url 'contact' %}">Contact Us</a></li>
                                 <li class="nav-item dropdown">
                                     <a class="dropdown-item dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -375,7 +451,7 @@
                                 <li><a class="dropdown-item" href="#">Register</a></li>
                             </ul>
                         </li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'impact' %}">Impact</a></li>
+                        
                     </ul>
                     <a class="btn btn-orange btn-tiny ms-lg-4" href="{% url 'get-quote' %}">Get Your Quote</a>
                 </div>
@@ -386,18 +462,13 @@
         <section class="hero-section" style="background-image: url('{% static 'img/abouthero.png' %}');">
             <div class="hero-overlay"></div>
             <div class="hero-content">
-                <div class="hero-badge">About Us</div>
                 <h1 class="hero-title">About VeGrid</h1>
                 <p class="hero-description">
-                    We're on a mission to provide reliable, affordable solar power to businesses across Africa
-                </p>
-                <p class="hero-description">
-                    <strong>The Digital Backbone of Africa's Clean Energy</strong><br>
-                    An asset-light, software-driven platform orchestrating financing, deployment, monitoring, and payments for distributed solar at scale.
+                    We're on a mission to provide reliable, affordable solar power to businesses across Africa. An asset-light, software-driven platform orchestrating financing, deployment, monitoring, and payments for distributed solar at scale.
                 </p>
                 <div class="d-flex gap-3 justify-content-center flex-wrap">
                     <a href="{% url 'get-quote' %}" class="btn-orange">Get Your Quote <i class="bi bi-arrow-right"></i></a>
-                    <a href="{% url 'contact' %}" class="btn-white">Contact Us</a>
+                    <a href="{% url 'how-it-works' %}" class="btn-white">Learn More</a>
                 </div>
             </div>
         </section>
@@ -433,25 +504,14 @@
                         <p class="section-subtitle">
                             VeGrid's core asset is its software, data, and analytics. VeGrid is a leading solar power-as-a-service provider dedicated to bringing clean, reliable energy to businesses across Africa. Our innovative approach eliminates the financial barriers to solar adoption through affordable subscription models.
                         </p>
-                        <div class="d-flex gap-3 flex-wrap">
-                            <div class="feature-card mb-3" style="flex: 1; min-width: 200px;">
-                                <div class="feature-icon"><i class="bi bi-trophy"></i></div>
-                                <h3 class="feature-title">Award Winning</h3>
-                                <p class="feature-description">Recognized for innovation in renewable energy solutions</p>
-                            </div>
-                            <div class="feature-card" style="flex: 1; min-width: 200px;">
-                                <div class="feature-icon"><i class="bi bi-geo-alt"></i></div>
-                                <h3 class="feature-title">Pan-African</h3>
-                                <p class="feature-description">Operating across multiple African countries</p>
-                            </div>
-                        </div>
+                        
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Our Story Section-->
-        <section class="secondary-bg py-10">
+        <section class="secondary-bg padding-section">
             <div class="container px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 align-items-center">
                     <div class="col-lg-6 order-lg-2 mb-5 mb-lg-0">
@@ -494,187 +554,101 @@
                 </div>
             </div>
         </section>
-
-        <!-- Our Values Section-->
-        <section class="values-section">
+        
+        <!-- Our Mission & Values Section-->
+        <section class="values-section py-6">
             <div class="container px-4 px-lg-5">
-                <!-- Our Mission -->
-                <div class="row justify-content-center mb-8">
-                    <div class="col-lg-8 text-center">
-                        <h2 class="section-title">Our Mission</h2>
-                        <p class="section-subtitle">
-                            Democratize access to reliable, quality, clean, and affordable renewable energy across Africa. We build the infrastructure layer that makes distributed solar work — for customers, installers, and financiers alike.
-                        </p>
+                <div class="row justify-content-center mb-5">
+                    <div class="col-lg-10">
+                        <div class="mission-box p-4 p-md-5 text-center bg-white shadow-sm rounded-20 border-top border-primary border-5">
+                            <span class="text-uppercase tracking-widest primary-color fw-bold small mb-2 d-block">Our Mission</span>
+                            <h2 class="display-6 fw-bold mb-4">Empowering Africa's Energy Future</h2>
+                            <p class="lead text-muted mx-auto" style="max-width: 800px;">
+                                Democratize access to reliable, quality, clean, and affordable renewable energy across Africa. We build the <strong>infrastructure layer</strong> that makes distributed solar work — for customers, installers, and financiers alike.
+                            </p>
+                        </div>
                     </div>
                 </div>
-                <!-- Our Values -->
-                <div class="text-center mb-5">
-                    <h2 class="section-title">Our Values</h2>
-                    <p class="section-subtitle">Guiding principles that drive everything we do</p>
-                </div>
-                <div class="row gx-4 gx-lg-5">
+
+                <div class="row mt-5">
+                    <div class="col-12 text-center mb-5">
+                        <h2 class="section-title">Our Values</h2>
+                        <div class="title-underline mx-auto"></div>
+                    </div>
+                    
                     <div class="col-lg-3 col-md-6 mb-4">
-                        <div class="value-item">
-                            <div class="value-icon"><i class="bi bi-heart"></i></div>
-                            <h3 class="value-title">Customer First</h3>
-                            <p class="value-description">Your success is our success. We're committed to providing exceptional service.</p>
+                        <div class="value-card h-100 text-center p-4">
+                            <div class="value-icon-wrap mb-3">
+                                <i class="bi bi-heart-fill"></i>
+                            </div>
+                            <h4 class="fw-bold mb-2">Customer First</h4>
+                            <p class="text-muted small mb-0">Your success is our success. We're committed to providing exceptional service.</p>
                         </div>
                     </div>
+
                     <div class="col-lg-3 col-md-6 mb-4">
-                        <div class="value-item">
-                            <div class="value-icon"><i class="bi bi-lightning"></i></div>
-                            <h3 class="value-title">Innovation</h3>
-                            <p class="value-description">Constantly improving and finding better ways to serve our customers.</p>
+                        <div class="value-card h-100 text-center p-4">
+                            <div class="value-icon-wrap mb-3">
+                                <i class="bi bi-lightning-charge-fill"></i>
+                            </div>
+                            <h4 class="fw-bold mb-2">Innovation</h4>
+                            <p class="text-muted small mb-0">Constantly finding better ways to serve the unique needs of our customers.</p>
                         </div>
                     </div>
+
                     <div class="col-lg-3 col-md-6 mb-4">
-                        <div class="value-item">
-                            <div class="value-icon"><i class="bi bi-globe"></i></div>
-                            <h3 class="value-title">Sustainability</h3>
-                            <p class="value-description">Building a greener future through renewable energy solutions.</p>
+                        <div class="value-card h-100 text-center p-4">
+                            <div class="value-icon-wrap mb-3">
+                                <i class="bi bi-globe-americas"></i>
+                            </div>
+                            <h4 class="fw-bold mb-2">Sustainability</h4>
+                            <p class="text-muted small mb-0">Building a greener, more resilient future through renewable energy solutions.</p>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="value-item">
-                            <div class="value-icon"><i class="bi bi-people"></i></div>
-                            <h3 class="value-title">Integrity</h3>
-                            <p class="value-description">Transparency and trust are the foundation of our business.</p>
+
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="value-card h-100 text-center p-4">
+                            <div class="value-icon-wrap mb-3">
+                                <i class="bi bi-shield-lock-fill"></i>
+                            </div>
+                            <h4 class="fw-bold mb-2">Integrity</h4>
+                            <p class="text-muted small mb-0">Transparency and trust are the foundation of everything we build.</p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- What We Stand For Section-->
-        <section class="secondary-bg py-10">
+        <section class="secondary-bg padding-section">
             <div class="container px-4 px-lg-5">
                 <div class="text-center mb-5">
                     <h2 class="section-title">What We Stand For</h2>
                 </div>
                 
-                <div class="row gx-4 gx-lg-5">
-                    <!-- Transparency -->
+                <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="feature-card">
+                        <div class="feature-card h-100">
                             <div class="feature-icon"><i class="bi bi-eye"></i></div>
                             <h3 class="feature-title">Transparency</h3>
                             <p class="feature-description">Every transaction, every datapoint, visible to all stakeholders.</p>
                         </div>
                     </div>
                     
-                    <!-- Local Execution -->
                     <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="feature-card">
+                        <div class="feature-card h-100">
                             <div class="feature-icon"><i class="bi bi-geo-alt"></i></div>
                             <h3 class="feature-title">Local Execution</h3>
                             <p class="feature-description">Certified local installers. Local jobs. Local impact.</p>
                         </div>
                     </div>
                     
-                    <!-- Data-Driven -->
-                    <div class="col-lg-4 col-md-6">
-                        <div class="feature-card">
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="feature-card h-100">
                             <div class="feature-icon"><i class="bi bi-bar-chart-line"></i></div>
                             <h3 class="feature-title">Data-Driven</h3>
                             <p class="feature-description">Real-time monitoring. Predictive maintenance. Continuous improvement.</p>
                         </div>
                     </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Stats Section-->
-        <section class="stats-section">
-            <div class="container px-4 px-lg-5">
-                <div class="row gx-4 gx-lg-5 justify-content-center">
-                    <div class="col-lg-3 col-md-6 text-center mb-5 mb-lg-0">
-                        <div class="stat-number">100+</div>
-                        <div class="stat-label">Businesses Powered</div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 text-center mb-5 mb-lg-0">
-                        <div class="stat-number">10M+</div>
-                        <div class="stat-label">KWh Generated</div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 text-center mb-5 mb-lg-0">
-                        <div class="stat-number">500+</div>
-                        <div class="stat-label">Jobs Created</div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 text-center">
-                        <div class="stat-number">50K+</div>
-                        <div class="stat-label">Tonnes CO₂ Saved</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- The VESPMAN Platform Section-->
-        <section class="secondary-bg py-10">
-            <div class="container px-4 px-lg-5">
-                <div class="text-center mb-5">
-                    <h2 class="section-title">The VESPMAN Platform</h2>
-                    <p class="section-subtitle">A Digital Ecosystem Connecting All Stakeholders</p>
-                </div>
-                
-                <div class="row gx-4 gx-lg-5">
-                    <!-- Customers -->
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="feature-card">
-                            <div class="feature-icon"><i class="bi bi-people"></i></div>
-                            <h3 class="feature-title">Customers</h3>
-                            <p class="feature-description">Request quotes, track installation, monitor usage, make payments</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Installers -->
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="feature-card">
-                            <div class="feature-icon"><i class="bi bi-hammer"></i></div>
-                            <h3 class="feature-title">Installers</h3>
-                            <p class="feature-description">Receive work orders, access technical specs, report completion, earn service fees</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Regulators (EPRA) -->
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="feature-card">
-                            <div class="feature-icon"><i class="bi bi-shield-shaded"></i></div>
-                            <h3 class="feature-title">Regulators (EPRA)</h3>
-                            <p class="feature-description">Ensure compliance, license partners, oversee quality</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Distributors -->
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="feature-card">
-                            <div class="feature-icon"><i class="bi bi-truck"></i></div>
-                            <h3 class="feature-title">Distributors</h3>
-                            <p class="feature-description">Fulfill orders, manage inventory, coordinate delivery</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Investors -->
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="feature-card">
-                            <div class="feature-icon"><i class="bi bi-graph-up"></i></div>
-                            <h3 class="feature-title">Investors</h3>
-                            <p class="feature-description">Track portfolio performance, assess risk, plan exits</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Financiers -->
-                    <div class="col-lg-4 col-md-6">
-                        <div class="feature-card">
-                            <div class="feature-icon"><i class="bi bi-cash-stack"></i></div>
-                            <h3 class="feature-title">Financiers</h3>
-                            <p class="feature-description">Underwrite loans, monitor repayment, access performance data</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="text-center mt-8">
-                    <p class="section-subtitle">
-                        VESPMAN orchestrates the entire solar value chain digitally. Every transaction, datapoint, and workflow flows through a single integrated system that reduces friction and increases transparency.
-                    </p>
                 </div>
             </div>
         </section>
@@ -701,12 +675,37 @@
             // Navbar scroll effect
             window.addEventListener('scroll', function() {
                 const navbar = document.querySelector('.navbar');
+                const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+                const brandSpans = document.querySelectorAll('.navbar-brand span');
+                const navbarToggler = document.querySelector('.navbar-toggler');
+                const navbarTogglerIcon = document.querySelector('.navbar-toggler-icon');
+                
                 if (window.scrollY > 50) {
-                    navbar.style.background = 'rgba(255, 255, 255, 0.98)';
-                    navbar.style.boxShadow = '0 4px 20px rgba(0,0,0,0.1)';
+                    navbar.style.background = 'rgba(0, 0, 0, 0.95)';
+                    navbar.style.boxShadow = '0 4px 20px rgba(0,0,0,0.3)';
+                    
+                    // Change links to white color
+                    navLinks.forEach(link => {
+                        link.style.color = 'white !important';
+                    });
+                    brandSpans.forEach(span => {
+                        span.style.color = 'white';
+                    });
+                    navbarToggler.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+                    navbarTogglerIcon.style.filter = 'invert(1)';
                 } else {
-                    navbar.style.background = 'rgba(255, 255, 255, 0.95)';
-                    navbar.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+                    navbar.style.background = 'transparent';
+                    navbar.style.boxShadow = 'none';
+                    
+                    // Change links to white color
+                    navLinks.forEach(link => {
+                        link.style.color = 'white !important';
+                    });
+                    brandSpans.forEach(span => {
+                        span.style.color = 'white';
+                    });
+                    navbarToggler.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+                    navbarTogglerIcon.style.filter = 'invert(1)';
                 }
             });
         </script>

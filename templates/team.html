@@ -24,17 +24,43 @@
                 overflow-x: hidden;
             }
             .primary-color {
-                color: #ff6600;
+                color: #F7941E;
             }
             .primary-bg {
-                background-color: #ff6600;
+                background-color: #F7941E;
             }
             .secondary-bg {
                 background-color: #f8f8f8;
             }
             .gradient-bg {
-                background: linear-gradient(135deg, #ff6600 0%, #ff8c00 100%);
+                background: linear-gradient(135deg, #F7941E 0%, #ff8c00 100%);
             }
+
+            /* Base Orange Button */
+            .btn-orange {
+                background-color: #F7941E !important;
+                border-color: #F7941E !important;
+                color: #ffffff !important;
+            }
+
+            /* Hover State */
+            .btn-orange:hover {
+                background-color: #e68519 !important; /* Slightly darker for feedback */
+                border-color: #e68519 !important;
+                color: #ffffff !important;
+            }
+
+            /* Custom Tiny Size */
+            .btn-tiny {
+            padding: 6px 16px !important; 
+            
+            border-radius: 50px !important; 
+            
+            font-size: 0.75rem !important;
+            line-height: 1.2 !important;
+            display: inline-block;
+            }
+
             .navbar-nav .nav-link {
                 font-size: 0.85rem;
                 font-weight: 500;
@@ -48,8 +74,8 @@
             }
 
             .navbar-nav .nav-link.active {
-                color: #ff6600 !important;
-                border-bottom: 2px solid #ff6600;
+                color: #F7941E !important;
+                border-bottom: 2px solid #F7941E;
             }
 
             /* Enable dropdown on hover for desktop */
@@ -63,7 +89,7 @@
             }
             
             .navbar-brand span {
-                color: white !important;
+                color: white;
             }
             
             .navbar-toggler {
@@ -114,7 +140,7 @@
                 z-index: 1;
             }
             .team-member:hover .team-member-image {
-                border-color: #ff6600;
+                border-color: #F7941E;
                 transform: scale(1.05);
                 box-shadow: 0 0 0 6px rgba(255, 102, 0, 0.1);
             }
@@ -130,7 +156,7 @@
             }
             .team-member-role {
                 font-size: 0.85rem;
-                color: #ff6600;
+                color: #F7941E;
                 margin-bottom: 12px;
                 font-weight: 500;
                 text-transform: uppercase;
@@ -156,12 +182,12 @@
                 border-radius: 50%;
                 text-align: center;
                 line-height: 40px;
-                color: #ff6600;
+                color: #F7941E;
                 text-decoration: none;
                 transition: all 0.3s ease;
             }
             .social-link:hover {
-                background: #ff6600;
+                background: #F7941E;
                 color: white;
                 transform: translateY(-2px);
             }
@@ -223,7 +249,7 @@
             }
             .value-icon {
                 font-size: 3rem;
-                color: #ff6600;
+                color: #F7941E;
                 margin-bottom: 20px;
             }
             .value-title {
@@ -236,6 +262,9 @@
                 font-size: 1rem;
                 color: #666;
                 line-height: 1.6;
+            }
+            .padding-section {
+                padding: 60px 0;
             }
             @media (max-width: 768px) {
                 .hero-title {
@@ -259,7 +288,7 @@
             <div class="container-fluid px-3">
                 <a class="navbar-brand" href="#page-top">
                     <img src="{% static 'vegrid-logo-BBC4G70n.png' %}" alt="VeGrid Logo" style="height: 24px; margin-right: 8px;">
-                    <span style="color: #ff6600; font-weight: bold;">Ve</span><span style="color: #000000; font-weight: bold;">Grid</span>
+                    <span style="color: #F7941E; font-weight: bold;">Ve</span><span style="color: #000000; font-weight: bold;">Grid</span>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -273,7 +302,6 @@
                             <ul class="dropdown-menu" aria-labelledby="homeDropdown">
                                 <li><a class="dropdown-item" href="{% url 'about' %}">About Us</a></li>
                                 <li><a class="dropdown-item active" href="{% url 'team' %}">Our Team</a></li>
-                                <li><a class="dropdown-item" href="{% url 'careers' %}">Careers</a></li>
                                 <li><a class="dropdown-item" href="{% url 'contact' %}">Contact Us</a></li>
                                 <li class="nav-item dropdown">
                                     <a class="dropdown-item dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -314,7 +342,6 @@
                                 <li><a class="dropdown-item" href="#">Register</a></li>
                             </ul>
                         </li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'impact' %}">Impact</a></li>
                     </ul>
                     <a class="btn btn-orange btn-tiny ms-lg-4" href="{% url 'get-quote' %}">Get Your Quote</a>
                 </div>
@@ -325,20 +352,19 @@
         <section class="hero-section" style="background-image: url('{% static 'img/Image_fx (25).png' %}');">
             <div class="hero-overlay"></div>
             <div class="hero-content">
-                <div class="hero-badge">Our Team</div>
                 <h1 class="hero-title">Our Team</h1>
                 <p class="hero-description">
                     The people behind VeGrid's mission to transform Africa's energy landscape
                 </p>
                 <div class="d-flex gap-3 justify-content-center flex-wrap">
-                    <a href="#leadership" class="btn-orange">Meet Our Team <i class="bi bi-arrow-right"></i></a>
-                    <a href="{% url 'contact' %}" class="btn-white">Contact Us</a>
+                    <a href="/about" class="btn-orange">Learn More About Us <i class="bi bi-arrow-right"></i></a>
+                    <a href="{% url 'contact' %}" class="btn-white">Begin Your Setup</a>
                 </div>
             </div>
         </section>
 
         <!-- Leadership Section-->
-        <section id="leadership" class="py-10">
+        <section id="leadership" class="padding-section">
             <div class="container px-4 px-lg-5">
                 <div class="text-center mb-5">
                     <h2 class="section-title">Leadership Team</h2>
@@ -354,10 +380,7 @@
                                 <p class="team-member-bio">
                                     Founder of VeGrid Ltd with 32+ years in technology and energy. Held senior ICT/energy roles at Compaq, Postal Corporation of Kenya, and Kenya Power & Lighting PLC where he recently served as Chief Innovations Officer and prior as General Manager.
                                 </p>
-                                <div class="team-member-social">
-                                    <a href="#" class="social-link"><i class="bi bi-linkedin"></i></a>
-                                    <a href="#" class="social-link"><i class="bi bi-twitter-x"></i></a>
-                                </div>
+                                
                             </div>
                         </div>
                     </div>
@@ -370,10 +393,7 @@
                                 <p class="team-member-bio">
                                     AI entrepreneur & technologist with multiple global AI startups. Patented AI technologies and published research in AI and human-computer interaction (MIT, Stanford).
                                 </p>
-                                <div class="team-member-social">
-                                    <a href="#" class="social-link"><i class="bi bi-linkedin"></i></a>
-                                    <a href="#" class="social-link"><i class="bi bi-twitter-x"></i></a>
-                                </div>
+                                
                             </div>
                         </div>
                     </div>
@@ -386,10 +406,7 @@
                                 <p class="team-member-bio">
                                     Nearly a decade in digital marketing, brand management, and strategic communications. Led high-profile accounts including Safaricom PLC, M-PESA Foundation, NCBA, and HEIB.
                                 </p>
-                                <div class="team-member-social">
-                                    <a href="#" class="social-link"><i class="bi bi-linkedin"></i></a>
-                                    <a href="#" class="social-link"><i class="bi bi-twitter-x"></i></a>
-                                </div>
+                                
                             </div>
                         </div>
                     </div>
@@ -402,10 +419,7 @@
                                 <p class="team-member-bio">
                                     Founder & CEO of DermRx, a healthcare tech company achieving $30M+ revenue in 3 years. Pioneering entrepreneur in healthcare tech and sustainable development.
                                 </p>
-                                <div class="team-member-social">
-                                    <a href="#" class="social-link"><i class="bi bi-linkedin"></i></a>
-                                    <a href="#" class="social-link"><i class="bi bi-twitter-x"></i></a>
-                                </div>
+                                
                             </div>
                         </div>
                     </div>
@@ -418,10 +432,7 @@
                                 <p class="team-member-bio">
                                     25+ years in advisory & investments across energy, telecom, infrastructure, and education. Former Energy Advisor to the Minister of Energy, Kenya, for five years.
                                 </p>
-                                <div class="team-member-social">
-                                    <a href="#" class="social-link"><i class="bi bi-linkedin"></i></a>
-                                    <a href="#" class="social-link"><i class="bi bi-twitter-x"></i></a>
-                                </div>
+                                
                             </div>
                         </div>
                     </div>
@@ -434,10 +445,7 @@
                                 <p class="team-member-bio">
                                     Country Manager for EDF Kenya, driving investments in hydro, geothermal, and low-carbon energy. Advanced UK-Kenya trade and investment partnerships at British High Commission.
                                 </p>
-                                <div class="team-member-social">
-                                    <a href="#" class="social-link"><i class="bi bi-linkedin"></i></a>
-                                    <a href="#" class="social-link"><i class="bi bi-twitter-x"></i></a>
-                                </div>
+                                
                             </div>
                         </div>
                     </div>
@@ -446,11 +454,11 @@
         </section>
 
         <!-- Our Culture Section-->
-        <section id="culture" class="py-10">
+        <section id="culture" class="padding-section secondary-bg">
             <div class="container px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 align-items-center">
                     <div class="col-lg-6 mb-5 mb-lg-0">
-                        <img src="assets/img/herosection/hero-home.jpg" alt="Our Culture" class="img-fluid rounded-15" style="border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                        <img src="{% static 'img/herosection/hero-home.jpg' %}" alt="Our Culture" class="img-fluid rounded-15" style="border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
                     </div>
                     <div class="col-lg-6">
                         <h2 class="section-title">Our Culture</h2>
@@ -499,12 +507,37 @@
             // Navbar scroll effect
             window.addEventListener('scroll', function() {
                 const navbar = document.querySelector('.navbar');
+                const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+                const brandSpans = document.querySelectorAll('.navbar-brand span');
+                const navbarToggler = document.querySelector('.navbar-toggler');
+                const navbarTogglerIcon = document.querySelector('.navbar-toggler-icon');
+                
                 if (window.scrollY > 50) {
-                    navbar.style.background = 'rgba(255, 255, 255, 0.98)';
-                    navbar.style.boxShadow = '0 4px 20px rgba(0,0,0,0.1)';
+                    navbar.style.background = 'rgba(0, 0, 0, 0.95)';
+                    navbar.style.boxShadow = '0 4px 20px rgba(0,0,0,0.3)';
+                    
+                    // Change links to white color
+                    navLinks.forEach(link => {
+                        link.style.color = 'white !important';
+                    });
+                    brandSpans.forEach(span => {
+                        span.style.color = 'white';
+                    });
+                    navbarToggler.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+                    navbarTogglerIcon.style.filter = 'invert(1)';
                 } else {
-                    navbar.style.background = 'rgba(255, 255, 255, 0.95)';
-                    navbar.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+                    navbar.style.background = 'transparent';
+                    navbar.style.boxShadow = 'none';
+                    
+                    // Change links to white color
+                    navLinks.forEach(link => {
+                        link.style.color = 'white !important';
+                    });
+                    brandSpans.forEach(span => {
+                        span.style.color = 'white';
+                    });
+                    navbarToggler.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+                    navbarTogglerIcon.style.filter = 'invert(1)';
                 }
             });
         </script>

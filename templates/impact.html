@@ -24,16 +24,40 @@
                 overflow-x: hidden;
             }
             .primary-color {
-                color: #ff6600;
+                color: #F7941E;
             }
             .primary-bg {
-                background-color: #ff6600;
+                background-color: #F7941E;
             }
             .secondary-bg {
                 background-color: #f8f8f8;
             }
             .gradient-bg {
-                background: linear-gradient(135deg, #ff6600 0%, #ff8c00 100%);
+                background: linear-gradient(135deg, #F7941E 0%, #ff8c00 100%);
+            }
+            /* Base Orange Button */
+            .btn-orange {
+                background-color: #F7941E !important;
+                border-color: #F7941E !important;
+                color: #ffffff !important;
+            }
+
+            /* Hover State */
+            .btn-orange:hover {
+                background-color: #e68519 !important; /* Slightly darker for feedback */
+                border-color: #e68519 !important;
+                color: #ffffff !important;
+            }
+
+            /* Custom Tiny Size */
+            .btn-tiny {
+            padding: 6px 16px !important; 
+            
+            border-radius: 50px !important; 
+            
+            font-size: 0.75rem !important;
+            line-height: 1.2 !important;
+            display: inline-block;
             }
             .navbar-nav .nav-link {
                 font-size: 0.85rem;
@@ -48,8 +72,8 @@
             }
 
             .navbar-nav .nav-link.active {
-                color: #ff6600 !important;
-                border-bottom: 2px solid #ff6600;
+                color: #F7941E !important;
+                border-bottom: 2px solid #F7941E;
             }
 
             /* Enable dropdown on hover for desktop */
@@ -63,7 +87,7 @@
             }
             
             .navbar-brand span {
-                color: white !important;
+                color: white ;
             }
             
             .navbar-toggler {
@@ -100,7 +124,7 @@
             }
             .impact-icon {
                 font-size: 2.5rem;
-                color: #ff6600;
+                color: #F7941E;
                 margin-bottom: 20px;
             }
             .impact-title {
@@ -173,7 +197,7 @@
             .stat-number {
                 font-size: 3.5rem;
                 font-weight: 700;
-                color: #ff6600;
+                color: #F7941E;
                 margin-bottom: 10px;
             }
             .stat-label {
@@ -209,7 +233,7 @@
                 margin-bottom: 20px;
             }
             .testimonial-section {
-                background: linear-gradient(135deg, #ff6600 0%, #ff8c00 100%);
+                background: linear-gradient(135deg, #F7941E 0%, #ff8c00 100%);
                 padding: 150px 0;
                 color: white;
                 margin: 0;
@@ -237,7 +261,7 @@
                 box-shadow: 0 8px 25px rgba(0,0,0,0.15);
             }
             .text-orange {
-                color: #ff6600;
+                color: #F7941E;
             }
             .carousel-indicators [data-bs-target] {
                 width: 12px;
@@ -309,7 +333,7 @@
             <div class="container-fluid px-3">
                 <a class="navbar-brand" href="#page-top">
                     <img src="{% static 'vegrid-logo-BBC4G70n.png' %}" alt="VeGrid Logo" style="height: 24px; margin-right: 8px;">
-                    <span style="color: #ff6600; font-weight: bold;">Ve</span><span style="color: #000000; font-weight: bold;">Grid</span>
+                    <span style="color: #F7941E; font-weight: bold;">Ve</span><span style="color: #000000; font-weight: bold;">Grid</span>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -317,13 +341,12 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto my-2 my-lg-0">
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle active" href="{% url 'index' %}" id="homeDropdown" role="button" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="{% url 'index' %}" id="homeDropdown" role="button" aria-expanded="false">
                                 Home
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="homeDropdown">
                                 <li><a class="dropdown-item" href="{% url 'about' %}">About Us</a></li>
                                 <li><a class="dropdown-item" href="{% url 'team' %}">Our Team</a></li>
-                                <li><a class="dropdown-item" href="{% url 'careers' %}">Careers</a></li>
                                 <li><a class="dropdown-item" href="{% url 'contact' %}">Contact Us</a></li>
                                 <li class="nav-item dropdown">
                                     <a class="dropdown-item dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -375,13 +398,9 @@
         <section class="hero-section" style="background-image: url('{% static 'img/Image_fx (26).png' %}');">
             <div class="hero-overlay"></div>
             <div class="hero-content">
-                <div class="hero-badge">Our Impact</div>
                 <h1 class="hero-title">Our Impact</h1>
                 <p class="hero-description">
-                    Transforming lives and businesses through clean, reliable solar energy
-                </p>
-                <p class="hero-description">
-                    <strong>Making a Difference Across Africa</strong><br>
+                    Transforming lives and businesses through clean, reliable solar energy.
                     See how VeGrid's solar solutions are empowering businesses, creating jobs, and protecting the environment.
                 </p>
                 <a href="#stats" class="btn-orange">View Impact <i class="bi bi-arrow-right"></i></a>
@@ -437,7 +456,7 @@
                             <div class="impact-icon"><i class="bi bi-lightbulb"></i></div>
                             <h3 class="impact-title">Energy Access</h3>
                             <p class="impact-description">
-                                Providing reliable energy access to businesses and communities that previously relied on expensive and unreliable power sources.
+                                Providing reliable and renewable energy access to businesses and communities that need it.
                             </p>
                         </div>
                     </div>
@@ -452,7 +471,7 @@
                     </div>
                     <div class="col-lg-4 col-md-6">
                         <div class="impact-card">
-                            <div class="impact-icon"><i class="bi bi-seedling"></i></div>
+                            <div class="impact-icon"><i class="bi bi-tree"></i></div>
                             <h3 class="impact-title">Environmental Impact</h3>
                             <p class="impact-description">
                                 Reducing carbon emissions by replacing fossil fuel-based electricity with clean, renewable solar energy.
@@ -669,12 +688,34 @@
             // Navbar scroll effect
             window.addEventListener('scroll', function() {
                 const navbar = document.querySelector('.navbar');
+                const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+                const brandSpans = document.querySelectorAll('.navbar-brand span');
+                const navbarToggler = document.querySelector('.navbar-toggler');
+                const navbarTogglerIcon = document.querySelector('.navbar-toggler-icon');
+                
                 if (window.scrollY > 50) {
-                    navbar.style.background = 'rgba(255, 255, 255, 0.98)';
-                    navbar.style.boxShadow = '0 4px 20px rgba(0,0,0,0.1)';
+                    navbar.style.background = 'rgba(0, 0, 0, 0.95)';
+                    navbar.style.boxShadow = '0 4px 20px rgba(0,0,0,0.3)';
+                    
+                    // Change links to white color
+                    navLinks.forEach(link => {
+                        link.style.color = 'white !important';
+                    });
+                    brandSpans.forEach(span => {
+                        span.style.color = 'white';
+                    });
+                    navbarToggler.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+                    navbarTogglerIcon.style.filter = 'invert(1)';
                 } else {
-                    navbar.style.background = 'rgba(255, 255, 255, 0.95)';
-                    navbar.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+                    navbar.style.background = 'transparent';
+                    navbar.style.boxShadow = 'none';
+                    
+                    // Change links to white color
+                    navLinks.forEach(link => {
+                        link.style.color = 'white !important';
+                    });
+                    navbarToggler.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+                    navbarTogglerIcon.style.filter = 'invert(1)';
                 }
             });
         </script>

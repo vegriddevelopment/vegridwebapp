@@ -17,6 +17,8 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" />
         <!-- Custom CSS-->
         <link href="{% static 'styles.css' %}" rel="stylesheet" />
+        <!--Animation tool (AOS)-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
         <style>
             body {
                 font-family: 'Inter', sans-serif;
@@ -24,16 +26,40 @@
                 overflow-x: hidden;
             }
             .primary-color {
-                color: #ff6600;
+                color: #F7941E;
             }
             .primary-bg {
-                background-color: #ff6600;
+                background-color: #F7941E;
             }
             .secondary-bg {
                 background-color: #f8f8f8;
             }
             .gradient-bg {
-                background: linear-gradient(135deg, #ff6600 0%, #ff8c00 100%);
+                background: linear-gradient(135deg, #F7941E 0%, #ff8c00 100%);
+            }
+            /* Base Orange Button */
+            .btn-orange {
+                background-color: #F7941E !important;
+                border-color: #F7941E !important;
+                color: #ffffff !important;
+            }
+
+            /* Hover State */
+            .btn-orange:hover {
+                background-color: #e68519 !important; /* Slightly darker for feedback */
+                border-color: #e68519 !important;
+                color: #ffffff !important;
+            }
+
+            /* Custom Tiny Size */
+            .btn-tiny {
+            padding: 6px 16px !important; 
+            
+            border-radius: 50px !important; 
+            
+            font-size: 0.75rem !important;
+            line-height: 1.2 !important;
+            display: inline-block;
             }
             .navbar-nav .nav-link {
                 font-size: 0.85rem;
@@ -48,8 +74,8 @@
             }
 
             .navbar-nav .nav-link.active {
-                color: #ff6600 !important;
-                border-bottom: 2px solid #ff6600;
+                color: #F7941E !important;
+                border-bottom: 2px solid #F7941E;
             }
 
             /* Enable dropdown on hover for desktop */
@@ -63,7 +89,7 @@
             }
             
             .navbar-brand span {
-                color: white !important;
+                color: white ;
             }
             
             .navbar-toggler {
@@ -129,7 +155,7 @@
             }
             .solution-features li:before {
                 content: "✓";
-                color: #ff6600;
+                color: #F7941E;
                 font-weight: bold;
                 margin-right: 10px;
             }
@@ -173,26 +199,77 @@
             }
             .features-section {
                 padding: 100px 0;
-                background: #f8f8f8;
+                background: linear-gradient(to bottom, #ffffff, #fdf8f2);
             }
-            .feature-item {
+            
+            .feature-card {
+                padding: 40px 30px;
                 text-align: center;
-                margin-bottom: 40px;
+                background: #ffffff;
+                border-radius: 20px;
+                border: 1px solid rgba(0,0,0,0.05);
+                box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+                transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+                height: 100%;
+                position: relative;
+                overflow: hidden;
             }
+
+            .feature-card::before {
+                content: "";
+                position: absolute;
+                top: 0; left: 0; width: 100%; height: 4px;
+                background: #F7941E;
+                transform: scaleX(0);
+                transition: transform 0.4s ease;
+            }
+
+            .feature-card:hover {
+                transform: translateY(-15px);
+                box-shadow: 0 20px 40px rgba(247, 148, 30, 0.1);
+            }
+
+            .feature-card:hover::before {
+                transform: scaleX(1);
+            }
+
+            .icon-wrapper {
+                width: 80px;
+                height: 80px;
+                background: rgba(247, 148, 30, 0.1);
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0 auto 25px;
+                transition: 0.3s;
+            }
+
+            .feature-card:hover .icon-wrapper {
+                background: #F7941E;
+            }
+
+            .feature-card:hover .feature-icon {
+                color: #ffffff;
+                transform: rotateY(360deg);
+            }
+
             .feature-icon {
-                font-size: 3rem;
-                color: #ff6600;
-                margin-bottom: 20px;
+                font-size: 2rem;
+                color: #F7941E;
+                transition: 0.6s;
             }
+
             .feature-title {
-                font-size: 1.4rem;
-                font-weight: 600;
+                font-size: 1.25rem;
+                font-weight: 700;
                 margin-bottom: 15px;
-                color: #333;
+                color: #222;
             }
+
             .feature-description {
-                font-size: 1rem;
-                color: #666;
+                font-size: 0.95rem;
+                color: #6c757d;
                 line-height: 1.6;
             }
             .comparison-table {
@@ -250,7 +327,7 @@
             <div class="container-fluid px-3">
                 <a class="navbar-brand" href="#page-top">
                     <img src="{% static 'vegrid-logo-BBC4G70n.png' %}" alt="VeGrid Logo" style="height: 24px; margin-right: 8px;">
-                    <span style="color: #ff6600; font-weight: bold;">Ve</span><span style="color: #000000; font-weight: bold;">Grid</span>
+                    <span style="color: #F7941E; font-weight: bold;">Ve</span><span style="color: #000000; font-weight: bold;">Grid</span>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -258,13 +335,12 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto my-2 my-lg-0">
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle active" href="{% url 'index' %}" id="homeDropdown" role="button" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="{% url 'index' %}" id="homeDropdown" role="button" aria-expanded="false">
                                 Home
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="homeDropdown">
                                 <li><a class="dropdown-item" href="{% url 'about' %}">About Us</a></li>
                                 <li><a class="dropdown-item" href="{% url 'team' %}">Our Team</a></li>
-                                <li><a class="dropdown-item" href="{% url 'careers' %}">Careers</a></li>
                                 <li><a class="dropdown-item" href="{% url 'contact' %}">Contact Us</a></li>
                                 <li class="nav-item dropdown">
                                     <a class="dropdown-item dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -305,7 +381,6 @@
                                 <li><a class="dropdown-item" href="#">Register</a></li>
                             </ul>
                         </li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'impact' %}">Impact</a></li>
                     </ul>
                     <a class="btn btn-orange btn-tiny ms-lg-4" href="{% url 'get-quote' %}">Get Your Quote</a>
                 </div>
@@ -322,14 +397,14 @@
                     Tailored solar power-as-a-service solutions for businesses of all sizes across Africa
                 </p>
                 <div class="d-flex gap-3 justify-content-center flex-wrap">
-                    <a href="#home" class="btn-orange">Explore Solutions <i class="bi bi-arrow-right"></i></a>
-                    <a href="{% url 'get-quote' %}" class="btn-white">Get Your Quote</a>
+                    <a href="/how-it-works" class="btn-orange">Learn How It Works <i class="bi bi-arrow-right"></i></a>
+                    <a href="{% url 'get-quote' %}" class="btn-white">Get Started Now</a>
                 </div>
             </div>
         </section>
 
         <!-- Home Solar Section-->
-        <section id="home" class="py-10">
+        <section id="home" class="py-5">
             <div class="container px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 align-items-center mb-5">
                     <div class="col-lg-6 mb-5 mb-lg-0">
@@ -377,7 +452,7 @@
         </section>
 
         <!-- Commercial Solar Section-->
-        <section id="commercial" class="py-10 secondary-bg">
+        <section id="commercial" class="py-5 secondary-bg">
             <div class="container px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 align-items-center mb-5">
                     <div class="col-lg-6 order-lg-2 mb-5 mb-lg-0">
@@ -390,7 +465,7 @@
                                 </p>
                                 <ul class="solution-features">
                                     <li>Tailored to your business energy needs</li>
-                                    <li>Zero upfront costs</li>
+                                    <li>Minimal upfront costs</li>
                                     <li>Fixed monthly payments</li>
                                     <li>24/7 monitoring and maintenance</li>
                                     <li>Remote management system</li>
@@ -425,7 +500,7 @@
         </section>
 
         <!-- Industrial Solar Section-->
-        <section id="industrial" class="py-10">
+        <section id="industrial" class="py-5">
             <div class="container px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 align-items-center">
                     <div class="col-lg-6 mb-5 mb-lg-0">
@@ -472,144 +547,115 @@
             </div>
         </section>
 
-        <!-- Agricultural Solar Section-->
-        <section id="agricultural" class="py-10 secondary-bg">
+        <!-- Social Impact Section-->
+        <section id="impact" class="py-5 secondary-bg">
             <div class="container px-4 px-lg-5">
-                <div class="row gx-4 gx-lg-5 align-items-center mb-5">
+                <div class="row gx-4 gx-lg-5 align-items-center">
+
                     <div class="col-lg-6 order-lg-2 mb-5 mb-lg-0">
                         <div class="solution-card">
-                            <img src="{% static 'img/agriculture/Image_fx.png' %}" alt="Agricultural Solar" class="solution-image">
-                            <div class="solution-content">
-                                <h3 class="solution-title">Agricultural Solar</h3>
+                            <img src="{% static 'img/agriculture/Image_fx.png' %}" alt="Agricultural Solar" class="solution-image">                    <div class="solution-content">
+                                <h3 class="solution-title">Social Impact</h3>
                                 <p class="solution-description">
-                                    Solar-powered irrigation and farm operations to improve productivity and reduce costs.
+                                    Expanding access to reliable clean energy across underserved communities, schools, and essential services.
                                 </p>
+
                                 <ul class="solution-features">
-                                    <li>Solar-powered water pumps</li>
-                                    <li>Cold storage solutions</li>
-                                    <li>Processing plant power</li>
-                                    <li>Durable and weather-resistant</li>
-                                    <li>Remote irrigation control</li>
+                                    <li>Power for schools and education centers</li>
+                                    <li>Energy for healthcare & Religious facilities</li>
+                                    <li>Reliable electricity for rural communities</li>
+                                    <li>Reduced reliance on diesel generators</li>
+                                    <li>Sustainable energy for long-term development</li>
                                 </ul>
-                                <a href="{% url 'get-quote' %}" class="btn-orange">Get Your Quote <i class="bi bi-arrow-right"></i></a>
+
+                                <a href="{% url 'get-quote' %}" class="btn-orange">
+                                    Partner With Us <i class="bi bi-arrow-right"></i>
+                                </a>
                             </div>
                         </div>
                     </div>
+
                     <div class="col-lg-6 order-lg-1">
-                        <h2 class="section-title">Agricultural Solar Solutions</h2>
+                        <h2 class="section-title">Energy for Communities</h2>
+
                         <p class="section-subtitle">
-                            Our agricultural solar solutions help farmers improve productivity and reduce operational costs. From powering irrigation systems to providing energy for cold storage and processing, our solar systems are built to withstand tough farm environments.
+                            Access to reliable electricity is essential for economic growth, education, and healthcare. VeGrid works with communities and organizations to deploy solar energy solutions that power critical services and improve quality of life.
                         </p>
+
                         <p class="section-subtitle">
-                            By switching to solar, farmers can reduce their dependence on expensive and unreliable diesel generators, leading to better crop yields and higher profitability.
+                            Our scalable solar infrastructure allows communities to access affordable power without the burden of large upfront costs.
                         </p>
+
                         <div class="d-flex gap-3 flex-wrap">
-                            <div class="feature-item" style="flex: 1; min-width: 150px;">
-                                <div class="feature-icon"><i class="bi bi-droplet"></i></div>
-                                <h3 class="feature-title">Irrigation</h3>
-                                <p class="feature-description">Reliable power for water pumps</p>
+
+                            <div class="feature-item" style="flex:1; min-width:150px;">
+                                <div class="feature-icon"><i class="bi bi-lightning"></i></div>
+                                <h3 class="feature-title">Energy Access</h3>
+                                <p class="feature-description">Power for underserved regions</p>
                             </div>
-                            <div class="feature-item" style="flex: 1; min-width: 150px;">
-                                <div class="feature-icon"><i class="bi bi-snow"></i></div>
-                                <h3 class="feature-title">Cold Storage</h3>
-                                <p class="feature-description">Reduce post-harvest losses</p>
+
+                            <div class="feature-item" style="flex:1; min-width:150px;">
+                                <div class="feature-icon"><i class="bi bi-globe"></i></div>
+                                <h3 class="feature-title">Sustainability</h3>
+                                <p class="feature-description">Clean energy for long-term impact</p>
                             </div>
+
                         </div>
                     </div>
+
                 </div>
             </div>
         </section>
 
         <!-- Features Section-->
         <section class="features-section">
-            <div class="container px-4 px-lg-5">
-                <div class="text-center mb-5">
+            <div class="container">
+                <div class="text-center mb-5" data-aos="fade-up">
+                    <span class="badge rounded-pill mb-3" style="background: rgba(247, 148, 30, 0.1); color: #F7941E; padding: 8px 20px;">The VeGrid Advantage</span>
                     <h2 class="section-title">Why Choose VeGrid?</h2>
-                    <p class="section-subtitle">All our solar solutions come with these benefits</p>
+                    <p class="section-subtitle mx-auto" style="max-width: 600px;">Experience a seamless transition to clean energy with benefits designed for your growth.</p>
                 </div>
-                <div class="row gx-4 gx-lg-5">
-                    <div class="col-lg-3 col-md-6 mb-4">
-                        <div class="feature-item">
-                            <div class="feature-icon"><i class="bi bi-credit-card"></i></div>
-                            <h3 class="feature-title">Zero Upfront Costs</h3>
+
+                <div class="row g-4">
+                    <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                        <div class="feature-card">
+                            <div class="icon-wrapper">
+                                <i class="bi bi-credit-card feature-icon"></i>
+                            </div>
+                            <h3 class="feature-title">Minimal Upfront Costs</h3>
                             <p class="feature-description">No capital expenditure required. Pay only for the power you use.</p>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-6 mb-4">
-                        <div class="feature-item">
-                            <div class="feature-icon"><i class="bi bi-graph-down"></i></div>
+
+                    <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                        <div class="feature-card">
+                            <div class="icon-wrapper">
+                                <i class="bi bi-graph-down feature-icon"></i>
+                            </div>
                             <h3 class="feature-title">Cost Savings</h3>
                             <p class="feature-description">Reduce your energy costs by 30-50% compared to grid electricity.</p>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-6 mb-4">
-                        <div class="feature-item">
-                            <div class="feature-icon"><i class="bi bi-clock"></i></div>
+
+                    <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                        <div class="feature-card">
+                            <div class="icon-wrapper">
+                                <i class="bi bi-clock feature-icon"></i>
+                            </div>
                             <h3 class="feature-title">24/7 Monitoring</h3>
                             <p class="feature-description">Real-time monitoring and maintenance to ensure optimal performance.</p>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="feature-item">
-                            <div class="feature-icon"><i class="bi bi-shield-check"></i></div>
-                            <h3 class="feature-title">Guaranteed Performance</h3>
-                            <p class="feature-description">Industry-leading performance guarantees and warranties.</p>
+
+                    <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="400">
+                        <div class="feature-card">
+                            <div class="icon-wrapper">
+                                <i class="bi bi-shield-check feature-icon"></i>
+                            </div>
+                            <h3 class="feature-title">Guaranteed Power</h3>
+                            <p class="feature-description">Industry-leading performance guarantees and full warranties.</p>
                         </div>
                     </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Comparison Section-->
-        <section class="py-10 secondary-bg">
-            <div class="container px-4 px-lg-5">
-                <div class="text-center mb-5">
-                    <h2 class="section-title">Solar vs. Traditional Power</h2>
-                    <p class="section-subtitle">See how our solar solutions compare to traditional power sources</p>
-                </div>
-                <div class="comparison-table">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Feature</th>
-                                <th>VeGrid Solar</th>
-                                <th>Grid Electricity</th>
-                                <th>Diesel Generators</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Upfront Costs</td>
-                                <td><span class="check-icon">✓</span> Zero</td>
-                                <td><span class="cross-icon">✗</span> High</td>
-                                <td><span class="cross-icon">✗</span> High</td>
-                            </tr>
-                            <tr>
-                                <td>Operating Costs</td>
-                                <td><span class="check-icon">✓</span> Low & Fixed</td>
-                                <td><span class="cross-icon">✗</span> Variable & Rising</td>
-                                <td><span class="cross-icon">✗</span> High & Volatile</td>
-                            </tr>
-                            <tr>
-                                <td>Reliability</td>
-                                <td><span class="check-icon">✓</span> 99.9% Uptime</td>
-                                <td><span class="cross-icon">✗</span> Frequent Outages</td>
-                                <td><span class="cross-icon">✗</span> Maintenance Issues</td>
-                            </tr>
-                            <tr>
-                                <td>Environmental Impact</td>
-                                <td><span class="check-icon">✓</span> Zero Emissions</td>
-                                <td><span class="cross-icon">✗</span> High Emissions</td>
-                                <td><span class="cross-icon">✗</span> High Emissions</td>
-                            </tr>
-                            <tr>
-                                <td>Maintenance</td>
-                                <td><span class="check-icon">✓</span> Included</td>
-                                <td><span class="cross-icon">✗</span> Customer Responsibility</td>
-                                <td><span class="cross-icon">✗</span> Customer Responsibility</td>
-                            </tr>
-                        </tbody>
-                    </table>
                 </div>
             </div>
         </section>
@@ -622,6 +668,15 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
         <script src="{% static 'scripts.js' %}"></script>
+        <!--Animation script-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+        <script>
+            AOS.init({
+                duration: 800,
+                once: true,
+                easing: 'ease-out-quad'
+            });
+        </script>
         <script>
             // Smooth scrolling for anchor links
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -636,12 +691,35 @@
             // Navbar scroll effect
             window.addEventListener('scroll', function() {
                 const navbar = document.querySelector('.navbar');
+                const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+                const brandSpans = document.querySelectorAll('.navbar-brand span');
+                const navbarToggler = document.querySelector('.navbar-toggler');
+                const navbarTogglerIcon = document.querySelector('.navbar-toggler-icon');
+                
                 if (window.scrollY > 50) {
-                    navbar.style.background = 'rgba(255, 255, 255, 0.98)';
-                    navbar.style.boxShadow = '0 4px 20px rgba(0,0,0,0.1)';
+                    navbar.style.background = 'rgba(0, 0, 0, 0.95)';
+                    navbar.style.boxShadow = '0 4px 20px rgba(0,0,0,0.3)';
+                    
+                    // Change links to white color
+                    navLinks.forEach(link => {
+                        link.style.color = 'white !important';
+                    });
+                    brandSpans.forEach(span => {
+                        span.style.color = 'white';
+                    });
+                    navbarToggler.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+                    navbarTogglerIcon.style.filter = 'invert(1)';
                 } else {
-                    navbar.style.background = 'rgba(255, 255, 255, 0.95)';
-                    navbar.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+                    navbar.style.background = 'transparent';
+                    navbar.style.boxShadow = 'none';
+                    
+                    // Change links to white color
+                    navLinks.forEach(link => {
+                        link.style.color = 'white !important';
+                    });
+                    
+                    navbarToggler.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+                    navbarTogglerIcon.style.filter = 'invert(1)';
                 }
             });
         </script>
